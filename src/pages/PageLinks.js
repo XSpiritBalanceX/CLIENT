@@ -27,10 +27,12 @@ const IntPageLinks=(props)=>{
           <Navbar.Brand >Reviewer</Navbar.Brand>
             <Nav className='nav justify-content-end' >
             <NavLink to={'/'} className="nav-link"><FormattedMessage id='main'/></NavLink>
-            <NavLink to={'/books'} className="nav-link"><FormattedMessage id='books'/></NavLink>
-            <NavLink to={'/movies'} className="nav-link"><FormattedMessage id='movies'/></NavLink>
-            <NavLink to={'/series'} className="nav-link"><FormattedMessage id='series'/></NavLink>
+            <NavLink to={'/books/first'} className="nav-link"><FormattedMessage id='books'/></NavLink>
+            <NavLink to={'/movies/first'} className="nav-link"><FormattedMessage id='movies'/></NavLink>
+            <NavLink to={'/series/first'} className="nav-link"><FormattedMessage id='series'/></NavLink>
+            <NavLink to={'/games/first'} className="nav-link"><FormattedMessage id='games'/></NavLink>
             <NavLink to={'/login'} className="nav-link"><FormattedMessage id='signIn'/></NavLink>
+
             </Nav>
         </Container>       
       </Navbar>

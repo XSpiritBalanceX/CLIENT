@@ -9,6 +9,11 @@ import BooksPage from './BooksPage';
 import MoviesPage from './MoviesPage';
 import SeriesPage from './SeriesPage';
 import AuthPage from './AuthPage';
+import GamePage from './GamePage';
+import ItemMovie from '../components/Item_Movie';
+import ItemBook from '../components/ItemBook';
+import ItemGame from '../components/ItemGame';
+import ItemSeries from '../components/ItemSeries';
 
 
 const intPageRouter=(props)=>{
@@ -21,9 +26,14 @@ const intPageRouter=(props)=>{
            defaultLocale={LOCALES.RUSSIAN}>
          <Routes>
         <Route path='/' element={<MainPage/>}/>
-        <Route path='/books' element={<BooksPage />}/>
-        <Route path='/movies' element={<MoviesPage />}/>
-        <Route path='/series' element={<SeriesPage />}/>
+        <Route path='/books/:page' element={<BooksPage />}/>
+        <Route path='/books/item/:id' element={<ItemBook />}/>
+        <Route path='/movies/:page' element={<MoviesPage />}/>
+        <Route path='/movies/item/:id' element={<ItemMovie />}/>
+        <Route path='/series/:page' element={<SeriesPage />}/>
+        <Route path='/series/item/:id' element={<ItemSeries />}/>
+        <Route path='/games/:page' element={<GamePage />}/>
+        <Route path='/games/item/:id' element={<ItemGame />}/>
         <Route path='/login' element={<AuthPage />}/>
         <Route path='/registration' element={<AuthPage />}/>
         <Route path="*" element={<Navigate to ={'/'}/>}/>
