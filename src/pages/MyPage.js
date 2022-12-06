@@ -1,6 +1,5 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {Spinner, ButtonGroup, Button, ButtonToolbar } from 'react-bootstrap';
 
 
 const IntMyPage=(props)=>{

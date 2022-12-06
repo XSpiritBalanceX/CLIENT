@@ -19,7 +19,7 @@ const IntPageLinks=(props)=>{
       props.dispatch(changeLanguage(language));
     }
 
-    const {theme, setTheme}=useTheme();
+    const { setTheme}=useTheme();
     const handleClickLight=()=>{
       setTheme('light')
     }
