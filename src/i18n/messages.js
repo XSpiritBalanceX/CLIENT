@@ -9,6 +9,13 @@ export const messages={
         series:'Series',
         games:'Games',
         signIn:'Sign In',
+        auth:'Authorization',
+        registr:'Registration',
+        noAcc:'No account?',
+        haveAcc:'Have an account?',
+        enterName:'Enter your username',
+        enterEmail:'Enter email',
+        enterPass:'Enter password',
         title: `Hello, this is the Reviewer. `,
         gretings:`Here you can leave a review about your favorite movies, series, books, games. You can also get other people's opinions. We care what you think!`,
         date:'Realise year: ',
@@ -24,6 +31,8 @@ export const messages={
         summary:'Summary: ',
         metascore:'Expert rating: ',
         userscore:'User rating: ',
+        blocked:'You have been blocked. You cannot enter!',
+        logOut:'Log Out'
     },
     [LOCALES.RUSSIAN]:{
         theme:'Темная тема     ',
@@ -33,6 +42,13 @@ export const messages={
         series:'Сериалы',
         games:'Игры',
         signIn:'Войти',
+        auth:'Авторизация',
+        registr:'Регистрация',
+        noAcc:'Нет аккаунта?',
+        haveAcc:'Уже есть аккаунт?',
+        enterName:'Введите имя пользователя',
+        enterEmail:'Введите свой email',
+        enterPass:'Введите пароль',
         title: `Привет, это проект "Обозреватель".`,
         gretings:`Здесь ты сможешь оставить отзыв о своих любимых фильмах, сериалах, книгах, играх. Так же ты можешь узнать мнение других людей. Нам важно, что ты думаешь!`,
         date:'Год выхода: ',
@@ -48,5 +64,7 @@ export const messages={
         summary:'Описание: ',
         metascore:'Оценка экспертов: ',
         userscore:'Оценка пользователей: ',
+        blocked:'Вы были заблокированы и не можете войти!',
+        logOut:'Выйти'
     }
 }

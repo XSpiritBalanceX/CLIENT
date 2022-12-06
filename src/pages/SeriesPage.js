@@ -60,12 +60,12 @@ const IntSeriesPage=(props)=>{
                     <div style={{margin:'0 auto 2% auto', position:'absolute', left:'40%',}}>
                     <ButtonToolbar >
                     <ButtonGroup className="me-2" style={{textDecoration:'none'}}>
-                        <Button variant="dark" name='1'><NavLink to={'/series/first'} className={obj=>obj.isActive?'active':'page-link'}>1</NavLink ></Button> 
-                        <Button variant="dark" name='2'><NavLink to={'/series/second'} className={obj=>obj.isActive?'active':'page-link'}>2</NavLink ></Button> 
-                        <Button variant="dark" name='3'><NavLink to={'/series/third'} className={obj=>obj.isActive?'active':'page-link'}>3</NavLink ></Button>
-                        <Button variant="dark" name='4'><NavLink to={'/series/fourth'} className={obj=>obj.isActive?'active':'page-link'}>4</NavLink ></Button>
-                        <Button variant="dark" name='5'><NavLink to={'/series/fifth'} className={obj=>obj.isActive?'active':'page-link'}>5</NavLink ></Button>
-                        <Button variant="dark" name='6'><NavLink to={'/series/sixth'} className={obj=>obj.isActive?'active':'page-link'}>6</NavLink ></Button>
+                        <Button className='myBtn' name='1'><NavLink to={'/series/first'} className={obj=>obj.isActive?'active':'page-link'}>1</NavLink ></Button> 
+                        <Button className='myBtn' name='2'><NavLink to={'/series/second'} className={obj=>obj.isActive?'active':'page-link'}>2</NavLink ></Button> 
+                        <Button className='myBtn' name='3'><NavLink to={'/series/third'} className={obj=>obj.isActive?'active':'page-link'}>3</NavLink ></Button>
+                        <Button className='myBtn' name='4'><NavLink to={'/series/fourth'} className={obj=>obj.isActive?'active':'page-link'}>4</NavLink ></Button>
+                        <Button className='myBtn' name='5'><NavLink to={'/series/fifth'} className={obj=>obj.isActive?'active':'page-link'}>5</NavLink ></Button>
+                        <Button className='myBtn' name='6'><NavLink to={'/series/sixth'} className={obj=>obj.isActive?'active':'page-link'}>6</NavLink ></Button>
                     </ButtonGroup>
                 </ButtonToolbar>
                     </div>

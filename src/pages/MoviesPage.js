@@ -12,11 +12,12 @@ const IntMoviesPage=(props)=>{
     let pageCount=params.page;
     const navigate=useNavigate();
 
+
     useEffect(()=>{
         fetch('http://localhost:5000/api/movies/?lang='+props.locale)
         .then(response=>response.json())
         .then(data=>{setLoad(false); props.dispatch(loadMovies(data))})
-        .catch(err=>console.log(err))
+        .catch(err=>console.log(err))       
         // eslint-disable-next-line
     },[props.locale]);
 
@@ -34,6 +35,7 @@ const IntMoviesPage=(props)=>{
     }else if(pageCount==='sixth'){
         moviesData=props.moviData.slice(25,30);
     }
+    
     
     const goToMovie=(id)=>{
         navigate('/movies/item/'+id);
@@ -60,12 +62,12 @@ const IntMoviesPage=(props)=>{
                     <div style={{margin:'0 auto 2% auto', position:'absolute', left:'40%',}}>
                     <ButtonToolbar >
                     <ButtonGroup className="me-2" style={{textDecoration:'none'}}>
-                        <Button variant="dark" name='1'><NavLink to={'/movies/first'} className={obj=>obj.isActive?'active':'page-link'}>1</NavLink ></Button> 
-                        <Button variant="dark" name='2'><NavLink to={'/movies/second'} className={obj=>obj.isActive?'active':'page-link'}>2</NavLink ></Button> 
-                        <Button variant="dark" name='3'><NavLink to={'/movies/third'} className={obj=>obj.isActive?'active':'page-link'}>3</NavLink ></Button>
-                        <Button variant="dark" name='4'><NavLink to={'/movies/fourth'} className={obj=>obj.isActive?'active':'page-link'}>4</NavLink ></Button>
-                        <Button variant="dark" name='5'><NavLink to={'/movies/fifth'} className={obj=>obj.isActive?'active':'page-link'}>5</NavLink ></Button>
-                        <Button variant="dark" name='6'><NavLink to={'/movies/sixth'} className={obj=>obj.isActive?'active':'page-link'}>6</NavLink ></Button>
+                        <Button className='myBtn' name='1'><NavLink to={'/movies/first'} className={obj=>obj.isActive?'active':'page-link'}>1</NavLink ></Button> 
+                        <Button className='myBtn' name='2'><NavLink to={'/movies/second'} className={obj=>obj.isActive?'active':'page-link'}>2</NavLink ></Button> 
+                        <Button className='myBtn' name='3'><NavLink to={'/movies/third'} className={obj=>obj.isActive?'active':'page-link'}>3</NavLink ></Button>
+                        <Button className='myBtn' name='4'><NavLink to={'/movies/fourth'} className={obj=>obj.isActive?'active':'page-link'}>4</NavLink ></Button>
+                        <Button className='myBtn' name='5'><NavLink to={'/movies/fifth'} className={obj=>obj.isActive?'active':'page-link'}>5</NavLink ></Button>
+                        <Button className='myBtn' name='6'><NavLink to={'/movies/sixth'} className={obj=>obj.isActive?'active':'page-link'}>6</NavLink ></Button>
                     </ButtonGroup>
                 </ButtonToolbar>
                     </div>

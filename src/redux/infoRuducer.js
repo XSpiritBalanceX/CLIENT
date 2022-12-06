@@ -1,5 +1,6 @@
 import { LOCALES } from "../i18n/locales";
-import { change_language, load_movies, load_books, load_games, load_series } from "./explainForReducer";
+import { change_language, load_movies, load_books, load_games, load_series,
+    isLogin_user} from "./explainForReducer";
 
 const initialState={
     locale:LOCALES.RUSSIAN,
@@ -7,7 +8,7 @@ const initialState={
     books:[],
     games:[],
     series:[],
-    itemMovie:null,
+    isLogin:false,
  }
  
  function infoReducer (state=initialState, action){
@@ -42,6 +43,11 @@ const initialState={
             return newState;
         }
 
+        case isLogin_user:{
+            let newState={...state};
+            newState.isLogin=action.login;
+            return newState;
+        }
         
  
  

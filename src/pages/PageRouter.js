@@ -10,10 +10,11 @@ import MoviesPage from './MoviesPage';
 import SeriesPage from './SeriesPage';
 import AuthPage from './AuthPage';
 import GamePage from './GamePage';
-import ItemMovie from '../components/Item_Movie';
-import ItemBook from '../components/ItemBook';
-import ItemGame from '../components/ItemGame';
-import ItemSeries from '../components/ItemSeries';
+import ItemMovie from '../components/items/Item_Movie';
+import ItemBook from '../components/items/ItemBook';
+import ItemGame from '../components/items/ItemGame';
+import ItemSeries from '../components/items/ItemSeries';
+import MyPage from './MyPage';
 
 
 const intPageRouter=(props)=>{
@@ -36,6 +37,7 @@ const intPageRouter=(props)=>{
         <Route path='/games/item/:id' element={<ItemGame />}/>
         <Route path='/login' element={<AuthPage />}/>
         <Route path='/registration' element={<AuthPage />}/>
+       {props.isLogin&&<Route path='/mypage' element={<MyPage />}/>}
         <Route path="*" element={<Navigate to ={'/'}/>}/>
        </Routes>   
         </IntlProvider>
@@ -45,7 +47,8 @@ const intPageRouter=(props)=>{
 
 const mapStateToProps=(state)=>{
     return {
-      locale:state.info.locale
+      locale:state.info.locale,
+      isLogin:state.info.isLogin
     }
  }
  

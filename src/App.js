@@ -1,11 +1,14 @@
+import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {createStore, combineReducers} from 'redux';
 import infoReducer from './redux/infoRuducer';
 import PageRouter from './pages/PageRouter';
 import PageLinks from './pages/PageLinks';
+import './app.css';
 
 function App() {
+
   let combineReducer=combineReducers({
     info:infoReducer
   });
@@ -13,13 +16,13 @@ function App() {
 
 
   return (
-    <BrowserRouter>
-    <Provider store={store}>
+      <BrowserRouter>
+    <Provider store={store}>    
       <PageLinks />
-     <PageRouter />     
+     <PageRouter />  
+     
     </Provider>    
-    </BrowserRouter>
-    
+    </BrowserRouter>      
   );
 }
 
