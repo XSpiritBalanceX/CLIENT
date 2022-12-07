@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {useParams} from 'react-router-dom';
-import {Spinner, Card } from 'react-bootstrap';
+import {Spinner, Card, Button } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 
 const IntItemSeries=(props)=>{
@@ -40,10 +40,17 @@ const IntItemSeries=(props)=>{
     return(
         <div>
            {isLoad?<Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>:
-            <div>
+            <div className='contanForItem'>
                 <Card style={{ width: '20rem', height:'auto', margin:'3% 5% 2% 5%',padding:'2%'  }}>
-            {oneSer}
-          </Card></div>} 
+                    {oneSer}
+                </Card>
+                <div>
+                <Button className='myBtn' size='sm'><FormattedMessage id='newRev' /></Button>
+                <div>
+                    Тут будут все обзоры
+                </div>
+                </div>
+            </div>} 
         </div>        
     )
 }

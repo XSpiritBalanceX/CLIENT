@@ -54,7 +54,7 @@ const IntPageLinks=(props)=>{
             <NavLink to={'/series/first'} className="nav-link"><FormattedMessage id='series'/></NavLink>
             <NavLink to={'/games/first'} className="nav-link"><FormattedMessage id='games'/></NavLink>
             {props.isLogin?<Button className='myBtn' onClick={()=>goToProf()}><i className="bi bi-person-circle myProf"></i></Button>:null}
-            <Button className='myBtn' onClick={()=>redirectTo()}>{!props.isLogin?<FormattedMessage id='signIn'/>:<FormattedMessage id='logOut'/>}</Button>           
+            <Button className='myBtn' onClick={()=>redirectTo()}>{!props.isLogin?<i className="bi bi-box-arrow-in-right myProf"></i>:<i className="bi bi-box-arrow-left myProf"></i>}</Button>           
             </Nav>           
         </Container>       
       </Navbar>

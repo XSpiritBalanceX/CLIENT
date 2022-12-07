@@ -32,7 +32,23 @@ export const messages={
         metascore:'Expert rating: ',
         userscore:'User rating: ',
         blocked:'You have been blocked. You cannot enter!',
-        logOut:'Log Out'
+        logOut:'Log Out',
+        nameRev:'Review name',
+        dateCrea:'Date of creation',
+        editRev:'Edit review',
+        showRev:'See review',
+        deletRev:'Delete review',
+        sortRev:'Sort by date',
+        findRev:'Start typing the name of the review',
+        newRev:'New review',
+        emptyTable:`Oops... You haven't written any reviews yet`,
+        send:'Publish',
+        revTitle:'Review title',
+        titleWo:'Title of the work',
+        group:'Product group',
+        tags:'Enter tags',
+        text:'Enter the text of your review',
+        rate:'Your rating'
     },
     [LOCALES.RUSSIAN]:{
         theme:'Темная тема     ',
@@ -65,6 +81,22 @@ export const messages={
         metascore:'Оценка экспертов: ',
         userscore:'Оценка пользователей: ',
         blocked:'Вы были заблокированы и не можете войти!',
-        logOut:'Выйти'
+        logOut:'Выйти',
+        nameRev:'Наименование обзора',
+        dateCrea:'Дата создания',
+        editRev:'Изменить обзор',
+        deletRev:'Удалить обзор',
+        showRev:'Посмотреть обзор',
+        sortRev:'Сортировать по дате',
+        findRev:'Начните вводить наименование',
+        newRev:'Новый обзор',
+        emptyTable:'Упс...Вы еще не написали ни одного обзора',
+        send:'Опубликовать',
+        revTitle:'Название обзора',
+        titleWo:'Название произведения',
+        group:'Группа',
+        tags:'Введите теги',
+        text:'Введите текст Вашего обзора', 
+        rate:'Ваша оценка'
     }
 }

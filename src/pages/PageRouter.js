@@ -15,6 +15,7 @@ import ItemBook from '../components/items/ItemBook';
 import ItemGame from '../components/items/ItemGame';
 import ItemSeries from '../components/items/ItemSeries';
 import MyPage from './MyPage';
+import NewReview from '../components/NewReview';
 
 
 const intPageRouter=(props)=>{
@@ -38,6 +39,7 @@ const intPageRouter=(props)=>{
         <Route path='/login' element={<AuthPage />}/>
         <Route path='/registration' element={<AuthPage />}/>
        {props.isLogin&&<Route path='/mypage' element={<MyPage />}/>}
+       {props.isLogin&&<Route path='/newreview' element={<NewReview />}/>}
         <Route path="*" element={<Navigate to ={'/'}/>}/>
        </Routes>   
         </IntlProvider>
