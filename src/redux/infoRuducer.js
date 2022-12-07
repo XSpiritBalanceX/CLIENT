@@ -1,6 +1,6 @@
 import { LOCALES } from "../i18n/locales";
 import { change_language, load_movies, load_books, load_games, load_series,
-    isLogin_user, load_user_review, add_name_review} from "./explainForReducer";
+    isLogin_user, add_name_review} from "./explainForReducer";
 
 const initialState={
     locale:LOCALES.RUSSIAN,
@@ -11,7 +11,8 @@ const initialState={
     isLogin:true,
     userEmail:null,
     arrReview:[],
-    nameReview:''
+    nameReview:'',
+    alltags:['funny', 'good', 'книги', 'badly', 'фильмы']
  }
  
  function infoReducer (state=initialState, action){
@@ -45,11 +46,6 @@ const initialState={
             let newState={...state};
             newState.isLogin=action.login;
             newState.userEmail=action.user;
-            return newState;
-        }
-        case load_user_review:{
-            let newState={...state};
-            newState.arrReview=action.arrR;
             return newState;
         }
         case add_name_review:{

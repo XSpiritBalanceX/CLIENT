@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {useParams} from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
 import {Spinner, Card, Button } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
+import {addNameReview} from '../../redux/explainForReducer'
 
 const IntItemSeries=(props)=>{
     const [item, setItem]=useState([]);
     const [isLoad, setLoad]=useState(true)
     const params=useParams();
     const idSeries=params.id;
+    const navigate=useNavigate();
 
     useEffect(()=>{
         fetch(`http://localhost:5000/api/series/getoneseries?lang=${props.locale}&id=${idSeries}`)
@@ -18,8 +20,15 @@ const IntItemSeries=(props)=>{
         // eslint-disable-next-line
     },[props.locale]);
 
+    let nameItem;
+    const goToNewReview=()=>{
+        props.dispatch(addNameReview(nameItem))
+        navigate('/newreview')
+    }
+
     console.log()
      let oneSer=!isLoad? item.map(el=>{
+        nameItem=props.locale==='ru-RU'?el.nameru:el.nameen;
        return <React.Fragment key={el.id}>
            <Card.Img variant="top" title={el.nameen||el.nameru} src={el.url} />
            <Card.Body>
@@ -45,7 +54,7 @@ const IntItemSeries=(props)=>{
                     {oneSer}
                 </Card>
                 <div>
-                <Button className='myBtn' size='sm'><FormattedMessage id='newRev' /></Button>
+                <Button className='myBtn' size='sm' onClick={()=>goToNewReview()}><FormattedMessage id='newRev' /></Button>
                 <div>
                     Тут будут все обзоры
                 </div>

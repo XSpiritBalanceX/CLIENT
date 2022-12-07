@@ -4,7 +4,6 @@ const load_books='load_books';
 const load_games='load_games';
 const load_series='load_series';
 const isLogin_user='isLogin_user';
-const load_user_review='load_user_review';
 const add_name_review='add_name_review';
 
 const changeLanguage=function (lang){
@@ -50,12 +49,6 @@ const loginUser=function(bool, userEmail){
    }
 }
 
-const loadReview=function(dataReview){
-   return{
-      type:load_user_review,
-      arrR:dataReview
-   }
-}
 
 const addNameReview=function(name){
    return{
@@ -73,5 +66,4 @@ export {change_language, changeLanguage,
    load_games, loadGames,
    load_series, loadSeries,
    isLogin_user, loginUser,
-   load_user_review, loadReview,
    add_name_review, addNameReview}

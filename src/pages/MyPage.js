@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Button,Form,Table,Spinner  } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
-import {loadReview} from '../redux/explainForReducer';
 import {useNavigate } from 'react-router-dom';
 
 
@@ -10,6 +9,7 @@ const IntMyPage=(props)=>{
 
     const [isLoad, setLoad]=useState(false);
     const [filter, setFilter]=useState('');
+    const [allReview, setAllReview]=useState([]);
     const intl=useIntl();
     const navigate=useNavigate();
 
@@ -17,7 +17,7 @@ const IntMyPage=(props)=>{
     useEffect(()=>{
         fetch('http://localhost:5000/api/review/userreview?useremail='+props.email)
         .then(response=>response.json())
-        .then(data=>{setLoad(true); props.dispatch(loadReview(data))})
+        .then(data=>{setLoad(true); setAllReview(data)})
         .catch(err=>console.log(err))
         // eslint-disable-next-line
     },[]) 
@@ -27,7 +27,7 @@ const IntMyPage=(props)=>{
     }
     
 
-    let review=isLoad&&props.userReview.length===0?
+    let review=isLoad&&allReview.length===0?
        <tr>
         <td colSpan={5} style={{textAlign:'center'}}><FormattedMessage id='emptyTable' /></td>
       </tr>:
@@ -72,9 +72,7 @@ const IntMyPage=(props)=>{
 const mapStateToProps=(state)=>{
     return {
         locale:state.info.locale,
-        email:state.info.userEmail,
-        userReview:state.info.arrReview
-        
+        email:state.info.userEmail,        
     }
  }
  
