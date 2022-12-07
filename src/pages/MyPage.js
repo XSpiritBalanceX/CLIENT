@@ -15,7 +15,7 @@ const IntMyPage=(props)=>{
 
 
     useEffect(()=>{
-        fetch('http://localhost:5000/api/review/userreview?useremail=props.email')
+        fetch('http://localhost:5000/api/review/userreview?useremail='+props.email)
         .then(response=>response.json())
         .then(data=>{setLoad(true); props.dispatch(loadReview(data))})
         .catch(err=>console.log(err))

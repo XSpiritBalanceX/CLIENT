@@ -1,14 +1,16 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
-import {Button, Modal, Form, Container, Card, FloatingLabel} from 'react-bootstrap';
+import {Button,  Form, Container, Card, FloatingLabel} from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
+import {Typeahead} from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 
 const IntNewReview=(props)=>{
 
     let nameRev=props.nameItem===''?'':props.nameItem;
-    const [formRev, setFormRev]=useState({title:'',titleWo:nameRev,group:'',tags:'',rat:0, textRev:''})
-
+    const [formRev, setFormRev]=useState({title:'',titleWo:nameRev,group:[],tags:[],rat:0, textRev:''})
+    
     const intl=useIntl();
 
     const changeForm=(event)=>{
@@ -17,6 +19,8 @@ const IntNewReview=(props)=>{
         }
         setFormRev({...formRev, [event.target.name]:event.target.value})
     }
+    let options=props.locale==='en-US'?['Games', 'Movies', "Books", "Series"]:['Игры', 'Фильмы', "Книги", "Сериалы"]
+
 
     return(
         <Container className="d-flex justify-content-center align-items-center" style={{height:window.innerHeight-54}}>          
@@ -25,8 +29,23 @@ const IntNewReview=(props)=>{
             <Form className="d-flex flex-column">
               <Form.Control type="text" className="mt-3" name='title' onChange={changeForm} placeholder={intl.formatMessage({id:'revTitle'})} value={formRev.title} />
               <Form.Control type="text" className="mt-3" name='titleWo' onChange={changeForm} placeholder={intl.formatMessage({id:'titleWo'})} value={formRev.titleWo} disabled={props.nameItem===''?false:true}/>
-              <Form.Control type="text" className="mt-3" name='group' onChange={changeForm} placeholder={intl.formatMessage({id:'group'})} value={formRev.group} />
-              <Form.Control type="text" className="mt-3" name='tags' onChange={changeForm} placeholder={intl.formatMessage({id:'tags'})}  value={formRev.tags}/>
+              <Typeahead className="mt-3"
+                 id="basic-typeahead-single"
+                    labelKey="name"
+                    onChange={(event)=>setFormRev({...formRev, group:event})}
+                    options={options}
+                    placeholder={intl.formatMessage({id:'group'})}
+                    selected={formRev.group}
+                />
+                <Typeahead className="mt-3"
+                    id="basic-typeahead-multiple"
+                    labelKey="name"
+                    multiple
+                    onChange={(event)=>setFormRev({...formRev, tags:event})}
+                    options={options}
+                    placeholder={intl.formatMessage({id:'tags'})}
+                    selected={formRev.tags}
+                />
               <Form.Control type="text" min={0} max={10} maxLength="2" name='rat'  className="mt-3" onChange={changeForm} placeholder={intl.formatMessage({id:'rate'})}  value={formRev.rat}/>
               <FloatingLabel controlId="floatingTextarea2" label={intl.formatMessage({id:'text'})}>
               <Form.Control className="mt-2"
@@ -47,7 +66,8 @@ const IntNewReview=(props)=>{
 
 const mapStateToProps=(state)=>{
     return { 
-        nameItem:state.info.nameReview       
+        nameItem:state.info.nameReview ,
+        locale:state.info.locale ,    
     }
  }
  
