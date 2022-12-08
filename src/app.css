@@ -101,3 +101,11 @@ body{
 .close {
     font-size: 60%;
 }
+
+.quill{
+    margin-top: 2%;    
+}
+.ql-container{
+    overflow-y: auto;
+    height: 7em;
+}

@@ -8,7 +8,7 @@ const initialState={
     books:[],
     games:[],
     series:[],
-    isLogin:true,
+    isLogin:false,
     userEmail:null,
     arrReview:[],
     nameReview:'',

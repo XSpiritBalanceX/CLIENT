@@ -47,8 +47,9 @@ export const messages={
         titleWo:'Title of the work',
         group:'Product group',
         tags:'Enter tags',
-        text:'Enter the text of your review',
-        rate:'Your rating'
+        rate:'Your rating',
+        errRat:'The score cannot be greater than 10. Please enter a valid number.',
+        errField:'The fields cannot be empty.'
     },
     [LOCALES.RUSSIAN]:{
         theme:'Темная тема     ',
@@ -96,7 +97,8 @@ export const messages={
         titleWo:'Название произведения',
         group:'Группа',
         tags:'Введите теги',
-        text:'Введите текст Вашего обзора', 
-        rate:'Ваша оценка'
+        rate:'Ваша оценка',
+        errRat:'Оценка не может быть больше 10. Введите корректное число.',
+        errField:'Поля не могут быть пустым.'
     }
 }
