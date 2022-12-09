@@ -1,15 +1,12 @@
 /* function createMarkup() { return {__html: editorHtmlValue}; };
 
 <div dangerouslySetInnerHTML={createMarkup()} /> */
-import React, {useState, useEffect} from 'react';
-import {Button,  } from 'react-bootstrap';
-import {useNavigate } from 'react-router-dom';
+import React from 'react';
 import {connect} from 'react-redux';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 
 const IntShowReview=(props)=>{
-    const navigate=useNavigate();
 
     function createMarkup(text) { return {__html: text}; };
 
