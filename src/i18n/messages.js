@@ -2,7 +2,6 @@ import { LOCALES } from "./locales";
 
 export const messages={
     [LOCALES.ENGLISH]:{
-        theme:'Enable dark theme     ',
         main:'Main',
         books:'Books',
         movies:'Movies',
@@ -49,10 +48,19 @@ export const messages={
         tags:'Enter tags',
         rate:'Your rating',
         errRat:'The score cannot be greater than 10. Please enter a valid number.',
-        errField:'The fields cannot be empty.'
+        errField:'The fields cannot be empty.',
+        addPict:'You posted picture',
+        drag:'Drag pictures here',
+        drop:'Drop pictures',
+        upload:'Upload file',
+        rule:'You can only upload one image!',
+        edit:'Edit',
+        show:'Show',
+        delete:'Delete',
+        revTags:'Tags: ',
+        ratAuth:'Reviewer rating: '
     },
     [LOCALES.RUSSIAN]:{
-        theme:'Темная тема     ',
         main:'Главная',
         books:'Книги',
         movies:'Фильмы',
@@ -99,6 +107,16 @@ export const messages={
         tags:'Введите теги',
         rate:'Ваша оценка',
         errRat:'Оценка не может быть больше 10. Введите корректное число.',
-        errField:'Поля не могут быть пустым.'
+        errField:'Поля не могут быть пустым.',
+        addPict:'Вы загрузили изображение',
+        drag:'Перетащите сюда изображения',
+        drop:'Отпустите изображения',
+        upload:'Загрузить файл',
+        rule:'Вы можете загрузить только одно изображение!',
+        edit:'Изменить',
+        show:'Просмотр',
+        delete:'Удалить',
+        revTags:'Теги: ',
+        ratAuth:'Оценка обозревателя: '
     }
 }

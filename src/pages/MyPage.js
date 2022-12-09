@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import {Button,Form,Table,Spinner  } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {useNavigate } from 'react-router-dom';
+import Reviews from '../components/Reviews';
+import {showReview} from '../redux/explainForReducer';
 
 
 const IntMyPage=(props)=>{
@@ -26,16 +28,29 @@ const IntMyPage=(props)=>{
         navigate('/newreview')
     }
     
+    const showR=(id)=>{
+      let item=allReview.find(el=>el.id===id)
+      props.dispatch(showReview(item))
+      navigate('/showReview/'+item.name)
+    }
 
     let review=isLoad&&allReview.length===0?
        <tr>
-        <td colSpan={5} style={{textAlign:'center'}}><FormattedMessage id='emptyTable' /></td>
+        <td colSpan={6} style={{textAlign:'center'}}><FormattedMessage id='emptyTable' /></td>
       </tr>:
-      <tr>
-      <td colSpan={5} style={{textAlign:'center'}}>Не пусто</td>
-    </tr>;
+      allReview.map(el=>{
+        return <Reviews key={el.id}
+         id={el.id}
+         nameRev={el.title}
+         nameWork={el.name}
+         date={el.date}
+         edit={<FormattedMessage id='edit' />}
+         show={<FormattedMessage id='show' />}
+         delete={<FormattedMessage id='delete' />}
+         cbShowRev={showR}
+         />
+      });
 
-    
     
     return(
         <div className='myPageContainer'>
@@ -53,6 +68,7 @@ const IntMyPage=(props)=>{
       <thead>
         <tr>
           <th><FormattedMessage id='nameRev'/></th>
+          <th><FormattedMessage id='titleWo'/></th>
           <th><FormattedMessage id='dateCrea'/></th>
           <th><FormattedMessage id='editRev'/></th>
           <th><FormattedMessage id='showRev'/></th>
@@ -63,8 +79,7 @@ const IntMyPage=(props)=>{
        {review}       
       </tbody>
     </Table>
-            </div>
-            :<Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}
+            </div>:<Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}
         </div>
     )
 }

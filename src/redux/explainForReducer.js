@@ -5,6 +5,7 @@ const load_games='load_games';
 const load_series='load_series';
 const isLogin_user='isLogin_user';
 const add_name_review='add_name_review';
+const show_review='show_review';
 
 const changeLanguage=function (lang){
    return{
@@ -57,6 +58,13 @@ const addNameReview=function(name){
    }
 }
 
+const showReview=function(obj){
+   return{
+      type:show_review,
+      itemreview:obj
+   }
+}
+
 
 
 
@@ -66,4 +74,5 @@ export {change_language, changeLanguage,
    load_games, loadGames,
    load_series, loadSeries,
    isLogin_user, loginUser,
-   add_name_review, addNameReview}
+   add_name_review, addNameReview,
+   show_review, showReview}

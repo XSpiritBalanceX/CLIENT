@@ -8,6 +8,7 @@ html[data-theme='light']{
     --cardBook-background-color:white;
     --cardBook-color:black;
     --cardBook-border-color:#3c3c3c;
+    --textReview-background:white;
 }
 html[data-theme='dark']{
     --background-color:#3c3c3c;
@@ -19,6 +20,7 @@ html[data-theme='dark']{
     --cardBook-background-color:#3c3c3c;
     --cardBook-color:white;
     --cardBook-border-color:white;
+    --textReview-background:rgb(244, 216, 147);
 }
 
 body{
@@ -108,4 +110,58 @@ body{
 .ql-container{
     overflow-y: auto;
     height: 7em;
+}
+
+.MyPicture{
+    border: dashed 2px;
+    border-color: var(--main-text-color);
+    height: 5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.MyInput{
+     display: none; 
+}
+.labelMyInput{
+    border: solid 2px;
+    border-color: var(--main-text-color);
+    padding: 5px 10px;
+    cursor: pointer;
+    /* display: none; */
+}
+
+.showRev{
+    display: flex;
+    flex-direction: row;
+    margin: 2% 5% 2% 5%;
+    color:var(--main-text-color);
+}
+.pict{
+    width: 20em;
+    height: 25em;
+}
+
+.textReview{
+    background-color:var(--textReview-background);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+
+
+@media all and (max-width: 60em){
+    
+}
+    
+@media all and (max-width: 40em){
+
+    .labelMyInput{
+        display: block;
+    }
+    .MyPicture{
+        display: none;
+    }
+        
 }

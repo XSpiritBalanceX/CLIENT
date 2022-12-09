@@ -13,72 +13,135 @@ const IntNewReview=(props)=>{
     setEditorHtmlValue(content.html);
   };
     let nameRev=props.nameItem===''?'':props.nameItem;
-    const [formRev, setFormRev]=useState({title:'',titleWo:nameRev,group:[],tags:[],rat:''});
+    const [title, setTitle]=useState('');
+    const [titleWo, setTitleWo]=useState(nameRev);
+    const [group, setGroupn]=useState([]);
+    const [tags, setTags]=useState([]);
+    const [rat, setRat]=useState(0);
     const [show, setShow] = useState(false);
     const [modalInfo, setModal]=useState('');
     const handleClose = () => setShow(false);
+    const [dragEnter, setDragEnter]=useState(false);
+    const [pic, setPic] = useState('');
 
     const intl=useIntl();
 
-    const changeForm=(event)=>{
-        if(event.target.name==='rat'){
+    const changeRat=(event)=>{
           if(Number(event.target.value)>10){
-           setFormRev({...formRev, rat:0});
+           setRat(0);
            setModal(<FormattedMessage id='errRat'/>)
            setShow(true);
           }else{            
-             setFormRev({...formRev, rat:event.target.value})
-          }
-        }
-       setFormRev({...formRev, [event.target.name]:event.target.value})                
+            setRat(event.target.value)
+          }               
     }
     let options=props.locale==='en-US'?['Games', 'Movies', "Books", "Series"]:['Игры', 'Фильмы', "Книги", "Сериалы"]
 
-    const sendReview=()=>{
-      if(formRev.group.length===0 || formRev.title==='' ||formRev.titleWo==='' || 
-        editorHtmlValue==='' || formRev.rat==='' || formRev.tags.length===0){
+    const dragEnterHangler=(event)=>{
+      event.preventDefault();
+      event.stopPropagation();
+      setDragEnter(true)
+    }
+    const dragLeaveHangler=(event)=>{
+      event.preventDefault();
+      event.stopPropagation();
+      setDragEnter(false)
+    }
+    const dragOverHangler=(event)=>{
+      event.preventDefault();
+      event.stopPropagation();
+      setDragEnter(true)
+    }
+
+    const dropHandler=(event)=>{
+      event.preventDefault();
+      event.stopPropagation();
+      setPic(event.dataTransfer.files[0])      
+      setDragEnter(false)
+    }
+
+    const handleChange = (e) => {
+      setPic(e.target.files[0]);
+    };
+    
+    const sendReview=async(event)=>{
+      event.preventDefault();
+      if(group.length===0 || title==='' ||titleWo==='' || 
+        editorHtmlValue==='' || rat==='' || tags.length===0){
         setModal(<FormattedMessage id='errField'/>)
         setShow(true);
       } else{
-        console.log(formRev)
-      }
-          
+        const formData = new FormData();
+        formData.append("pic", pic);
+        formData.append("title", title);
+        formData.append("name", titleWo);
+        formData.append("groupn", group);
+        formData.append("teg", tags);
+        formData.append("rate", rat);
+        formData.append("text", editorHtmlValue);
+        formData.append("useremail", props.useremail);
+        let response=await fetch('http://localhost:5000/api/review/postpic',{
+        method:'POST',
+        body:formData
+      })
+      let data=await response.json()
+      setModal(data.message);
+      setShow(true);
+      setTitle('');
+      setTitleWo('');
+      setTags([]);
+      setGroupn([]);
+      setEditorHtmlValue('');
+      setRat('');
+      }          
     }
+    
 
     return(
-        <Container className="d-flex justify-content-center align-items-center" style={{height:window.innerHeight-54}}>          
+        <Container className="d-flex justify-content-center align-items-center" style={{height:'auto', margin:'2% auto 2% auto'}}>          
           <Card style={{width:600, border:'2px solid'}} className='p-5 contMain'>
             <h2 className="m-auto"><FormattedMessage id='newRev'/></h2>
-            <Form className="d-flex flex-column" >
-              <Form.Control type="text" className="mt-3" name='title' onChange={changeForm} 
-                placeholder={intl.formatMessage({id:'revTitle'})} value={formRev.title} />
-              <Form.Control type="text" className="mt-3" name='titleWo' onChange={changeForm} 
-                placeholder={intl.formatMessage({id:'titleWo'})}  value={formRev.titleWo} disabled={props.nameItem===''?false:true}/>
+            <Form className="d-flex flex-column" onSubmit={sendReview}>
+              <Form.Control type="text" className="mt-3" name='title' onChange={(event)=>setTitle(event.target.value)} 
+                placeholder={intl.formatMessage({id:'revTitle'})} value={title} />
+              <Form.Control type="text" className="mt-3" name='titleWo' onChange={(event)=>setTitleWo(event.target.value)} 
+                placeholder={intl.formatMessage({id:'titleWo'})}  value={titleWo} disabled={props.nameItem===''?false:true}/>
               <Typeahead className="mt-3" 
                  id="basic-typeahead-single"
                     labelKey="name" 
-                    onChange={(event)=>setFormRev({...formRev, group:event})}
+                    onChange={(event)=>setGroupn(event)}
                     options={options}
                     placeholder={intl.formatMessage({id:'group'})}
-                    selected={formRev.group}
+                    selected={group}
                 />
                 <Typeahead className="mt-3 myMylti" 
                     id="basic-typeahead-multiple"
                     labelKey="name"
                     multiple 
-                    onChange={(event)=>setFormRev({...formRev, tags:event})}
+                    onChange={(event)=>setTags(event)}
                     options={props.tags}
                     placeholder={intl.formatMessage({id:'tags'})}
-                    selected={formRev.tags}
+                    selected={tags}
                 />
               <Form.Control type="number" min={0} max={10} maxLength="2" name='rat'  
-                 className="mt-3" onChange={changeForm} placeholder={intl.formatMessage({id:'rate'})}  value={formRev.rat}/>
+                 className="mt-3" onChange={(event)=>changeRat(event)} placeholder={intl.formatMessage({id:'rate'})}  value={rat}/>
               <Editor 
                 value={initialMarkdownContent}
                 onChange={onEditorContentChanged}
-              />
+              />     
+               <div className='mt-3'>
+                {pic!==''?<FormattedMessage id='addPict'/>:<FormattedMessage id='rule'/>}               
+              </div>        
+              <div className='mt-3'>
+                <label htmlFor='loadPic' className='labelMyInput'><FormattedMessage id='upload'/></label>
+                 <input type={'file'} onChange={handleChange} id='loadPic' className='MyInput'/>
+              </div>               
+                <div className='MyPicture mt-3'  onDragEnter={dragEnterHangler} 
+                onDragLeave={dragLeaveHangler} onDragOver={dragOverHangler} onDrop={dropHandler}>                  
+                { dragEnter? <FormattedMessage id='drop'/>:<FormattedMessage id='drag'/>}
+              </div>
               <div className=" d-flex  justify-content-end mt-3 pl-3 pr-3">
-                <Button  variant="outline-dark" className='myBtn' onClick={sendReview}><FormattedMessage id='send'/></Button>
+                <Button  variant="outline-dark" className='myBtn' type='submit'><FormattedMessage id='send'/></Button>
               </div>              
             </Form>
           </Card>
@@ -100,6 +163,7 @@ const mapStateToProps=(state)=>{
         nameItem:state.info.nameReview ,
         locale:state.info.locale ,  
         tags:state.info.alltags ,
+        useremail:state.info.userEmail
     }
  }
  
