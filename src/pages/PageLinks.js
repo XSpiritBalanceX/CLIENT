@@ -29,7 +29,7 @@ const IntPageLinks=(props)=>{
 
     const redirectTo=()=>{
       if(props.isLogin){
-        props.dispatch(loginUser(false));
+        props.dispatch(loginUser(false, ''));
         navigate('/');        
       }else{
         navigate('/login')

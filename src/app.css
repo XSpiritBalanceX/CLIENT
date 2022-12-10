@@ -63,6 +63,7 @@ body{
 }
 
 .myTable{
+    width: 100%;
     color:var(--main-text-color)
 }
 
@@ -149,6 +150,52 @@ body{
     padding: 5px;
 }
 
+.myCardReview{
+    font-size: 13px;
+    border: solid 2px ;
+    border-color: var(--main-text-color);
+    background-color: var(--cardBook-background-color);
+    color:var(--main-text-color);  
+    margin-top: 2%;
+}
+
+.bi-star-fill{
+    color:yellow
+}
+
+.MyDescript{
+    width: 20rem;
+    height:auto;
+    padding:2%;
+    border: solid 2px ;
+    border-color: var(--main-text-color);
+    background-color: var(--cardBook-background-color);
+    color:var(--main-text-color);  
+}
+.emptyReview{
+    color:var(--main-text-color);
+    font-size: 1.5em;
+}
+
+.comment{
+    margin: 0 5% 2% 5%;
+}
+
+.newComment{
+    display: flex;
+    flex-direction: row;
+    margin: 5%;
+    align-items: center;
+}
+.textar{
+    width: 60%;
+    margin-right: 2%;
+}
+.newComBut{
+    width: 15%;
+    height: 3em;
+}
+
 
 
 @media all and (max-width: 60em){
@@ -162,6 +209,43 @@ body{
     }
     .MyPicture{
         display: none;
+    }
+    .contanForItem{
+        flex-direction: column;
+    }
+    .MyDescript{
+        width: 100%;
+        margin-bottom: 3%;
+    }
+    .showRev{
+        flex-direction: column;
+    }
+    .newComment{
+        flex-direction: column;
+    }
+    .textar{
+        width: 90%;        
+    }
+    .newComBut{
+        width: 50%;
+        height: 3em;
+    }
+    .myTable thead {
+        display: none;
+    }
+    .myTable tr {
+        display: block;
+    }
+    .myTable td {
+      display: block;
+      text-align: center;
+    }
+    .myTable td:before {
+      content: attr(aria—label);
+      float: left;
+    }
+    .mainCont{
+        margin-top: 40%;
     }
         
 }

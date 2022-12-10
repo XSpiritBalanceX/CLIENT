@@ -58,7 +58,11 @@ export const messages={
         show:'Show',
         delete:'Delete',
         revTags:'Tags: ',
-        ratAuth:'Reviewer rating: '
+        ratAuth:'Reviewer rating: ',
+        messForEmpty:'No one has written a review yet.',
+        revi:'User Reviews',
+        authRev:'Review Author',
+        comment:'Leave your comment here'
     },
     [LOCALES.RUSSIAN]:{
         main:'Главная',
@@ -117,6 +121,10 @@ export const messages={
         show:'Просмотр',
         delete:'Удалить',
         revTags:'Теги: ',
-        ratAuth:'Оценка обозревателя: '
+        ratAuth:'Оценка обозревателя: ',
+        messForEmpty:'Никто еще не написал обзор.',
+        revi:'Обзоры пользователей',
+        authRev:'Автор обзора',
+        comment:'Оставьте свой комментарий тут'
     }
 }

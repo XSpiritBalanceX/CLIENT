@@ -8,7 +8,7 @@ import PageLinks from './pages/PageLinks';
 import './app.css';
 
 function App() {
-
+   
   let combineReducer=combineReducers({
     info:infoReducer
   });

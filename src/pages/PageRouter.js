@@ -22,7 +22,7 @@ import ShowReview from '../components/ShowReview';
 const intPageRouter=(props)=>{
 
     const locale=props.locale;
-
+    
     return(
         <IntlProvider messages={messages[locale]}
            locale={locale}
@@ -39,7 +39,7 @@ const intPageRouter=(props)=>{
         <Route path='/games/item/:id' element={<ItemGame />}/>
         <Route path='/login' element={<AuthPage />}/>
         <Route path='/registration' element={<AuthPage />}/>
-        <Route path='/showReview/:name' element={<ShowReview />}/>
+        <Route path='/showReview/:id' element={<ShowReview />}/>
        {props.isLogin&&<Route path='/mypage' element={<MyPage />}/>}
        {props.isLogin&&<Route path='/newreview' element={<NewReview />}/>}
         <Route path="*" element={<Navigate to ={'/'}/>}/>

@@ -4,7 +4,6 @@ import {Button,Form,Table,Spinner  } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {useNavigate } from 'react-router-dom';
 import Reviews from '../components/Reviews';
-import {showReview} from '../redux/explainForReducer';
 
 
 const IntMyPage=(props)=>{
@@ -30,8 +29,7 @@ const IntMyPage=(props)=>{
     
     const showR=(id)=>{
       let item=allReview.find(el=>el.id===id)
-      props.dispatch(showReview(item))
-      navigate('/showReview/'+item.name)
+      navigate('/showReview/'+item.id)
     }
 
     let review=isLoad&&allReview.length===0?
