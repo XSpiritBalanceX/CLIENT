@@ -3,7 +3,7 @@ import { change_language, load_movies, load_books, load_games, load_series,
     isLogin_user, add_name_review } from "./explainForReducer";
 import decoded from 'jwt-decode';
 
-let isExist=localStorage.getItem('token')==='';
+let isExist=localStorage.getItem('token')===''||localStorage.getItem('token')===null;
 let localSt=localStorage.getItem('token');
 let emailUs=isExist?'':decoded(localSt);
 let log=localStorage.getItem('isLogin')==='yes';
