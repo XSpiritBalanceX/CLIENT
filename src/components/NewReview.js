@@ -64,6 +64,7 @@ const IntNewReview=(props)=>{
       setPic(e.target.files[0]);
     };
     
+    
     const sendReview=async(event)=>{
       event.preventDefault();
       if(group.length===0 || title==='' ||titleWo==='' || 

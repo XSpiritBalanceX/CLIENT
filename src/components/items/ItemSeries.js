@@ -18,7 +18,7 @@ const IntItemSeries=(props)=>{
     useEffect(()=>{
         fetch(`http://localhost:5000/api/series/getoneseries?lang=${props.locale}&id=${idSeries}`)
         .then(response=>response.json())
-        .then(data=>{setItem(data); setLoad(false)})
+        .then(data=>{setItem(data); setIsLoadReview(false)})
         .catch(err=>console.log(err))
         // eslint-disable-next-line
     },[props.locale]);
@@ -29,7 +29,7 @@ const IntItemSeries=(props)=>{
         navigate('/newreview')
     }
 
-    console.log()
+    
      let oneSer=!isLoad? item.map(el=>{
         nameItem=props.locale==='ru-RU'?el.nameru:el.nameen;
        return <React.Fragment key={el.id}>
@@ -50,15 +50,15 @@ const IntItemSeries=(props)=>{
         </React.Fragment> 
         }):null;
 
-        const showR=(id)=>{
-            let item=allReview.find(el=>el.id===id)
+        const showR=(id)=>{            
+            let item=allReview.find(el=>el.id===id)         
             navigate('/showReview/'+item.id)
         }
 
         useEffect(()=>{
             fetch(`http://localhost:5000/api/review/itemreview?name=${nameItem}`)
             .then(response=>response.json())
-            .then(data=>{setAllReview(data); setIsLoadReview(false)})
+            .then(data=>{setAllReview(data); setLoad(false)})
             .catch(err=>console.log(err))
             // eslint-disable-next-line
         },[nameItem]); 
@@ -66,6 +66,7 @@ const IntItemSeries=(props)=>{
         let cardReview=allReview.length===0?<p className='emptyReview'><FormattedMessage id='messForEmpty'/></p>:
       allReview.map(el=>{
         return <CardReview key={el.id}
+         id={el.id}
          title={el.title}
          username={el.nameuser}
          date={el.date}
@@ -83,7 +84,7 @@ const IntItemSeries=(props)=>{
                 </Card>
                 <div>
                 {props.isLogin&&<Button className='myBtn' size='sm' onClick={()=>goToNewReview()}><FormattedMessage id='newRev' /></Button>}
-                <div>
+                <div >
                 <h4 className='emptyReview'><FormattedMessage id='revi'/></h4>
                 {cardReview}
                 </div>
@@ -96,6 +97,7 @@ const IntItemSeries=(props)=>{
 const mapStateToProps=(state)=>{
     return {
         locale:state.info.locale,
+        isLogin:state.info.isLogin
     }
  }
  

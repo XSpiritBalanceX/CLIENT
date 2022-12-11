@@ -3,7 +3,7 @@ import { Card, Button } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 
 const CardReview=(props)=>{
-
+  
     return(
         <Card className='myCardReview'>
            <Card.Body>

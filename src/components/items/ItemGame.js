@@ -24,7 +24,7 @@ const IntItemGame=(props)=>{
     useEffect(()=>{
         fetch(`http://localhost:5000/api/games/getonegame?lang=${props.locale}&id=${idGame}`)
         .then(response=>response.json())
-        .then(data=>{setItem(data); setLoad(false)})
+        .then(data=>{setItem(data); setIsLoadReview(false)})
         .catch(err=>console.log(err))
         // eslint-disable-next-line
     },[props.locale]);
@@ -54,7 +54,7 @@ const IntItemGame=(props)=>{
         useEffect(()=>{
             fetch(`http://localhost:5000/api/review/itemreview?name=${nameItem}`)
             .then(response=>response.json())
-            .then(data=>{setAllReview(data); setIsLoadReview(false)})
+            .then(data=>{setAllReview(data); setLoad(false)})
             .catch(err=>console.log(err))
             // eslint-disable-next-line
         },[nameItem]); 
@@ -62,6 +62,7 @@ const IntItemGame=(props)=>{
         let cardReview=allReview.length===0?<p className='emptyReview'><FormattedMessage id='messForEmpty'/></p>:
       allReview.map(el=>{
         return <CardReview key={el.id}
+         id={el.id}
          title={el.title}
          username={el.nameuser}
          date={el.date}
@@ -92,6 +93,7 @@ const IntItemGame=(props)=>{
 const mapStateToProps=(state)=>{
     return {
         locale:state.info.locale,
+        isLogin:state.info.isLogin
     }
  }
  

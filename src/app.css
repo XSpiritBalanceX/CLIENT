@@ -77,7 +77,7 @@ body{
 .contanForItem{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     margin: 2% 3% 2% 3%;
 }
 
@@ -194,6 +194,18 @@ body{
 .newComBut{
     width: 15%;
     height: 3em;
+}
+
+.oneComment{
+    border: solid 1px ;
+    border-color: var(--main-text-color);
+    border-radius: 10px;
+    color:var(--main-text-color);
+    margin-bottom: 2%;
+    width: 60%;
+}
+.labelForComment{
+    color:var(--main-text-color);
 }
 
 

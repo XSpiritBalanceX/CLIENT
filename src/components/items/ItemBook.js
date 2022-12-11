@@ -47,7 +47,7 @@ const IntItemBook=(props)=>{
         </React.Fragment> 
         }):null
 
-    const showR=(id)=>{
+    const showR=(id)=>{        
        let item=allReview.find(el=>el.id===id)
       navigate('/showReview/'+item.id)
     }

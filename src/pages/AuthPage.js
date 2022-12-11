@@ -13,7 +13,7 @@ const IntAuthPage=(props)=>{
     const intl=useIntl();
 
     const [form, setForm]=useState({email:'', password:''});
-    const [formReg, setFormReg]=useState({nameReg:'', emailReg:'', passwordReg:''});
+    const [formReg, setFormReg]=useState({name:'', email:'', password:''});
     const [show, setShow] = useState(false);
     const [modalInfo, setModal]=useState('');
     const handleClose = () => setShow(false);
@@ -49,12 +49,22 @@ const IntAuthPage=(props)=>{
           }
           setForm({email:'', password:''}); 
         }else{
-
+           let response=await fetch('http://localhost:5000/api/user/registration',{method:'POST',
+            headers:{
+             'Accept': 'application/json',
+             'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(formReg)})
+            data=await response.json(); 
+            setModal(data.message);
+            setShow(true)
+            data.token?navigate('/login'):navigate('/registration');
+            setFormReg({name:'', email:'', password:''}) 
         }
         
       }catch(e){
         setForm({email:'', password:''})
-        setFormReg({nameReg:'', emailReg:'', passwordReg:''})  
+        setFormReg({name:'', email:'', password:''})  
         setModal(e.response.data.message)
         setShow(true); 
       }
@@ -75,9 +85,9 @@ const IntAuthPage=(props)=>{
               </div>              
             </Form>:
             <Form className="d-flex flex-column">
-              <Form.Control className="mt-3" placeholder={intl.formatMessage({id:'enterName'})} value={formReg.nameReg} name='nameReg' onChange={changeReg}/>
-            <Form.Control className="mt-3" type="email" placeholder={intl.formatMessage({id:'enterEmail'})} value={formReg.emailReg} name='emailReg' onChange={changeReg}/>
-            <Form.Control className="mt-3" type='password' placeholder={intl.formatMessage({id:'enterPass'})} value={formReg.passwordReg} name='passwordReg' onChange={changeReg}/>
+              <Form.Control className="mt-3" placeholder={intl.formatMessage({id:'enterName'})} value={formReg.name} name='name' onChange={changeReg}/>
+            <Form.Control className="mt-3" type="email" placeholder={intl.formatMessage({id:'enterEmail'})} value={formReg.email} name='email' onChange={changeReg}/>
+            <Form.Control className="mt-3" type='password' placeholder={intl.formatMessage({id:'enterPass'})} value={formReg.password} name='password' onChange={changeReg}/>
             <div className=" d-flex  justify-content-between mt-3 pl-3 pr-3">
               <div ><FormattedMessage id='haveAcc'/>  <NavLink to='/login'><FormattedMessage id='signIn'/></NavLink></div>
               <Button  variant="outline-dark" className='myBtn' onClick={()=>sendInfoToServer()}><FormattedMessage id='signIn'/></Button>

@@ -1,8 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import {useParams} from 'react-router-dom';
-import {Form, Button, Spinner} from 'react-bootstrap';
+import {Form, Button, Spinner, Modal} from 'react-bootstrap';
+import 'animate.css';
+import {useReactToPrint} from 'react-to-print';
+
 
 const IntShowReview=(props)=>{
 
@@ -12,6 +15,12 @@ const IntShowReview=(props)=>{
     const [newComment, setNewComment]=useState('');
     const [isLoad, setLoad]=useState(false);
     const [oneReview, setOneReview]=useState([]);
+    const [show, setShow] = useState(false);
+    const [modalInfo, setModal]=useState('');
+    const handleClose = () => setShow(false);
+    const [allComments, setAllComments]=useState([]);
+    const [isLoadComment, setLoadComment]=useState(false);
+    const template=useRef();
 
     useEffect(()=>{
         fetch(`http://localhost:5000/api/review/onereview?id=${idReview}`)
@@ -21,8 +30,10 @@ const IntShowReview=(props)=>{
         // eslint-disable-next-line
     },[idReview]); 
     
+    let nameReviewNow;
     let review=isLoad?oneReview.map(el=>{
-     return <div key={el.id} className='showRev'>
+        nameReviewNow=el.title;
+     return <div key={el.id} className='showRev' ref={template}>
         <div style={{marginRight:'5%'}}>
                 <img src={el.namepict} alt={el.name} className='pict'/>
             </div>
@@ -39,23 +50,85 @@ const IntShowReview=(props)=>{
       </div>
     }):null;
     
+
+    const sendComment=async()=>{
+        let sendInfo={
+            namereview:nameReviewNow,
+            useremail:props.useremail,
+            text:newComment
+        }
+        const response=await fetch('http://localhost:5000/api/review/comment',{
+            method:'POST',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(sendInfo)
+          })
+        const data=await response.json();
+        setModal(data.message);
+        setShow(true);
+        setNewComment('');
+    }
+
+      useEffect(() => {
+        const id = setInterval(() => {
+          fetch('http://localhost:5000/api/review/getcomments')
+          .then(response=>response.json())
+          .then(data=>setAllComments(data), setLoadComment(true))
+          .catch(err=>console.log(err))       
+        }, 3000);
+    
+        return () => {
+          clearInterval(id);
+        };
+        // eslint-disable-next-line
+      }, []);   
+
+      let comments=allComments.length===0?<p>Нет комментариев</p>:
+        allComments.map(el=>{
+            return el.namereview===nameReviewNow?
+                (<div key={el.id} className='oneComment animate__animated animate__backInLeft'>
+                <p><i className="bi bi-person"></i> {el.nameuser}</p>
+                <p>{el.text}</p>
+                <p><i className="bi bi-clock"></i> {el.date}</p>
+            </div>):null; 
+        });
+
+        const handlePrint=useReactToPrint({
+            content:()=>template.current,
+            documentTitle:'review',
+        })
+
+    
     return(
         <div>
            {!isLoad?<Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>:
     <React.Fragment>
+        <Button className='myBtn newComBut' onClick={handlePrint}
+              style={{marginTop:'3%', width:'auto', height:'auto'}} size='sm'>
+                <i className="bi bi-download"></i> | <i className="bi bi-printer"></i>
+              </Button>
           {review}
-        <div className='comment'>
-            <div>comment</div>
+        {isLoadComment&&<div className='comment'>
+            <div>{comments}</div>
             {props.isLogin&&<div className='newComment'>
             <Form.Group className="mb-3 textar" controlId="exampleForm.ControlInput1">
-                <Form.Label className="mb-3 "><FormattedMessage id='comment'/></Form.Label>
+                <Form.Label className="mb-3 labelForComment"><FormattedMessage id='comment'/></Form.Label>
                 <Form.Control as="textarea"  value={newComment} onChange={(event)=>setNewComment(event.target.value)}/>
             </Form.Group>
-            <Button className='myBtn newComBut' size='sm' ><FormattedMessage id='send' /></Button>
+            <Button className='myBtn newComBut' size='sm' onClick={sendComment}><FormattedMessage id='send' /></Button>
             </div>}
-        </div>
+        </div>}
         </React.Fragment>
     } 
+
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Body>{modalInfo}</Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary"  onClick={handleClose}>Close</Button>
+                </Modal.Footer>
+            </Modal>
         </div>
         
         
@@ -65,7 +138,8 @@ const IntShowReview=(props)=>{
 
 const mapStateToProps=(state)=>{
     return {
-        isLogin:state.info.isLogin        
+        isLogin:state.info.isLogin,
+        useremail: state.info.userEmail,      
     }
 }
  
