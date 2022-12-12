@@ -42,10 +42,8 @@ const IntAuthPage=(props)=>{
             setModal(<FormattedMessage id='blocked'/>);
             setShow(true);
           }else{
-            props.dispatch(loginUser('yes', data.token));
+            props.dispatch(loginUser(true, data.email, data.token));
             navigate('/mypage')
-            setModal(<FormattedMessage id='blocked'/>);
-            setShow(true);
           }
           setForm({email:'', password:''}); 
         }else{

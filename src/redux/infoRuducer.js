@@ -1,21 +1,16 @@
 import { LOCALES } from "../i18n/locales";
 import { change_language, load_movies, load_books, load_games, load_series,
-    isLogin_user, add_name_review } from "./explainForReducer";
+    isLogin_user, add_name_review} from "./explainForReducer";
 import decoded from 'jwt-decode';
-
-let isExist=localStorage.getItem('token')===''||localStorage.getItem('token')==='null' ;
-let localSt=localStorage.getItem('token');
-let emailUs=isExist?'':decoded(localSt);
-let log=localStorage.getItem('isLogin')==='yes';
-
+let tokeninStorage=sessionStorage.getItem('token');
 const initialState={
     locale:LOCALES.RUSSIAN,
     movies:[],
     books:[],
     games:[],
     series:[],
-    isLogin:log,
-    userEmail:emailUs.email,
+    isLogin:tokeninStorage!==null?true:false,
+    userEmail:tokeninStorage!==null?decoded(tokeninStorage).email:'',
     nameReview:'',
     alltags:['funny', 'good', 'книги', 'badly', 'фильмы'],
  }
@@ -50,15 +45,9 @@ const initialState={
         }
         case isLogin_user:{
             let newState={...state};
-            if(action.user===''){
-                localStorage.setItem('token', null);
-            }else{
-               localStorage.setItem('token', action.user); 
-               let decod=decoded(action.user)
-               newState.userEmail=decod.email;
-            }
-            localStorage.setItem('isLogin',action.login);
-            newState.isLogin=localStorage.getItem('isLogin')==='yes';
+            newState.isLogin=action.login;
+            sessionStorage.setItem('token',action.tokenUser)
+            newState.userEmail=action.user;
             return newState;
         }
         case add_name_review:{

@@ -6,6 +6,7 @@ import {useNavigate } from 'react-router-dom';
 import Reviews from '../components/Reviews';
 
 
+
 const IntMyPage=(props)=>{
 
     const [isLoad, setLoad]=useState(false);
@@ -13,15 +14,28 @@ const IntMyPage=(props)=>{
     const [allReview, setAllReview]=useState([]);
     const intl=useIntl();
     const navigate=useNavigate();
-
-
+    const [isToken, setToken]=useState(false);
+    
     useEffect(()=>{
-        fetch('http://localhost:5000/api/review/userreview?useremail='+props.email)
+      fetch('http://localhost:5000/api/user/auth', {
+        headers:{
+          'Content-type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+        }
+      })
+      .then(response=>response.json())
+      .then(data=>{data.token?setToken(true):setToken(false)})
+      .catch(err=>console.log(err))
+      // eslint-disable-next-line
+  },[]) 
+
+      useEffect(()=>{
+        if(isToken){fetch('http://localhost:5000/api/review/userreview?useremail='+props.email)
         .then(response=>response.json())
         .then(data=>{setLoad(true); setAllReview(data)})
-        .catch(err=>console.log(err))
+        .catch(err=>console.log(err))}
         // eslint-disable-next-line
-    },[]) 
+    },[isToken])  
 
     const goToNewReview=()=>{
         navigate('/newreview')

@@ -11,7 +11,7 @@ import {useTheme} from '../components/hooks/useTheme'
 
 const IntPageLinks=(props)=>{
 
-  const navigate=useNavigate();
+  const navigate=useNavigate(); 
    
     const locale=props.locale;
 
@@ -30,6 +30,7 @@ const IntPageLinks=(props)=>{
     const redirectTo=()=>{
       if(props.isLogin){
         props.dispatch(loginUser(false, ''));
+        sessionStorage.removeItem('token')
         navigate('/');        
       }else{
         navigate('/login')
@@ -40,8 +41,7 @@ const IntPageLinks=(props)=>{
       navigate('/mypage')
     }
 
-    return (
-        <IntlProvider  messages={messages[locale]}
+    return (<IntlProvider  messages={messages[locale]}
         locale={locale}
         defaultLocale={LOCALES.RUSSIAN}>
             <Navbar bg="dark" variant="dark">
@@ -53,7 +53,7 @@ const IntPageLinks=(props)=>{
             <NavLink to={'/movies/first'} className="nav-link"><FormattedMessage id='movies'/></NavLink>
             <NavLink to={'/series/first'} className="nav-link"><FormattedMessage id='series'/></NavLink>
             <NavLink to={'/games/first'} className="nav-link"><FormattedMessage id='games'/></NavLink>
-            {props.isLogin?<Button className='myBtn' onClick={()=>goToProf()}><i className="bi bi-person-circle myProf"></i></Button>:null}
+            <Button className='myBtn' onClick={()=>goToProf()}><i className="bi bi-person-circle myProf"></i></Button>
             <Button className='myBtn' onClick={()=>redirectTo()}>{!props.isLogin?<i className="bi bi-box-arrow-in-right myProf"></i>:<i className="bi bi-box-arrow-left myProf"></i>}</Button>           
             </Nav>           
         </Container>       

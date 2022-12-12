@@ -14,15 +14,16 @@ function App() {
   });
   let store=createStore(combineReducer);
 
+  
 
   return (
-      <BrowserRouter>
+    <BrowserRouter>
     <Provider store={store}>    
       <PageLinks />
      <PageRouter />  
      
     </Provider>    
-    </BrowserRouter>      
+    </BrowserRouter>   
   );
 }
 

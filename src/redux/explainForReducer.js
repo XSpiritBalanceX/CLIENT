@@ -41,11 +41,12 @@ const loadSeries=function(dataSeries){
    }
 }
 
-const loginUser=function(bool, userEmail){
+const loginUser=function(bool, userEmail, token){
    return{
       type:isLogin_user,
       login:bool,
-      user:userEmail
+      user:userEmail,
+      tokenUser:token
    }
 }
 
@@ -61,11 +62,11 @@ const addNameReview=function(name){
 
 
 
-
 export {change_language, changeLanguage,
    load_movies, loadMovies,
    load_books, loadBooks,
    load_games, loadGames,
    load_series, loadSeries,
    isLogin_user, loginUser,
-   add_name_review, addNameReview}
+   add_name_review, addNameReview, 
+   }
