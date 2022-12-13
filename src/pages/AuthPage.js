@@ -72,6 +72,10 @@ const IntAuthPage=(props)=>{
       window.open('http://localhost:5000/auth/google', '_self')
     }
 
+    const githubAuth=()=>{
+      window.open('http://localhost:5000/auth/github', '_self')
+    }
+
     return(
         <div>
             <Container className="d-flex justify-content-center align-items-center" style={{height:window.innerHeight-54}}>          
@@ -80,7 +84,7 @@ const IntAuthPage=(props)=>{
             {isLogin?<Form className="d-flex flex-column">  
             <div className='buttForAut'>
               <Button variant="danger" style={{marginRight:'10px'}} onClick={googleAuth}><i className="bi bi-google"></i> Google</Button>
-              <Button variant="dark"  onClick={googleAuth}><i className="bi bi-github"></i> Github</Button>
+              <Button variant="dark"  onClick={githubAuth}><i className="bi bi-github"></i> Github</Button>
             </div>  
               <Form.Control type="email" className="mt-3" placeholder={intl.formatMessage({id:'enterEmail'})} value={form.email} name='email' onChange={changeLogin}/>
               <Form.Control type='password' className="mt-3" placeholder={intl.formatMessage({id:'enterPass'})} name='password' value={form.password} onChange={changeLogin}/>
