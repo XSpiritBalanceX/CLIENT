@@ -72,8 +72,14 @@ const IntAuthPage=(props)=>{
       window.open('http://localhost:5000/auth/google', '_self')
     }
 
+    const facebookAuth=()=>{
+      window.open('http://localhost:5000/auth/facebook', '_self')
+    }
     const githubAuth=()=>{
       window.open('http://localhost:5000/auth/github', '_self')
+    }
+    const discordAuth=()=>{
+      window.open('http://localhost:5000/auth/discord', '_self')
     }
 
     return(
@@ -84,7 +90,9 @@ const IntAuthPage=(props)=>{
             {isLogin?<Form className="d-flex flex-column">  
             <div className='buttForAut'>
               <Button variant="danger" style={{marginRight:'10px'}} onClick={googleAuth}><i className="bi bi-google"></i> Google</Button>
-              <Button variant="dark"  onClick={githubAuth}><i className="bi bi-github"></i> Github</Button>
+              <Button variant="primary" style={{marginRight:'10px'}} onClick={facebookAuth}><i className="bi bi-facebook"></i> Facebook</Button>
+              <Button variant="dark" style={{marginRight:'10px'}} onClick={githubAuth}><i className="bi bi-github"></i> Github</Button>
+              <Button variant="dark"  onClick={discordAuth}><i className="bi bi-discord"></i> Discord</Button>
             </div>  
               <Form.Control type="email" className="mt-3" placeholder={intl.formatMessage({id:'enterEmail'})} value={form.email} name='email' onChange={changeLogin}/>
               <Form.Control type='password' className="mt-3" placeholder={intl.formatMessage({id:'enterPass'})} name='password' value={form.password} onChange={changeLogin}/>
