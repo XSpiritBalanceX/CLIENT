@@ -207,6 +207,12 @@ body{
 .labelForComment{
     color:var(--main-text-color);
 }
+.myPerson{
+    color:var(--main-text-color);
+}
+.buttForAut{
+    margin:2% auto 0 auto;
+}
 
 
 

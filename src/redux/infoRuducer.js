@@ -11,6 +11,7 @@ const initialState={
     series:[],
     isLogin:tokeninStorage!==null?true:false,
     userEmail:tokeninStorage!==null?decoded(tokeninStorage).email:'',
+    nameUser:tokeninStorage!==null?decoded(tokeninStorage).name:'',
     nameReview:'',
     alltags:['funny', 'good', 'книги', 'badly', 'фильмы'],
  }
@@ -48,6 +49,7 @@ const initialState={
             newState.isLogin=action.login;
             sessionStorage.setItem('token',action.tokenUser)
             newState.userEmail=action.user;
+            newState.nameUser=action.nameUser;
             return newState;
         }
         case add_name_review:{

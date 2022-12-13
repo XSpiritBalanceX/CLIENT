@@ -29,6 +29,8 @@ const IntMyPage=(props)=>{
       // eslint-disable-next-line
   },[]) 
 
+  
+
       useEffect(()=>{
         if(isToken){fetch('http://localhost:5000/api/review/userreview?useremail='+props.email)
         .then(response=>response.json())
@@ -68,7 +70,8 @@ const IntMyPage=(props)=>{
         <div className='myPageContainer'>
             {isLoad? 
             <div>
-                <div className='contanForControl'>
+              <p className='myPerson'><i className="bi bi-person"></i> {props.name}</p>
+                <div className='contanForControl'>                  
                  <Button className='myBtn' size='sm'><FormattedMessage id='sortRev'/></Button>
                 <Form.Control type="text" className="mt-1"  style={{margin:'0 2% 0 2%'}}
                   placeholder={intl.formatMessage({id:'findRev'})}  
@@ -99,7 +102,8 @@ const IntMyPage=(props)=>{
 const mapStateToProps=(state)=>{
     return {
         locale:state.info.locale,
-        email:state.info.userEmail,        
+        email:state.info.userEmail, 
+        name:state.info.nameUser       
     }
  }
  

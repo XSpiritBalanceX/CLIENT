@@ -42,7 +42,7 @@ const IntAuthPage=(props)=>{
             setModal(<FormattedMessage id='blocked'/>);
             setShow(true);
           }else{
-            props.dispatch(loginUser(true, data.email, data.token));
+            props.dispatch(loginUser(true, data.email, data.token, data.name));
             navigate('/mypage')
           }
           setForm({email:'', password:''}); 
@@ -68,13 +68,20 @@ const IntAuthPage=(props)=>{
       }
     }
 
+    const googleAuth=()=>{
+      window.open('http://localhost:5000/auth/google', '_self')
+    }
 
     return(
         <div>
             <Container className="d-flex justify-content-center align-items-center" style={{height:window.innerHeight-54}}>          
           <Card style={{width:600, border:'2px solid'}} className='p-5 contMain'>
             <h2 className="m-auto">{isLogin?<FormattedMessage id='auth'/>:<FormattedMessage id='registr'/>}</h2>
-            {isLogin?<Form className="d-flex flex-column">
+            {isLogin?<Form className="d-flex flex-column">  
+            <div className='buttForAut'>
+              <Button variant="danger" style={{marginRight:'10px'}} onClick={googleAuth}><i className="bi bi-google"></i> Google</Button>
+              <Button variant="dark"  onClick={googleAuth}><i className="bi bi-github"></i> Github</Button>
+            </div>  
               <Form.Control type="email" className="mt-3" placeholder={intl.formatMessage({id:'enterEmail'})} value={form.email} name='email' onChange={changeLogin}/>
               <Form.Control type='password' className="mt-3" placeholder={intl.formatMessage({id:'enterPass'})} name='password' value={form.password} onChange={changeLogin}/>
               <div className=" d-flex  justify-content-between mt-3 pl-3 pr-3">

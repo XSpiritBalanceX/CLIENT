@@ -41,12 +41,13 @@ const loadSeries=function(dataSeries){
    }
 }
 
-const loginUser=function(bool, userEmail, token){
+const loginUser=function(bool, userEmail, token, name){
    return{
       type:isLogin_user,
       login:bool,
       user:userEmail,
-      tokenUser:token
+      tokenUser:token,
+      nameUser:name
    }
 }
 
