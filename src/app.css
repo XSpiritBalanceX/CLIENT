@@ -213,7 +213,10 @@ body{
 .buttForAut{
     margin:2% auto 0 auto;
 }
-
+.starRating{
+    text-align: center;
+    margin-bottom: 2%;
+}
 
 
 @media all and (max-width: 60em){

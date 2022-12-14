@@ -5,6 +5,7 @@ import {useParams} from 'react-router-dom';
 import {Form, Button, Spinner, Modal} from 'react-bootstrap';
 import 'animate.css';
 import {useReactToPrint} from 'react-to-print';
+import {Rating} from 'react-simple-star-rating';
 
 
 const IntShowReview=(props)=>{
@@ -21,6 +22,7 @@ const IntShowReview=(props)=>{
     const [allComments, setAllComments]=useState([]);
     const [isLoadComment, setLoadComment]=useState(false);
     const template=useRef();
+    const [star, setStar]=useState(0)
 
     useEffect(()=>{
         fetch(`http://localhost:5000/api/review/onereview?id=${idReview}`)
@@ -31,13 +33,16 @@ const IntShowReview=(props)=>{
     },[idReview]); 
     
     let nameReviewNow;
+    let idReviewNow;
     let review=isLoad?oneReview.map(el=>{
         nameReviewNow=el.title;
+        idReviewNow=el.id;
      return <div key={el.id} className='showRev' ref={template}>
         <div style={{marginRight:'5%'}}>
                 <img src={el.namepict} alt={el.name} className='pict'/>
             </div>
             <div>
+                <p><FormattedMessage id='ratReview'/>{el.ratreview} <i className="bi bi-star-fill"></i></p>
                 <h3>{el.title}</h3>
                 <h5>{el.name}</h5>
                 <p><FormattedMessage id='authRev'/>: {el.nameuser}</p>
@@ -100,7 +105,24 @@ const IntShowReview=(props)=>{
             documentTitle:'review',
         })
 
-    
+        const handleRating=async(rate)=>{
+            let newRat={
+                [props.useremail]:rate
+            }
+            setStar(rate)
+            let response=await fetch('http://localhost:5000/api/review/setrating',{
+                method:'POST',
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({title:nameReviewNow, ratreview:newRat})
+            });
+            let data=await response.json();
+            console.log(data)
+        }
+
+        
     return(
         <div>
            {!isLoad?<Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>:
@@ -110,6 +132,12 @@ const IntShowReview=(props)=>{
                 <i className="bi bi-download"></i> | <i className="bi bi-printer"></i>
               </Button>
           {review}
+          {props.isLogin&&<div className='starRating'>
+            <p><FormattedMessage id='ratUser' /></p>
+            <p>
+             <Rating initialValue={star} onClick={handleRating}/>
+            </p>
+          </div>}
         {isLoadComment&&<div className='comment'>
             <div>{comments}</div>
             {props.isLogin&&<div className='newComment'>

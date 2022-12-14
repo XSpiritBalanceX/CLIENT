@@ -62,7 +62,9 @@ export const messages={
         messForEmpty:'No one has written a review yet.',
         revi:'User Reviews',
         authRev:'Review Author',
-        comment:'Leave your comment here'
+        comment:'Leave your comment here',
+        ratUser:'Rate this review',
+        ratReview:'Review rating: '
     },
     [LOCALES.RUSSIAN]:{
         main:'Главная',
@@ -125,6 +127,8 @@ export const messages={
         messForEmpty:'Никто еще не написал обзор.',
         revi:'Обзоры пользователей',
         authRev:'Автор обзора',
-        comment:'Оставьте свой комментарий тут'
+        comment:'Оставьте свой комментарий тут',
+        ratUser:'Оцени этот обзор',
+        ratReview:'Рейтинг обзора: '
     }
 }
