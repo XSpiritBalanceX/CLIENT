@@ -33,10 +33,8 @@ const IntShowReview=(props)=>{
     },[idReview]); 
     
     let nameReviewNow;
-    let idReviewNow;
     let review=isLoad?oneReview.map(el=>{
         nameReviewNow=el.title;
-        idReviewNow=el.id;
      return <div key={el.id} className='showRev' ref={template}>
         <div style={{marginRight:'5%'}}>
                 <img src={el.namepict} alt={el.name} className='pict'/>
