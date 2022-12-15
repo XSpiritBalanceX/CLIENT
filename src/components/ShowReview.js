@@ -80,7 +80,7 @@ const IntShowReview=(props)=>{
           .then(response=>response.json())
           .then(data=>setAllComments(data), setLoadComment(true))
           .catch(err=>console.log(err))       
-        }, 3000);
+        }, 4000);
     
         return () => {
           clearInterval(id);
@@ -104,9 +104,6 @@ const IntShowReview=(props)=>{
         })
 
         const handleRating=async(rate)=>{
-            let newRat={
-                [props.useremail]:rate
-            }
             setStar(rate)
             let response=await fetch('http://localhost:5000/api/review/setrating',{
                 method:'POST',
@@ -114,10 +111,15 @@ const IntShowReview=(props)=>{
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body:JSON.stringify({title:nameReviewNow, ratreview:newRat})
+                body:JSON.stringify({useremail:props.useremail, value:rate, namereview:nameReviewNow})
             });
+            if(response.status!==200){
+                setModal('Упс...Попробуй еще раз');
+                setShow(true);
+            }
             let data=await response.json();
-            console.log(data)
+            setModal(data.message);
+            setShow(true);
         }
 
         
