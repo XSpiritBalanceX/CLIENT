@@ -64,7 +64,9 @@ export const messages={
         authRev:'Review Author',
         comment:'Leave your comment here',
         ratUser:'Rate this review',
-        ratReview:'Review rating: '
+        ratReview:'Review rating: ',
+        likeRev:'Did you like this review?',
+        editRevMess:'Review change'
     },
     [LOCALES.RUSSIAN]:{
         main:'Главная',
@@ -129,6 +131,8 @@ export const messages={
         authRev:'Автор обзора',
         comment:'Оставьте свой комментарий тут',
         ratUser:'Оцени этот обзор',
-        ratReview:'Рейтинг обзора: '
+        ratReview:'Рейтинг обзора: ',
+        likeRev:'Тебе понравился этот обзор?',
+        editRevMess:'Изменение обзора'
     }
 }

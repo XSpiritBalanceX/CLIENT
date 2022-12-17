@@ -15,6 +15,7 @@ const IntMyPage=(props)=>{
     const intl=useIntl();
     const navigate=useNavigate();
     const [isToken, setToken]=useState(false);
+    const [allLikes, setAllLikes]=useState([])
     
     useEffect(()=>{
       fetch('http://localhost:5000/api/user/auth', {
@@ -34,7 +35,7 @@ const IntMyPage=(props)=>{
       useEffect(()=>{
         if(isToken){fetch('http://localhost:5000/api/review/userreview?useremail='+props.email)
         .then(response=>response.json())
-        .then(data=>{setLoad(true); setAllReview(data)})
+        .then(data=>{setLoad(true); setAllReview(data.userReview);setAllLikes(data.allLikes)})
         .catch(err=>console.log(err))}
         // eslint-disable-next-line
     },[isToken])  
@@ -46,6 +47,11 @@ const IntMyPage=(props)=>{
     const showR=(id)=>{
       let item=allReview.find(el=>el.id===id)
       navigate('/showReview/'+item.id)
+    }
+
+    const editReview=(id)=>{
+      let item=allReview.find(el=>el.id===id)
+      navigate('/editreview/'+item.id)
     }
 
     let review=isLoad&&allReview.length===0?
@@ -62,15 +68,18 @@ const IntMyPage=(props)=>{
          show={<FormattedMessage id='show' />}
          delete={<FormattedMessage id='delete' />}
          cbShowRev={showR}
+         cbEditReview={editReview}
          />
       });
 
-    
+    let likes=isLoad?allLikes.reduce((acc,el)=> acc+el.like,0):null;
+
     return(
         <div className='myPageContainer'>
             {isLoad? 
             <div>
               <p className='myPerson'><i className="bi bi-person"></i> {props.name}</p>
+              <p><i className="bi bi bi-hand-thumbs-up"></i>{likes}</p>
                 <div className='contanForControl'>                  
                  <Button className='myBtn' size='sm'><FormattedMessage id='sortRev'/></Button>
                 <Form.Control type="text" className="mt-1"  style={{margin:'0 2% 0 2%'}}

@@ -17,6 +17,7 @@ import ItemSeries from '../components/items/ItemSeries';
 import MyPage from './MyPage';
 import NewReview from '../components/NewReview';
 import ShowReview from '../components/ShowReview';
+import EditReview from '../components/EditReview';
 
 
 const intPageRouter=(props)=>{
@@ -42,6 +43,7 @@ const intPageRouter=(props)=>{
         <Route path='/showReview/:id' element={<ShowReview />}/>
        {props.isLogin&&<Route path='/mypage' element={<MyPage />}/>}
        {props.isLogin&&<Route path='/newreview' element={<NewReview />}/>}
+       {props.isLogin&&<Route path='/editreview/:id' element={<EditReview />}/>}
         <Route path="*" element={<Navigate to ={'/'}/>}/>
        </Routes>   
         </IntlProvider>

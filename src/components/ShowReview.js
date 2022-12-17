@@ -22,15 +22,19 @@ const IntShowReview=(props)=>{
     const [allComments, setAllComments]=useState([]);
     const [isLoadComment, setLoadComment]=useState(false);
     const template=useRef();
-    const [star, setStar]=useState(0)
+    const [star, setStar]=useState(0);
+    const [averageRating, setAverageRating]=useState(0);
+    const [like, setLike]=useState(false);
 
     useEffect(()=>{
         fetch(`http://localhost:5000/api/review/onereview?id=${idReview}`)
         .then(response=>response.json())
-        .then(data=>{setOneReview(data); setLoad(true); })
+        .then(data=>{setOneReview(data.oneReview) ; setLoad(true);setAverageRating(data.getRating) })
         .catch(err=>console.log(err))
         // eslint-disable-next-line
     },[idReview]); 
+
+    let average=averageRating!==0?averageRating.reduce((acc,el)=> acc+el.value,0):0;
     
     let nameReviewNow;
     let review=isLoad?oneReview.map(el=>{
@@ -40,7 +44,7 @@ const IntShowReview=(props)=>{
                 <img src={el.namepict} alt={el.name} className='pict'/>
             </div>
             <div>
-                <p><FormattedMessage id='ratReview'/>{el.ratreview} <i className="bi bi-star-fill"></i></p>
+              <p><FormattedMessage id='ratReview'/>{average/averageRating.length} <i className="bi bi-star-fill"></i></p>
                 <h3>{el.title}</h3>
                 <h5>{el.name}</h5>
                 <p><FormattedMessage id='authRev'/>: {el.nameuser}</p>
@@ -81,7 +85,6 @@ const IntShowReview=(props)=>{
           .then(data=>setAllComments(data), setLoadComment(true))
           .catch(err=>console.log(err))       
         }, 4000);
-    
         return () => {
           clearInterval(id);
         };
@@ -122,7 +125,25 @@ const IntShowReview=(props)=>{
             setShow(true);
         }
 
-        
+        const clickLike=async()=>{
+            setLike(!like);
+            let response=await fetch('http://localhost:5000/api/review/setrating',{
+                method:'POST',
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({useremail:props.useremail, like:!like, namereview:nameReviewNow})
+            });
+            if(response.status!==200){
+                setModal('Упс...Попробуй еще раз');
+                setShow(true);
+            }
+            let data=await response.json();
+            setModal(data.message);
+            setShow(true);
+        }
+ 
     return(
         <div>
            {!isLoad?<Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>:
@@ -136,6 +157,13 @@ const IntShowReview=(props)=>{
             <p><FormattedMessage id='ratUser' /></p>
             <p>
              <Rating initialValue={star} onClick={handleRating}/>
+            </p>
+            <p>
+                <FormattedMessage id='likeRev' />
+                <Button className={like?'myBtn animate__animated animate__tada likeBtn':'myBtn '} style={{marginLeft:'1%'}} onClick={clickLike}>
+                <i className={like?"bi bi-hand-thumbs-up-fill likeHand":"bi bi-hand-thumbs-up"}></i>
+              </Button>
+                
             </p>
           </div>}
         {isLoadComment&&<div className='comment'>
