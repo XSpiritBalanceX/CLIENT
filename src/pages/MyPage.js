@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Button,Form,Table,Spinner  } from 'react-bootstrap';
+import {Button,Form,Table,Spinner, Modal, Dropdown } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {useNavigate } from 'react-router-dom';
 import Reviews from '../components/Reviews';
@@ -12,10 +12,14 @@ const IntMyPage=(props)=>{
     const [isLoad, setLoad]=useState(false);
     const [filter, setFilter]=useState('');
     const [allReview, setAllReview]=useState([]);
+    const [addiDataReview, setAddiData]=useState([]);
     const intl=useIntl();
     const navigate=useNavigate();
     const [isToken, setToken]=useState(false);
-    const [allLikes, setAllLikes]=useState([])
+    const [allLikes, setAllLikes]=useState([]);
+    const [show, setShow] = useState(false);
+    const [modalInfo, setModal]=useState('');
+    const handleClose = () => setShow(false);
     
     useEffect(()=>{
       fetch('http://localhost:5000/api/user/auth', {
@@ -35,7 +39,7 @@ const IntMyPage=(props)=>{
       useEffect(()=>{
         if(isToken){fetch('http://localhost:5000/api/review/userreview?useremail='+props.email)
         .then(response=>response.json())
-        .then(data=>{setLoad(true); setAllReview(data.userReview);setAllLikes(data.allLikes)})
+        .then(data=>{setLoad(true); setAllReview(data.userReview);setAddiData(data.userReview);setAllLikes(data.allLikes)})
         .catch(err=>console.log(err))}
         // eslint-disable-next-line
     },[isToken])  
@@ -54,6 +58,36 @@ const IntMyPage=(props)=>{
       navigate('/editreview/'+item.id)
     }
 
+    const deleteReview=async(id, title)=>{
+      let newReview=allReview.filter(el=>el.id!==id)
+      setAllReview(newReview)
+       let response=await fetch('http://localhost:5000/api/review/delete', {
+        method:'PUT',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body:JSON.stringify({id, title})
+      })
+      let data=await response.json();
+      setModal(data.message)
+      setShow(true);       
+    }
+
+    useEffect(()=>{
+      let newReview;
+      if(!filter){
+        newReview=addiDataReview.slice()
+      }else{
+        newReview=[]
+        allReview.forEach(el=>{
+          if(el.title.toLowerCase().includes(filter.toLowerCase())){
+            newReview.push(el)
+          } })
+      }
+      setAllReview(newReview)
+    },[filter]);
+
     let review=isLoad&&allReview.length===0?
        <tr>
         <td colSpan={6} style={{textAlign:'center'}}><FormattedMessage id='emptyTable' /></td>
@@ -69,22 +103,45 @@ const IntMyPage=(props)=>{
          delete={<FormattedMessage id='delete' />}
          cbShowRev={showR}
          cbEditReview={editReview}
+         cbDeleteReview={deleteReview}
          />
       });
-
+console.log(allReview.sort((a, b) => a.title > b.title ? 1 : -1))
     let likes=isLoad?allLikes.reduce((acc,el)=> acc+el.like,0):null;
 
+    const test=(event)=>{
+      console.log(event.target.name)
+    }
     return(
         <div className='myPageContainer'>
             {isLoad? 
             <div>
               <p className='myPerson'><i className="bi bi-person"></i> {props.name}</p>
               <p><i className="bi bi bi-hand-thumbs-up"></i>{likes}</p>
-                <div className='contanForControl'>                  
-                 <Button className='myBtn' size='sm'><FormattedMessage id='sortRev'/></Button>
+                <div className='contanForControl'>  
+                <Dropdown>
+                  <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
+                  <FormattedMessage id='sortRev'/>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu variant="dark">
+                    <Dropdown.Item name='byTitle'>
+                      <FormattedMessage id='byName'/>
+                    </Dropdown.Item>
+                    <Dropdown.Item name='byDate' onClick={(event)=>test(event)}>
+                      <FormattedMessage id='byDate'/>
+                    </Dropdown.Item>
+                    <Dropdown.Item name='byTitle'>
+                     <FormattedMessage id='byTitle'/>
+                    </Dropdown.Item>
+                    <Dropdown.Divider />
+                    <Dropdown.Item name='returnRev'>
+                     <FormattedMessage id='returnRev'/>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>                
                 <Form.Control type="text" className="mt-1"  style={{margin:'0 2% 0 2%'}}
                   placeholder={intl.formatMessage({id:'findRev'})}  
-                  value={filter} onChange={(event)=>setFilter(event.target.value)} />  
+                  value={filter} onChange={(event)=>{setFilter(event.target.value )}} />  
                   <Button className='myBtn' size='sm' 
                     onClick={()=>goToNewReview()}><FormattedMessage id='newRev' /></Button> 
                 </div>                
@@ -103,6 +160,13 @@ const IntMyPage=(props)=>{
        {review}       
       </tbody>
     </Table>
+
+            <Modal show={show} onHide={handleClose}>
+              <Modal.Body>{modalInfo}</Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary"  onClick={handleClose}>Close</Button>
+              </Modal.Footer>
+            </Modal>
             </div>:<Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}
         </div>
     )

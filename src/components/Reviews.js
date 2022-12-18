@@ -11,7 +11,7 @@ const Reviews=(props)=>{
         <td >{props.date}</td>
         <td ><Button className='myBtn' size='sm'onClick={()=>props.cbEditReview(props.id)}>{props.edit}</Button></td>
         <td ><Button className='myBtn' size='sm' onClick={()=>props.cbShowRev(props.id)}>{props.show}</Button></td>
-        <td ><Button className='myBtn' size='sm'>{props.delete}</Button></td>
+        <td ><Button className='myBtn' size='sm' onClick={()=>props.cbDeleteReview(props.id, props.nameRev)}>{props.delete}</Button></td>
       </tr>
     )
 }

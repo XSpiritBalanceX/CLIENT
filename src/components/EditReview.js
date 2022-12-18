@@ -23,13 +23,12 @@ const IntEditReview=(props)=>{
       setEditorHtmlValue(content.html);
     };
     const [pic, setPic] = useState('');
-    const [prevTitle, setPrevTitle]=useState('');
 
     useEffect(()=>{
         fetch(`http://localhost:5000/api/review/itemreview?id=${idReview}`)
         .then(response=>response.json())
         .then(data=>{setLoad(true);setInfoReview({title:data.title, name:data.name, rate:data.rate, 
-            groupn:data.groupn, teg:[data.teg], text:data.text, url:data.namepict}); setPrevTitle(data.title)})
+            groupn:data.groupn, teg:[data.teg], text:data.text, url:data.namepict})})
         .catch(err=>console.log(err))
         // eslint-disable-next-line
     },[idReview]); 
@@ -69,26 +68,13 @@ const IntEditReview=(props)=>{
       setShow(true);
     }
 
-    const testFunc=async()=>{
-        let newresponse=await fetch('http://localhost:5000/api/review/changeTitle',{
-        method:'POST',
-        headers:{
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body:JSON.stringify({prevTitle, newTitle:infoReview.title})
-      })
-      let newData=await newresponse.json()
-      console.log(newData)
-    }
-
     let options=props.locale==='en-US'?['Games', 'Movies', "Books", "Series"]:['Игры', 'Фильмы', "Книги", "Сериалы"]
     function createMarkup(text) { return {__html: text}; };
     return(
         <Container className="d-flex justify-content-center align-items-center" style={{height:'auto', margin:'2% auto 2% auto'}}>          
           {isLoad?<Card style={{width:600, border:'2px solid'}} className='p-5 contMain'>
             <h2 className="m-auto"><FormattedMessage id='editRev'/></h2>
-            <Form className="d-flex flex-column" onSubmit={sendEditInfo}>
+            <Form className="d-flex flex-column"  onSubmit={sendEditInfo}>
             <Form.Control type="text" className="mt-3" name='title' onChange={(event)=>changeInfo(event)} 
                 placeholder={intl.formatMessage({id:'revTitle'})} value={infoReview.title} />  
                 <Form.Control type="text" className="mt-3" name='titleWo'  defaultValue={infoReview.name} disabled={true}/>  
@@ -122,7 +108,7 @@ const IntEditReview=(props)=>{
                  <input type={'file'} onChange={handleChange} id='loadPic' className='MyInput'/>
               </div>
               <div className=" d-flex  justify-content-end mt-3 pl-3 pr-3">
-                <Button  variant="outline-dark" className='myBtn' type='submit' onClick={testFunc}><FormattedMessage id='edit'/></Button>
+                <Button  variant="outline-dark" className='myBtn'  type='submit' ><FormattedMessage id='edit'/></Button>
               </div>    
             </Form>
           </Card>:null}

@@ -37,7 +37,7 @@ export const messages={
         editRev:'Edit review',
         showRev:'See review',
         deletRev:'Delete review',
-        sortRev:'Sort by date',
+        sortRev:'Sort by ',
         findRev:'Start typing the name of the review',
         newRev:'New review',
         emptyTable:`Oops... You haven't written any reviews yet`,
@@ -66,7 +66,11 @@ export const messages={
         ratUser:'Rate this review',
         ratReview:'Review rating: ',
         likeRev:'Did you like this review?',
-        editRevMess:'Review change'
+        editRevMess:'Review change',
+        byName:'Name',
+        byDate:'Date',
+        byTitle:'Title',
+        returnRev:'Вернуться'
     },
     [LOCALES.RUSSIAN]:{
         main:'Главная',
@@ -104,7 +108,7 @@ export const messages={
         editRev:'Изменить обзор',
         deletRev:'Удалить обзор',
         showRev:'Посмотреть обзор',
-        sortRev:'Сортировать по дате',
+        sortRev:'Сортировать ',
         findRev:'Начните вводить наименование',
         newRev:'Новый обзор',
         emptyTable:'Упс...Вы еще не написали ни одного обзора',
@@ -133,6 +137,10 @@ export const messages={
         ratUser:'Оцени этот обзор',
         ratReview:'Рейтинг обзора: ',
         likeRev:'Тебе понравился этот обзор?',
-        editRevMess:'Изменение обзора'
+        editRevMess:'Изменение обзора',
+        byName:'Наименованию',
+        byDate:'Дате',
+        byTitle:'Названию',
+        returnRev:'Вернуться'
     }
 }
