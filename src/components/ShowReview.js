@@ -44,7 +44,7 @@ const IntShowReview=(props)=>{
                 <img src={el.namepict} alt={el.name} className='pict'/>
             </div>
             <div>
-              <p><FormattedMessage id='ratReview'/>{averageRating.length===0?0:average/averageRating.length} <i className="bi bi-star-fill"></i></p>
+              <p><FormattedMessage id='ratReview'/>{averageRating.length===0?0:(average/averageRating.length).toFixed(1)} <i className="bi bi-star-fill"></i></p>
                 <h3>{el.title}</h3>
                 <h5>{el.name}</h5>
                 <p><FormattedMessage id='authRev'/>: {el.nameuser}</p>

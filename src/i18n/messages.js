@@ -67,10 +67,10 @@ export const messages={
         ratReview:'Review rating: ',
         likeRev:'Did you like this review?',
         editRevMess:'Review change',
-        byName:'Name',
-        byDate:'Date',
-        byTitle:'Title',
-        returnRev:'Вернуться'
+        byName:'Review name',
+        byDate:'Date of creation',
+        byTitle:'Title of the work',
+        returnRev:'Return'
     },
     [LOCALES.RUSSIAN]:{
         main:'Главная',
@@ -138,9 +138,9 @@ export const messages={
         ratReview:'Рейтинг обзора: ',
         likeRev:'Тебе понравился этот обзор?',
         editRevMess:'Изменение обзора',
-        byName:'Наименованию',
-        byDate:'Дате',
-        byTitle:'Названию',
+        byName:'Наименование обзора',
+        byDate:'Дата создания',
+        byTitle:'Название произведения',
         returnRev:'Вернуться'
     }
 }

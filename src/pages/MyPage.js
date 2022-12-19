@@ -6,7 +6,6 @@ import {useNavigate } from 'react-router-dom';
 import Reviews from '../components/Reviews';
 
 
-
 const IntMyPage=(props)=>{
 
     const [isLoad, setLoad]=useState(false);
@@ -34,13 +33,12 @@ const IntMyPage=(props)=>{
       // eslint-disable-next-line
   },[]) 
 
-  
-
-      useEffect(()=>{
-        if(isToken){fetch('http://localhost:5000/api/review/userreview?useremail='+props.email)
-        .then(response=>response.json())
-        .then(data=>{setLoad(true); setAllReview(data.userReview);setAddiData(data.userReview);setAllLikes(data.allLikes)})
-        .catch(err=>console.log(err))}
+    useEffect(()=>{
+        if(isToken){
+          fetch('http://localhost:5000/api/review/userreview?useremail='+props.email)
+          .then(response=>response.json())
+          .then(data=>{setLoad(true); setAllReview(data.userReview);setAddiData(data.userReview);setAllLikes(data.allLikes)})
+          .catch(err=>console.log(err))}
         // eslint-disable-next-line
     },[isToken])  
 
@@ -79,11 +77,9 @@ const IntMyPage=(props)=>{
       if(!filter){
         newReview=addiDataReview.slice()
       }else{
-        newReview=[]
-        allReview.forEach(el=>{
-          if(el.title.toLowerCase().includes(filter.toLowerCase())){
-            newReview.push(el)
-          } })
+        newReview=addiDataReview.filter(el=>{
+          return el.title.toLowerCase().includes(filter.toLowerCase())
+        })
       }
       setAllReview(newReview)
       // eslint-disable-next-line
@@ -107,12 +103,23 @@ const IntMyPage=(props)=>{
          cbDeleteReview={deleteReview}
          />
       });
-console.log(allReview.sort((a, b) => a.title > b.title ? 1 : -1))
+
     let likes=isLoad?allLikes.reduce((acc,el)=> acc+el.like,0):null;
 
-    const test=(event)=>{
-      console.log(event.target.name)
+    const sortBy=(name)=>{
+      let sortReview;
+      if(name==='byTitle'){
+        sortReview=allReview.slice().sort((a, b) => a.title > b.title ? 1 : -1)
+      }else if(name==='byName'){
+        sortReview=allReview.slice().sort((a, b) => a.name > b.name ? 1 : -1)
+      }else if(name==='returnRev'){
+        sortReview=addiDataReview.slice()
+      }else if(name==='byDate'){
+        sortReview=allReview.slice().sort((a, b) => a > b ? 1 : -1)
+      }
+      setAllReview(sortReview)
     }
+    
     return(
         <div className='myPageContainer'>
             {isLoad? 
@@ -125,24 +132,24 @@ console.log(allReview.sort((a, b) => a.title > b.title ? 1 : -1))
                   <FormattedMessage id='sortRev'/>
                   </Dropdown.Toggle>
                   <Dropdown.Menu variant="dark">
-                    <Dropdown.Item name='byTitle'>
-                      <FormattedMessage id='byName'/>
+                    <Dropdown.Item name='byTitle' onClick={(event)=>sortBy(event.target.name)}>
+                      <FormattedMessage id='byTitle'/>
                     </Dropdown.Item>
-                    <Dropdown.Item name='byDate' onClick={(event)=>test(event)}>
+                    <Dropdown.Item name='byDate' onClick={(event)=>sortBy(event.target.name)}>
                       <FormattedMessage id='byDate'/>
                     </Dropdown.Item>
-                    <Dropdown.Item name='byTitle'>
-                     <FormattedMessage id='byTitle'/>
+                    <Dropdown.Item name='byName' onClick={(event)=>sortBy(event.target.name)}>
+                     <FormattedMessage id='byName'/>
                     </Dropdown.Item>
                     <Dropdown.Divider />
-                    <Dropdown.Item name='returnRev'>
+                    <Dropdown.Item name='returnRev' onClick={(event)=>sortBy(event.target.name)}>
                      <FormattedMessage id='returnRev'/>
                     </Dropdown.Item>
                   </Dropdown.Menu>
-                </Dropdown>                
+                </Dropdown>             
                 <Form.Control type="text" className="mt-1"  style={{margin:'0 2% 0 2%'}}
                   placeholder={intl.formatMessage({id:'findRev'})}  
-                  value={filter} onChange={(event)=>{setFilter(event.target.value )}} />  
+                  value={filter}  onChange={(event)=>{setFilter(event.target.value )}}  />  
                   <Button className='myBtn' size='sm' 
                     onClick={()=>goToNewReview()}><FormattedMessage id='newRev' /></Button> 
                 </div>                
