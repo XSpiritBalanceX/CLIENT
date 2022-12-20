@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Button,Table,Spinner, Modal } from 'react-bootstrap';
+import {Button,Table,Spinner,  } from 'react-bootstrap';
 import {useNavigate } from 'react-router-dom';
 import {connect} from 'react-redux';
 import { FormattedMessage} from 'react-intl';
@@ -10,9 +10,6 @@ import decoded from 'jwt-decode';
 const IntAdminPage=(props)=>{
 
     const [isLoad, setLoad]=useState(false);
-    const [show, setShow] = useState(false);
-    const [modalInfo, setModal]=useState('');
-    const handleClose = () => setShow(false);
     const navigate=useNavigate();
     const [allUsers, setAllUsers]=useState([]);
     const [myEmail, setMyEmail]=useState('');
@@ -119,12 +116,7 @@ const IntAdminPage=(props)=>{
                      {bodyUsers}       
                     </tbody>
                 </Table>
-                <Modal show={show} onHide={handleClose}>
-              <Modal.Body>{modalInfo}</Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary"  onClick={handleClose}>Close</Button>
-              </Modal.Footer>
-            </Modal>
+                
             </div>
             </div>:
             <Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}
