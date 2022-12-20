@@ -42,7 +42,7 @@ const intPageRouter=(props)=>{
         <Route path='/login' element={<AuthPage />}/>
         <Route path='/registration' element={<AuthPage />}/>
         <Route path='/showReview/:id' element={<ShowReview />}/>
-       {props.isLogin&&<Route path='/mypage' element={<MyPage />}/>}
+       {props.isLogin&&<Route path='/mypage/:token' element={<MyPage />}/>}
        {props.isLogin&&<Route path='/newreview' element={<NewReview />}/>}
        {props.isLogin&&<Route path='/editreview/:id' element={<EditReview />}/>}
        {props.isLogin&&<Route path='/administrator' element={<AdminPage />}/>}
