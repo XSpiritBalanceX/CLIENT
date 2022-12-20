@@ -12,13 +12,13 @@ import {useTheme} from '../components/hooks/useTheme'
 const IntPageLinks=(props)=>{
 
   useEffect(()=>{
-    fetch('http://localhost:5000/auth/login/success', {method:'GET',
+    fetch('https://server-production-5ca0.up.railway.app/auth/login/success', {method:'GET',
      credentials:'include',
-     headers:{
+     /* headers:{
       "Accept":"application/json",
       "Content-Type":"application/json",
       "Access-Control-Allow-Credentials":true
-     }})
+     } */})
     .then(response=>response.json())
     .then(data=>props.dispatch(loginUser(true, data.user, data.token, data.name)))
     .catch(err=>console.log(err))
@@ -43,10 +43,9 @@ const IntPageLinks=(props)=>{
 
     const redirectTo=()=>{
       if(props.isLogin){
-        //props.dispatch(loginUser(false, ''));
-        sessionStorage.removeItem('token')
-        window.open('http://localhost:5000/auth/logout', '_self')
-        //navigate('/');        
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('admin');
+        window.open('https://server-production-5ca0.up.railway.app/auth/logout', '_self')       
       }else{
         navigate('/login')
       }
@@ -54,6 +53,10 @@ const IntPageLinks=(props)=>{
 
     const goToProf=()=>{
       navigate('/mypage')
+    }
+
+    const goToAdmin=()=>{
+      navigate('/administrator')
     }
 
     return (<IntlProvider  messages={messages[locale]}
@@ -68,7 +71,8 @@ const IntPageLinks=(props)=>{
             <NavLink to={'/movies/first'} className="nav-link"><FormattedMessage id='movies'/></NavLink>
             <NavLink to={'/series/first'} className="nav-link"><FormattedMessage id='series'/></NavLink>
             <NavLink to={'/games/first'} className="nav-link"><FormattedMessage id='games'/></NavLink>
-            {props.isLogin&&<Button className='myBtn' style={{marginRight:'3px'}} onClick={()=>goToProf()}><i className="bi bi-person-circle myProf"></i></Button>}
+            {props.isLogin&&<Button className='myBtn' style={{marginRight:'3px', fontSize:'13px'}} onClick={()=>goToProf()}><i className="bi bi-person-circle myProf"></i> <FormattedMessage id='prof'/> </Button>}
+            {props.isLogin&&<Button className='myBtn' style={{marginRight:'3px', fontSize:'13px'}} onClick={()=>goToAdmin()}><i className="bi bi-person-fill-gear myProf"></i> <FormattedMessage id='admin'/></Button>}
             <Button className='myBtn' onClick={()=>redirectTo()}>{!props.isLogin?<i className="bi bi-box-arrow-in-right myProf"></i>:<i className="bi bi-box-arrow-left myProf"></i>}</Button>           
             </Nav>           
         </Container>       

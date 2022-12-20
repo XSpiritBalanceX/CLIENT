@@ -29,7 +29,7 @@ const IntAuthPage=(props)=>{
       let data;
       try{
         if(isLogin){
-          let response=await fetch('http://localhost:5000/api/user/login',{method:'POST',
+          let response=await fetch('https://server-production-5ca0.up.railway.app/api/user/login',{method:'POST',
             headers:{
              'Accept': 'application/json',
              'Content-Type': 'application/json'
@@ -47,7 +47,7 @@ const IntAuthPage=(props)=>{
           }
           setForm({email:'', password:''}); 
         }else{
-           let response=await fetch('http://localhost:5000/api/user/registration',{method:'POST',
+           let response=await fetch('https://server-production-5ca0.up.railway.app/api/user/registration',{method:'POST',
             headers:{
              'Accept': 'application/json',
              'Content-Type': 'application/json'
@@ -69,14 +69,14 @@ const IntAuthPage=(props)=>{
     }
 
     const googleAuth=()=>{
-      window.open('http://localhost:5000/auth/google', '_self')
+      window.open('https://server-production-5ca0.up.railway.app/auth/google', '_self')
     }
 
     const facebookAuth=()=>{
-      window.open('http://localhost:5000/auth/facebook', '_self')
+      window.open('https://server-production-5ca0.up.railway.app/auth/facebook', '_self')
     }
     const discordAuth=()=>{
-      window.open('http://localhost:5000/auth/discord', '_self')
+      window.open('https://server-production-5ca0.up.railway.app/auth/discord', '_self')
     }
 
     return(

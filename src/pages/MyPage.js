@@ -21,7 +21,7 @@ const IntMyPage=(props)=>{
     const handleClose = () => setShow(false);
     
     useEffect(()=>{
-      fetch('http://localhost:5000/api/user/auth', {
+      fetch('https://server-production-5ca0.up.railway.app/api/user/auth', {
         headers:{
           'Content-type': 'application/json',
           'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
@@ -35,7 +35,7 @@ const IntMyPage=(props)=>{
 
     useEffect(()=>{
         if(isToken){
-          fetch('http://localhost:5000/api/review/userreview?useremail='+props.email)
+          fetch('https://server-production-5ca0.up.railway.app/api/review/userreview?useremail='+props.email)
           .then(response=>response.json())
           .then(data=>{setLoad(true); setAllReview(data.userReview);setAddiData(data.userReview);setAllLikes(data.allLikes)})
           .catch(err=>console.log(err))}
@@ -59,7 +59,7 @@ const IntMyPage=(props)=>{
     const deleteReview=async(id, title)=>{
       let newReview=allReview.filter(el=>el.id!==id)
       setAllReview(newReview)
-       let response=await fetch('http://localhost:5000/api/review/delete', {
+       let response=await fetch('https://server-production-5ca0.up.railway.app/api/review/delete', {
         method:'PUT',
         headers: {
           'Accept': 'application/json',
@@ -125,7 +125,7 @@ const IntMyPage=(props)=>{
             {isLoad? 
             <div>
               <p className='myPerson'><i className="bi bi-person"></i> {props.name}</p>
-              <p><i className="bi bi bi-hand-thumbs-up"></i>{likes}</p>
+              <p className='myPerson'><i className="bi bi bi-hand-thumbs-up"></i>{likes}</p>
                 <div className='contanForControl'>  
                 <Dropdown>
                   <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
@@ -153,7 +153,7 @@ const IntMyPage=(props)=>{
                   <Button className='myBtn' size='sm' 
                     onClick={()=>goToNewReview()}><FormattedMessage id='newRev' /></Button> 
                 </div>                
-            <Table striped className='myTable'>
+            <Table  className='myTable'>
       <thead>
         <tr>
           <th><FormattedMessage id='nameRev'/></th>

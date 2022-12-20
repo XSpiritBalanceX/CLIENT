@@ -16,7 +16,7 @@ const IntItemSeries=(props)=>{
     const navigate=useNavigate();
 
     useEffect(()=>{
-        fetch(`http://localhost:5000/api/series/getoneseries?lang=${props.locale}&id=${idSeries}`)
+        fetch(`https://server-production-5ca0.up.railway.app/api/series/getoneseries?lang=${props.locale}&id=${idSeries}`)
         .then(response=>response.json())
         .then(data=>{setItem(data); setIsLoadReview(false)})
         .catch(err=>console.log(err))
@@ -56,7 +56,7 @@ const IntItemSeries=(props)=>{
         }
 
         useEffect(()=>{
-            fetch(`http://localhost:5000/api/review/itemreview?name=${nameItem}`)
+            fetch(`https://server-production-5ca0.up.railway.app/api/review/itemreview?name=${nameItem}`)
             .then(response=>response.json())
             .then(data=>{setAllReview(data); setLoad(false)})
             .catch(err=>console.log(err))

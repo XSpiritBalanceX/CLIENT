@@ -14,7 +14,7 @@ const IntMoviesPage=(props)=>{
 
 
     useEffect(()=>{
-        fetch('http://localhost:5000/api/movies/?lang='+props.locale)
+        fetch('https://server-production-5ca0.up.railway.app/api/movies/?lang='+props.locale)
         .then(response=>response.json())
         .then(data=>{setLoad(false); props.dispatch(loadMovies(data))})
         .catch(err=>console.log(err))       

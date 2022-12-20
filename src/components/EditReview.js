@@ -25,7 +25,7 @@ const IntEditReview=(props)=>{
     const [pic, setPic] = useState('');
 
     useEffect(()=>{
-        fetch(`http://localhost:5000/api/review/itemreview?id=${idReview}`)
+        fetch(`https://server-production-5ca0.up.railway.app/api/review/itemreview?id=${idReview}`)
         .then(response=>response.json())
         .then(data=>{setLoad(true);setInfoReview({title:data.title, name:data.name, rate:data.rate, 
             groupn:data.groupn, teg:[data.teg], text:data.text, url:data.namepict})})
@@ -59,7 +59,7 @@ const IntEditReview=(props)=>{
         formData.append("teg", infoReview.teg);
         formData.append("rate", infoReview.rate);
         formData.append("text", editorHtmlValue);
-        let response=await fetch('http://localhost:5000/api/review/editreview',{
+        let response=await fetch('https://server-production-5ca0.up.railway.app/api/review/editreview',{
         method:'POST',
         body:formData
       })

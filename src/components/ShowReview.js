@@ -27,7 +27,7 @@ const IntShowReview=(props)=>{
     const [like, setLike]=useState(false);
 
     useEffect(()=>{
-        fetch(`http://localhost:5000/api/review/onereview?id=${idReview}`)
+        fetch(`https://server-production-5ca0.up.railway.app/api/review/onereview?id=${idReview}`)
         .then(response=>response.json())
         .then(data=>{setOneReview(data.oneReview) ; setLoad(true);setAverageRating(data.getRating) })
         .catch(err=>console.log(err))
@@ -64,7 +64,7 @@ const IntShowReview=(props)=>{
             useremail:props.useremail,
             text:newComment
         }
-        const response=await fetch('http://localhost:5000/api/review/comment',{
+        const response=await fetch('https://server-production-5ca0.up.railway.app/api/review/comment',{
             method:'POST',
             headers:{
                 'Accept': 'application/json',
@@ -80,7 +80,7 @@ const IntShowReview=(props)=>{
 
       useEffect(() => {
         const id = setInterval(() => {
-          fetch('http://localhost:5000/api/review/getcomments')
+          fetch('https://server-production-5ca0.up.railway.app/api/review/getcomments')
           .then(response=>response.json())
           .then(data=>setAllComments(data), setLoadComment(true))
           .catch(err=>console.log(err))       
@@ -108,7 +108,7 @@ const IntShowReview=(props)=>{
 
         const handleRating=async(rate)=>{
             setStar(rate)
-            let response=await fetch('http://localhost:5000/api/review/setrating',{
+            let response=await fetch('https://server-production-5ca0.up.railway.app/api/review/setrating',{
                 method:'POST',
                 headers:{
                     'Accept': 'application/json',
@@ -127,7 +127,7 @@ const IntShowReview=(props)=>{
 
         const clickLike=async()=>{
             setLike(!like);
-            let response=await fetch('http://localhost:5000/api/review/setrating',{
+            let response=await fetch('https://server-production-5ca0.up.railway.app/api/review/setrating',{
                 method:'POST',
                 headers:{
                     'Accept': 'application/json',

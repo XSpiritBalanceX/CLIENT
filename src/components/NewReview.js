@@ -81,7 +81,7 @@ const IntNewReview=(props)=>{
         formData.append("rate", rat);
         formData.append("text", editorHtmlValue);
         formData.append("useremail", props.useremail);
-        let response=await fetch('http://localhost:5000/api/review/postpic',{
+        let response=await fetch('https://server-production-5ca0.up.railway.app/api/review/postpic',{
         method:'POST',
         body:formData
       })

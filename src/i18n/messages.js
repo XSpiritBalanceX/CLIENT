@@ -70,7 +70,17 @@ export const messages={
         byName:'Review name',
         byDate:'Date of creation',
         byTitle:'Title of the work',
-        returnRev:'Return'
+        returnRev:'Return',
+        prof:'Profile',
+        admin:'Administrator',
+        nameUser:'Username',
+        emailUser:'User email',
+        roleUser:'User role',
+        blockUser:'User blocking',
+        yesBlo:'Blocked',
+        noBlo:'Not blocked',
+        users:'Users',
+        switchUser:'Your account'
     },
     [LOCALES.RUSSIAN]:{
         main:'Главная',
@@ -141,6 +151,16 @@ export const messages={
         byName:'Наименование обзора',
         byDate:'Дата создания',
         byTitle:'Название произведения',
-        returnRev:'Вернуться'
+        returnRev:'Вернуться',
+        prof:'Профиль',
+        admin:'Администратор',
+        nameUser:'Имя',
+        emailUser:'Email',
+        roleUser:'Роль',
+        blockUser:'Блокировка',
+        yesBlo:'Заблокирован',
+        noBlo:'Не заблокирован ',
+        users:'Пользователи',
+        switchUser:'Свой аккаунт'
     }
 }

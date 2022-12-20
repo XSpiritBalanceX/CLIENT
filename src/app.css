@@ -225,6 +225,12 @@ body{
 .likeHand{
     color: rgb(66, 65, 65);
 }
+.activUser{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color:var(--main-text-color);
+}
 
 
 @media all and (max-width: 60em){

@@ -13,7 +13,7 @@ const IntSeriesPage=(props)=>{
     const navigate=useNavigate();
 
     useEffect(()=>{
-        fetch('http://localhost:5000/api/series/?lang='+props.locale)
+        fetch('https://server-production-5ca0.up.railway.app/api/series/?lang='+props.locale)
         .then(response=>response.json())
         .then(data=>{setLoad(false); props.dispatch(loadSeries(data))})
         .catch(err=>console.log(err))

@@ -13,7 +13,7 @@ const IntGamePage=(props)=>{
     const navigate=useNavigate();
 
     useEffect(()=>{
-        fetch('http://localhost:5000/api/games/?lang='+props.locale)
+        fetch('https://server-production-5ca0.up.railway.app/api/games/?lang='+props.locale)
         .then(response=>response.json())
         .then(data=>{setLoad(false); props.dispatch(loadGames(data))})
         .catch(err=>console.log(err))

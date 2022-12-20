@@ -17,7 +17,7 @@ const IntItemBook=(props)=>{
 
 
     useEffect(()=>{
-        fetch(`http://localhost:5000/api/books/getonebook?lang=${props.locale}&id=${idBook}`)
+        fetch(`https://server-production-5ca0.up.railway.app/api/books/getonebook?lang=${props.locale}&id=${idBook}`)
         .then(response=>response.json())
         .then(data=>{setItem(data); setIsLoadReview(false)})
         .catch(err=>console.log(err))
@@ -53,7 +53,7 @@ const IntItemBook=(props)=>{
     }
 
     useEffect(()=>{
-        fetch(`http://localhost:5000/api/review/itemreview?name=${nameItem}`)
+        fetch(`https://server-production-5ca0.up.railway.app/api/review/itemreview?name=${nameItem}`)
         .then(response=>response.json())
         .then(data=>{setAllReview(data); setLoad(false); })
         .catch(err=>console.log(err))
