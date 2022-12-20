@@ -14,11 +14,11 @@ const IntPageLinks=(props)=>{
   useEffect(()=>{
     fetch('https://server-production-5ca0.up.railway.app/auth/login/success', {method:'GET',
      credentials:'include',
-     /* headers:{
+     headers:{
       "Accept":"application/json",
       "Content-Type":"application/json",
       "Access-Control-Allow-Credentials":true
-     } */})
+     }})
     .then(response=>response.json())
     .then(data=>props.dispatch(loginUser(true, data.user, data.token, data.name)))
     .catch(err=>console.log(err))
