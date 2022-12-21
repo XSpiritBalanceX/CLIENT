@@ -72,9 +72,6 @@ const IntAuthPage=(props)=>{
       window.open('https://server-production-5ca0.up.railway.app/auth/google', '_self')
     }
 
-    const facebookAuth=()=>{
-      window.open('https://server-production-5ca0.up.railway.app/auth/facebook', '_self')
-    }
     const discordAuth=()=>{
       window.open( 'https://server-production-5ca0.up.railway.app/auth/discord' , '_self')
     }
@@ -87,7 +84,6 @@ const IntAuthPage=(props)=>{
             {isLogin?<Form className="d-flex flex-column">  
             <div className='buttForAut'>
               <Button variant="danger" style={{marginRight:'10px'}} onClick={googleAuth}><i className="bi bi-google"></i> Google</Button>
-              <Button variant="primary" style={{marginRight:'10px'}} onClick={facebookAuth}><i className="bi bi-facebook"></i> Facebook</Button>
               <Button  style={{backgroundColor:'rgb(88,101,242)'}} onClick={discordAuth}><i className="bi bi-discord"></i> Discord</Button>
             </div>  
               <Form.Control type="email" className="mt-3" placeholder={intl.formatMessage({id:'enterEmail'})} value={form.email} name='email' onChange={changeLogin}/>
