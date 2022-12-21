@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Button,  Form, Container, Card,  Modal} from 'react-bootstrap';
+import {Button,  Form, Container, Card,  Modal, Spinner} from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {Typeahead} from 'react-bootstrap-typeahead';
 import Editor from "./editor/Editor";
@@ -13,6 +13,7 @@ const IntNewReview=(props)=>{
     setEditorHtmlValue(content.html);
   };
     let nameRev=props.nameItem===''?'':props.nameItem;
+    const [isLoad, setLoad]=useState(false);
     const [title, setTitle]=useState('');
     const [titleWo, setTitleWo]=useState(nameRev);
     const [group, setGroupn]=useState([]);
@@ -23,6 +24,8 @@ const IntNewReview=(props)=>{
     const handleClose = () => setShow(false);
     const [dragEnter, setDragEnter]=useState(false);
     const [pic, setPic] = useState('');
+    const [allTags, setallTags]=useState([]);
+    const [initialTags, setInitial]=useState([])
 
     const intl=useIntl();
 
@@ -97,9 +100,27 @@ const IntNewReview=(props)=>{
       }          
     }
     
+    useEffect(()=>{
+      fetch('https://server-production-5ca0.up.railway.app/api/review/gettags')
+      .then(response=>response.json())
+      .then(data=>{ setallTags(data);setInitial(data);setLoad(true)})
+      .catch(err=>console.log(err))
+    },[])
 
+    const changeTags=(event)=>{
+      let newAllTags=allTags.slice()
+      newAllTags.push(event)
+      setallTags(newAllTags) 
+    }
+
+    useEffect(()=>{
+      setallTags([...initialTags].concat([...tags]));
+      // eslint-disable-next-line
+    },[tags]) 
+    
     return(
-        <Container className="d-flex justify-content-center align-items-center" style={{height:'auto', margin:'2% auto 2% auto'}}>          
+      <React.Fragment>
+        {isLoad?<Container className="d-flex justify-content-center align-items-center" style={{height:'auto', margin:'2% auto 2% auto'}}>          
           <Card style={{width:600, border:'2px solid'}} className='p-5 contMain'>
             <h2 className="m-auto"><FormattedMessage id='newRev'/></h2>
             <Form className="d-flex flex-column" onSubmit={sendReview}>
@@ -109,7 +130,7 @@ const IntNewReview=(props)=>{
                 placeholder={intl.formatMessage({id:'titleWo'})}  value={titleWo} disabled={props.nameItem===''?false:true}/>
               <Typeahead className="mt-3" 
                  id="basic-typeahead-single"
-                    labelKey="name" 
+                    labelKey="nameGroup" 
                     onChange={(event)=>setGroupn(event)}
                     options={options}
                     placeholder={intl.formatMessage({id:'group'})}
@@ -117,10 +138,11 @@ const IntNewReview=(props)=>{
                 />
                 <Typeahead className="mt-3 myMylti" 
                     id="basic-typeahead-multiple"
-                    labelKey="name"
+                    labelKey="nameTags"
                     multiple 
-                    onChange={(event)=>setTags(event)}
-                    options={props.tags}
+                    onInputChange={(event)=>changeTags(event)}
+                    onChange={(event)=>{setTags(event);}}
+                    options={allTags}
                     placeholder={intl.formatMessage({id:'tags'})}
                     selected={tags}
                 />
@@ -152,8 +174,8 @@ const IntNewReview=(props)=>{
               <Button variant="secondary"  onClick={handleClose}>Close</Button>
             </Modal.Footer>
             </Modal>
-          </Container>
-        
+          </Container>:<Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}
+          </React.Fragment>
     )
         
     

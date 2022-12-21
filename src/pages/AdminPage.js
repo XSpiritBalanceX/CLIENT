@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Button,Table,Spinner,  } from 'react-bootstrap';
+import {Button,Table,Spinner,Modal  } from 'react-bootstrap';
 import {useNavigate } from 'react-router-dom';
 import {connect} from 'react-redux';
 import { FormattedMessage} from 'react-intl';
@@ -13,9 +13,12 @@ const IntAdminPage=(props)=>{
     const navigate=useNavigate();
     const [allUsers, setAllUsers]=useState([]);
     const [myEmail, setMyEmail]=useState('');
+    const [show, setShow] = useState(false);
+    const [modalInfo, setModal]=useState('');
+    const handleClose = () => setShow(false);
 
     const checkRole=async()=>{        
-        const response=await fetch('http://localhost:5000/api/admin/', {
+        const response=await fetch('https://server-production-5ca0.up.railway.app/api/admin/', {
           headers:{
             'Content-type': 'application/json',
             'Authorization': `Bearer ${sessionStorage.getItem('admin')||sessionStorage.getItem('token')}`,
@@ -50,22 +53,39 @@ const IntAdminPage=(props)=>{
             sessionStorage.removeItem('admin')
             window.open('https://server-production-5ca0.up.railway.app/auth/logout', '_self') 
         }
-        let response=await fetch(`http://localhost:5000/api/admin/block?id=${id}&block=${isblock}`)
+        let response=await fetch(`https://server-production-5ca0.up.railway.app/api/admin/block?id=${id}&block=${isblock}`)
         let data=await response.json(); 
         setAllUsers(data)
     }
     const giveAdmin=async(id, role,email)=>{
-        let response=await fetch(`http://localhost:5000/api/admin/giveadmin?id=${id}&newrole=${role}`)
+        let response=await fetch(`https://server-production-5ca0.up.railway.app/admin/giveadmin?id=${id}&newrole=${role}`)
         let data=await response.json(); 
         setAllUsers(data)
         if(email===props.email){
             sessionStorage.removeItem('token')
             sessionStorage.removeItem('admin')
-            window.open('http://localhost:5000/auth/logout', '_self') 
+            window.open('https://server-production-5ca0.up.railway.app/auth/logout', '_self') 
         }
     }
-    const deleteUser=(id)=>{
-        console.log(id, '   deleteUser')
+    const deleteUser=async(id, email)=>{
+        let newDataUsers=allUsers.filter(el=>el.id!==id);
+        setAllUsers(newDataUsers)
+        let response=await fetch('https://server-production-5ca0.up.railway.app/api/admin/delete', {
+            method:'PUT',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body:JSON.stringify({id, email})
+           })
+        let data=await response.json();
+        setModal(data.message)
+        setShow(true); 
+        if(email===props.email){
+            sessionStorage.removeItem('token')
+            sessionStorage.removeItem('admin')
+            window.open('https://server-production-5ca0.up.railway.app/auth/logout', '_self') 
+        } 
     }
 
     const switchToMyAccount=()=>{
@@ -116,7 +136,12 @@ const IntAdminPage=(props)=>{
                      {bodyUsers}       
                     </tbody>
                 </Table>
-                
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Body>{modalInfo}</Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary"  onClick={handleClose}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
             </div>:
             <Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}

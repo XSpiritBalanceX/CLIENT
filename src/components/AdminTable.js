@@ -13,7 +13,7 @@ const AdminTable=(props)=>{
         <td >{props.blocked}</td>
         <td ><Button className='myBtn'  onClick={()=>props.cbBlock(props.id, props.isBlock, props.email)}>{props.isBlock?<i className="bi bi-person-check myProf" name='unblock'></i>:<i className="bi bi-person-dash myProf" name='block'></i>}</Button></td>
         <td ><Button className='myBtn'  onClick={()=>props.cbGiveAdmin(props.id, props.role, props.email)}><i className="bi bi-person-gear myProf"></i></Button></td>
-        <td ><Button className='myBtn'  onClick={()=>props.cbDeleteUser(props.id)}><i className="bi bi-trash myProf"></i></Button></td>
+        <td ><Button className='myBtn'  onClick={()=>props.cbDeleteUser(props.id, props.email)}><i className="bi bi-trash myProf"></i></Button></td>
       </tr>
     )
 }

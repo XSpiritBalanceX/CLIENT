@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {Navbar, Container, Nav, Button, ButtonGroup  } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
@@ -11,23 +11,6 @@ import {useTheme} from '../components/hooks/useTheme';
 
 const IntPageLinks=(props)=>{
 
- useEffect(()=>{
-  
-      /* let email=decoded(params.token).email;
-      let name=decoded(params.token).name;
-      props.dispatch(loginUser(true, email, params.token, name)); */
-    /* fetch('https://server-production-5ca0.up.railway.app/auth/login/success',  {method:'GET',
-     credentials:'include',
-     headers:{
-      "Accept":"application/json",
-      "Content-Type":"application/json",
-      "Access-Control-Allow-Credentials":true
-     }} )
-    .then(response=>response.json())
-    .then(data=>props.dispatch(loginUser(true, data.user, data.token, data.name)))
-    .catch(err=>console.log(err)) */
-    // eslint-disable-next-line
-  },[]) 
 
   const navigate=useNavigate(); 
    
@@ -66,8 +49,8 @@ const IntPageLinks=(props)=>{
     return (<IntlProvider  messages={messages[locale]}
         locale={locale}
         defaultLocale={LOCALES.RUSSIAN}>
-            <Navbar bg="dark" variant="dark">
-        <Container>
+            <Navbar bg="dark" variant="dark" className='pageLinkContaner'>
+        <Container >
           <Navbar.Brand >Reviewer</Navbar.Brand>
             <Nav className='nav justify-content-end' >
             <NavLink to={'/'} className="nav-link"><FormattedMessage id='main'/></NavLink>

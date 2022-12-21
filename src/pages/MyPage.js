@@ -148,10 +148,10 @@ const IntMyPage=(props)=>{
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>             
-                <Form.Control type="text" className="mt-1"  style={{margin:'0 2% 0 2%'}}
+                <Form.Control type="text" className="mt-1 "  style={{margin:'0 2% 0 2%'}}
                   placeholder={intl.formatMessage({id:'findRev'})}  
                   value={filter}  onChange={(event)=>{setFilter(event.target.value )}}  />  
-                  <Button className='myBtn' size='sm' 
+                  <Button className='myBtn serch' size='sm' 
                     onClick={()=>goToNewReview()}><FormattedMessage id='newRev' /></Button> 
                 </div>                
             <Table  className='myTable'>

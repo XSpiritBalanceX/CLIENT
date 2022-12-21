@@ -24,6 +24,7 @@ html[data-theme='dark']{
 }
 
 body{
+    font-family: 'Roboto', 'Montserrat', sans-serif;
     background-color: var(--background-color);
     transition: background-color 200ms linear;
 }
@@ -225,6 +226,7 @@ body{
 .likeHand{
     color: rgb(66, 65, 65);
 }
+
 .activUser{
     display: flex;
     flex-direction: row;
@@ -232,9 +234,67 @@ body{
     color:var(--main-text-color);
 }
 
+.userLink{
+  font-family: 'Roboto';
+  text-decoration: none;
+  font-size: 18px;
+  color: var(--main-text-color);
+  font-weight: 300;
+  margin: 0 2px;
+  position: relative;
+}
+.userLink:hover{
+    color: var(--main-text-color);
+}
+.userLink:before {
+  position: absolute;
+  margin: 0 auto;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: var(--main-text-color);
+  content: '';
+  opacity: .3;
+  transform: scaleX(.6);
+  transition-property: opacity, transform;
+  transition-duration: .3s;
+}
+  
+.userLink:hover:before {
+    transform: scaleX(1);
+    opacity: 1; 
+}
+
 
 @media all and (max-width: 60em){
-    
+    .myPageContainer{
+        margin: 0;
+    }
+   .showRev{
+        flex-direction: column;
+        align-items: center;
+   }
+   .pict{
+     width: auto;
+   }
+   .contanForItem{
+      flex-direction: column;
+      align-items: center;
+    }
+    .MyDescript{
+        width: 100%;
+        margin-bottom: 2%;
+    }
+    .MyDescript .card-img-top{
+        height: 40em;
+        width: 70%;
+        margin: 0 auto 0 auto;
+        padding: 5%;
+    }
+    .cardBook img{
+        height: 50%;
+    }
 }
     
 @media all and (max-width: 40em){
@@ -245,9 +305,7 @@ body{
     .MyPicture{
         display: none;
     }
-    .contanForItem{
-        flex-direction: column;
-    }
+    
     .MyDescript{
         width: 100%;
         margin-bottom: 3%;
@@ -282,5 +340,15 @@ body{
     .mainCont{
         margin-top: 40%;
     }
-        
+    .contanForControl{
+        flex-direction: column;
+        margin: 5%;
+        align-items: flex-start;
+    }
+    .dropdown{
+        margin:0 0 2% 2%;
+    }
+    .serch{
+        margin: 2% 0 0 2%;
+    }
 }
