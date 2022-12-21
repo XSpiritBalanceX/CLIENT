@@ -76,7 +76,7 @@ const IntAuthPage=(props)=>{
       window.open('https://server-production-5ca0.up.railway.app/auth/facebook', '_self')
     }
     const discordAuth=()=>{
-      window.open(/* 'https://server-production-5ca0.up.railway.app/auth/discord' */'http://localhost:5000/auth/discord', '_self')
+      window.open( 'https://server-production-5ca0.up.railway.app/auth/discord' , '_self')
     }
 
     return(

@@ -6,13 +6,17 @@ import {connect} from 'react-redux';
 import {IntlProvider} from 'react-intl';
 import { LOCALES } from '../i18n/locales';
 import { messages } from '../i18n/messages';
-import { changeLanguage, loginUser } from '../redux/explainForReducer';
-import {useTheme} from '../components/hooks/useTheme'
+import { changeLanguage } from '../redux/explainForReducer';
+import {useTheme} from '../components/hooks/useTheme';
 
 const IntPageLinks=(props)=>{
 
-  /* useEffect(()=>{
-    fetch('https://server-production-5ca0.up.railway.app/auth/login/success',  {method:'GET',
+ useEffect(()=>{
+  
+      /* let email=decoded(params.token).email;
+      let name=decoded(params.token).name;
+      props.dispatch(loginUser(true, email, params.token, name)); */
+    /* fetch('https://server-production-5ca0.up.railway.app/auth/login/success',  {method:'GET',
      credentials:'include',
      headers:{
       "Accept":"application/json",
@@ -21,9 +25,9 @@ const IntPageLinks=(props)=>{
      }} )
     .then(response=>response.json())
     .then(data=>props.dispatch(loginUser(true, data.user, data.token, data.name)))
-    .catch(err=>console.log(err))
+    .catch(err=>console.log(err)) */
     // eslint-disable-next-line
-  },[]) */
+  },[]) 
 
   const navigate=useNavigate(); 
    

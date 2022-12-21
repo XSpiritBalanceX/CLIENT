@@ -2,10 +2,8 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import {Button,Form,Table,Spinner, Modal, Dropdown } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
-import {useNavigate, useParams } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import Reviews from '../components/Reviews';
-import {loginUser} from '../redux/explainForReducer';
-import decode from 'jwt-decode'
 
 
 const IntMyPage=(props)=>{
@@ -21,17 +19,10 @@ const IntMyPage=(props)=>{
     const [show, setShow] = useState(false);
     const [modalInfo, setModal]=useState('');
     const handleClose = () => setShow(false);
-    const params=useParams();
+    
     
     useEffect(()=>{
-      let email=decode(params.token).email;
-      let name=decode(params.token).name;
-      props.dispatch(loginUser(true, email, params.token, name));
-    }, [])
-    
-    useEffect(()=>{
-      
-      fetch('https://server-production-5ca0.up.railway.app/api/user/auth', {
+       fetch('https://server-production-5ca0.up.railway.app/api/user/auth', {
         headers:{
           'Content-type': 'application/json',
           'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
@@ -39,7 +30,7 @@ const IntMyPage=(props)=>{
       })
       .then(response=>response.json())
       .then(data=>{data.token?setToken(true):setToken(false)})
-      .catch(err=>console.log(err))
+      .catch(err=>console.log(err)) 
       // eslint-disable-next-line
   },[]) 
 

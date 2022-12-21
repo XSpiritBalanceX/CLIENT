@@ -9,7 +9,7 @@ const initialState={
     books:[],
     games:[],
     series:[],
-    isLogin: /* tokeninStorage!==null?true: */true ,
+    isLogin:  tokeninStorage!==null?true: false ,
     userEmail:tokeninStorage!==null?decoded(tokeninStorage).email:'',
     nameUser:tokeninStorage!==null?decoded(tokeninStorage).name:'',
     nameReview:'',

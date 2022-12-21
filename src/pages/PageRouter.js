@@ -31,6 +31,7 @@ const intPageRouter=(props)=>{
            defaultLocale={LOCALES.RUSSIAN}>
          <Routes>
         <Route path='/' element={<MainPage/>}/>
+         <Route path='/auth/:token' element={<MainPage/>}/> 
         <Route path='/books/:page' element={<BooksPage />}/>
         <Route path='/books/item/:id' element={<ItemBook />}/>
         <Route path='/movies/:page' element={<MoviesPage />}/>
@@ -42,7 +43,7 @@ const intPageRouter=(props)=>{
         <Route path='/login' element={<AuthPage />}/>
         <Route path='/registration' element={<AuthPage />}/>
         <Route path='/showReview/:id' element={<ShowReview />}/>
-       {props.isLogin&&<Route path='/mypage/:token' element={<MyPage />}/>}
+       {props.isLogin&&<Route path='/mypage' element={<MyPage />}/>}
        {props.isLogin&&<Route path='/newreview' element={<NewReview />}/>}
        {props.isLogin&&<Route path='/editreview/:id' element={<EditReview />}/>}
        {props.isLogin&&<Route path='/administrator' element={<AdminPage />}/>}
