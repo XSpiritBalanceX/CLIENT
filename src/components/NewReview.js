@@ -93,6 +93,7 @@ const IntNewReview=(props)=>{
       setShow(true);
       setTitle('');
       setTitleWo('');
+      setPic('')
       setTags([]);
       setGroupn([]);
       setEditorHtmlValue('');
@@ -117,7 +118,7 @@ const IntNewReview=(props)=>{
       setallTags([...initialTags].concat([...tags]));
       // eslint-disable-next-line
     },[tags]) 
-    
+   
     return(
       <React.Fragment>
         {isLoad?<Container className="d-flex justify-content-center align-items-center" style={{height:'auto', margin:'2% auto 2% auto'}}>          

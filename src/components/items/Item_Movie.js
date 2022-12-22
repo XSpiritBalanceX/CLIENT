@@ -11,6 +11,7 @@ const IntItemMovie=(props)=>{
     const [isLoad, setLoad]=useState(true);
     const [isLoadReview, setIsLoadReview]=useState(true);
     const [allReview, setAllReview]=useState([]);
+    const [rating, setRating]=useState(0);
     const params=useParams();
     const idMovie=params.id;
     const navigate=useNavigate();
@@ -45,7 +46,7 @@ const IntItemMovie=(props)=>{
               <FormattedMessage id='starring'/> {props.locale==='ru-RU'?el.starringru:el.starringen}<br/><br/>
                <FormattedMessage id='summary'/> {props.locale==='ru-RU'?el.summaryru:el.summaryen}<br/><br/>
               <FormattedMessage id='metascore'/> {el.metascore}<br/>
-              <FormattedMessage id='userscore'/>  {el.rate}                
+              <FormattedMessage id='userscore'/>  {rating}                
               </Card.Text>
             </Card.Body>
         </React.Fragment> 
@@ -63,6 +64,21 @@ const IntItemMovie=(props)=>{
             .catch(err=>console.log(err))
             // eslint-disable-next-line
         },[nameItem]); 
+
+        useEffect(()=>{
+            let sumRating=0;
+            if(!isLoad){
+                if(allReview.length===0){
+                    sumRating=0
+                }else{
+                    allReview.forEach(el=>{
+                        sumRating+=el.rate/allReview.length 
+                    })
+                }
+                setRating(sumRating.toFixed(1))
+            }
+            // eslint-disable-next-line
+        },[allReview])
         
         let cardReview=allReview.length===0?<p className='emptyReview'><FormattedMessage id='messForEmpty'/></p>:
       allReview.map(el=>{

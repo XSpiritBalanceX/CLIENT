@@ -11,6 +11,7 @@ const IntItemBook=(props)=>{
     const [isLoad, setLoad]=useState(true);
     const [isLoadReview, setIsLoadReview]=useState(true);
     const [allReview, setAllReview]=useState([]);
+    const [rating, setRating]=useState(0);
     const params=useParams();
     const idBook=params.id;
     const navigate=useNavigate();
@@ -19,7 +20,7 @@ const IntItemBook=(props)=>{
     useEffect(()=>{
         fetch(`https://server-production-5ca0.up.railway.app/api/books/getonebook?lang=${props.locale}&id=${idBook}`)
         .then(response=>response.json())
-        .then(data=>{setItem(data); setIsLoadReview(false)})
+        .then(data=>{setItem(data); setIsLoadReview(false);})
         .catch(err=>console.log(err))
         // eslint-disable-next-line
     },[props.locale]);
@@ -30,6 +31,7 @@ const IntItemBook=(props)=>{
         navigate('/newreview')
     }
     
+     
     let oneBook=!isLoad? item.map(el=>{
         nameItem=props.locale==='ru-RU'?el.nameru:el.nameen;
        return <React.Fragment key={el.id}>
@@ -41,7 +43,7 @@ const IntItemBook=(props)=>{
               <FormattedMessage id='date'/> {el.data}<br/>
               <FormattedMessage id='genre'/> {props.locale==='ru-RU'?el.genreru:el.genreen}<br/><br/>
                <FormattedMessage id='summary'/> {props.locale==='ru-RU'?el.summaryru:el.summaryen}<br/><br/>
-              <FormattedMessage id='userscore'/>  {el.rate}                
+              <FormattedMessage id='userscore'/>  {rating}                
               </Card.Text>
             </Card.Body>
         </React.Fragment> 
@@ -55,10 +57,25 @@ const IntItemBook=(props)=>{
     useEffect(()=>{
         fetch(`https://server-production-5ca0.up.railway.app/api/review/itemreview?name=${nameItem}`)
         .then(response=>response.json())
-        .then(data=>{setAllReview(data); setLoad(false); })
+        .then(data=>{setAllReview(data); setLoad(false);})
         .catch(err=>console.log(err))
         // eslint-disable-next-line
     },[nameItem]); 
+
+    useEffect(()=>{
+        let sumRating=0;
+        if(!isLoad){
+            if(allReview.length===0){
+                sumRating=0
+            }else{
+                allReview.forEach(el=>{
+                    sumRating+=el.rate/allReview.length 
+                })
+            }
+            setRating(sumRating.toFixed(1))
+        }
+        // eslint-disable-next-line
+    },[allReview])
 
     let cardReview=allReview.length===0?<p className='emptyReview'> <FormattedMessage id='messForEmpty'/></p>:
       allReview.map(el=>{

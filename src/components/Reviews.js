@@ -9,9 +9,9 @@ const Reviews=(props)=>{
         <td >{props.nameRev}</td>
         <td >{props.nameWork}</td>
         <td >{props.date}</td>
-        <td ><Button className='myBtn' size='sm'onClick={()=>props.cbEditReview(props.id)}>{props.edit}</Button></td>
-        <td ><Button className='myBtn' size='sm' onClick={()=>props.cbShowRev(props.id)}>{props.show}</Button></td>
-        <td ><Button className='myBtn' size='sm' onClick={()=>props.cbDeleteReview(props.id, props.nameRev)}>{props.delete}</Button></td>
+        <td ><Button className='myBtn' size='sm'onClick={()=>props.cbEditReview(props.id)}><i className="bi bi-pen"></i></Button></td>
+        <td ><Button className='myBtn' size='sm' onClick={()=>props.cbShowRev(props.id)}><i className="bi bi-eye"></i></Button></td>
+        <td ><Button className='myBtn' size='sm' onClick={()=>props.cbDeleteReview(props.id, props.nameRev)}><i className="bi bi-trash myProf"></i></Button></td>
       </tr>
     )
 }

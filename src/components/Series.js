@@ -12,7 +12,6 @@ const Series=(props)=>{
           <Card.Text>
             {`${props.locale==='ru-RU'?'Жанр':'Genre'} - ${props.genre}`}<br/>
             {`${props.locale==='ru-RU'?'Количество сезонов':'Number of seasons'} - ${props.numberofseas}`}<br/>
-            {`${props.locale==='ru-RU'?'Оценка пользователей':'User rating'} - ${props.rate}`}
           </Card.Text>
           <Button variant="dark" className='myBtn' onClick={()=>props.goToSer(props.id)}>{props.locale==='ru-RU'?'Показать':'Show'}</Button>
         </Card.Body>

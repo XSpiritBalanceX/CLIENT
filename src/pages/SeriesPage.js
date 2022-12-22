@@ -51,7 +51,6 @@ const IntSeriesPage=(props)=>{
                         name={props.locale==='ru-RU'?el.nameru:el.nameen}
                         genre={props.locale==='ru-RU'?el.genreru:el.genreen}
                         numberofseas={el.numberofseas}
-                        rate={el.rate}
                         url={el.url}
                         locale={props.locale}
                         goToSer={goToSeries}/>

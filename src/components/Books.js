@@ -12,7 +12,6 @@ const Books=(props)=>{
           <Card.Text>
             {`${props.locale==='ru-RU'?'Автор':'Author'} - ${props.autor}`}<br/>
             {`${props.locale==='ru-RU'?'Жанр':'Genre'} - ${props.genre}`}<br/>            
-            {`${props.locale==='ru-RU'?'Оценка пользователей':'User rating'} - ${props.rate}`}
           </Card.Text>
           <Button variant="dark" className='myBtn' onClick={()=>props.goToBoo(props.id)}>{props.locale==='ru-RU'?'Показать':'Show'}</Button>
         </Card.Body>

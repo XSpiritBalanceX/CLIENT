@@ -96,9 +96,6 @@ const IntMyPage=(props)=>{
          nameRev={el.title}
          nameWork={el.name}
          date={el.date}
-         edit={<FormattedMessage id='edit' />}
-         show={<FormattedMessage id='show' />}
-         delete={<FormattedMessage id='delete' />}
          cbShowRev={showR}
          cbEditReview={editReview}
          cbDeleteReview={deleteReview}
@@ -154,15 +151,15 @@ const IntMyPage=(props)=>{
                   <Button className='myBtn serch' size='sm' 
                     onClick={()=>goToNewReview()}><FormattedMessage id='newRev' /></Button> 
                 </div>                
-            <Table  className='myTable'>
+            <Table  className='myTable' >
       <thead>
         <tr>
           <th><FormattedMessage id='nameRev'/></th>
           <th><FormattedMessage id='titleWo'/></th>
           <th><FormattedMessage id='dateCrea'/></th>
-          <th><FormattedMessage id='editRev'/></th>
-          <th><FormattedMessage id='showRev'/></th>
-          <th><FormattedMessage id='deletRev'/></th>
+          <th></th>
+          <th></th>
+          <th></th>
         </tr>
       </thead>
       <tbody>

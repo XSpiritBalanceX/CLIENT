@@ -65,7 +65,8 @@ body{
 
 .myTable{
     width: 100%;
-    color:var(--main-text-color)
+    color:var(--main-text-color);
+    text-align: center;
 }
 
 .contanForControl{

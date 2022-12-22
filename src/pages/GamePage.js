@@ -51,7 +51,6 @@ const IntGamePage=(props)=>{
                         name={props.locale==='ru-RU'?el.nameru:el.nameen}
                         developer={el.developer}
                         genre={props.locale==='ru-RU'?el.genreru:el.genreen}
-                        rate={el.rate}
                         url={el.url}
                         locale={props.locale}
                         goToGam={goToGame}/>

@@ -10,6 +10,7 @@ const IntItemSeries=(props)=>{
     const [item, setItem]=useState([]);
     const [isLoad, setLoad]=useState(true)
     const [isLoadReview, setIsLoadReview]=useState(true);
+    const [rating, setRating]=useState(0);
     const [allReview, setAllReview]=useState([]);
     const params=useParams();
     const idSeries=params.id;
@@ -44,7 +45,7 @@ const IntItemSeries=(props)=>{
               <FormattedMessage id='screenwriter'/> {props.locale==='ru-RU'?el.directorru:el.directoren}<br/><br/>
                <FormattedMessage id='summary'/> {props.locale==='ru-RU'?el.summaryru:el.summaryen}<br/><br/>
                <FormattedMessage id='metascore'/> {el.metascore}<br/>
-              <FormattedMessage id='userscore'/>  {el.rate}                
+              <FormattedMessage id='userscore'/>  {rating}                
               </Card.Text>
             </Card.Body>
         </React.Fragment> 
@@ -62,6 +63,21 @@ const IntItemSeries=(props)=>{
             .catch(err=>console.log(err))
             // eslint-disable-next-line
         },[nameItem]); 
+
+        useEffect(()=>{
+            let sumRating=0;
+            if(!isLoad){
+                if(allReview.length===0){
+                    sumRating=0
+                }else{
+                    allReview.forEach(el=>{
+                        sumRating+=el.rate/allReview.length 
+                    })
+                }
+                setRating(sumRating.toFixed(1))
+            }
+            // eslint-disable-next-line
+        },[allReview])
         
         let cardReview=allReview.length===0?<p className='emptyReview'><FormattedMessage id='messForEmpty'/></p>:
       allReview.map(el=>{

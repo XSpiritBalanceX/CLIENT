@@ -53,7 +53,6 @@ const IntMoviesPage=(props)=>{
                         name={props.locale==='ru-RU'?el.nameru:el.nameen}
                         genre={props.locale==='ru-RU'?el.genreru:el.genreen}
                         runtime={props.locale==='ru-RU'?`${el.runtime} мин`:`${el.runtime} min`}
-                        rate={el.rate}
                         url={el.url}
                         locale={props.locale}
                         goToM={goToMovie}/>

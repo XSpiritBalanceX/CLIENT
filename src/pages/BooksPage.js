@@ -51,7 +51,6 @@ const IntBooksPage=(props)=>{
                         name={props.locale==='ru-RU'?el.nameru:el.nameen}
                         autor={props.locale==='ru-RU'?el.autorru:el.autoren}
                         genre={props.locale==='ru-RU'?el.genreru:el.genreen}
-                        rate={el.rate}
                         url={el.url}
                         locale={props.locale}
                         goToBoo={goToBook}/>
