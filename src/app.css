@@ -270,6 +270,19 @@ body{
 .helloMain{
     margin: 2% 0 2% 0;
 }
+.reviewLast{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 2% 2% 2%;
+}
+.reviewLast > div{
+    width: 20em;
+    margin-right: 2%;
+}
+.HInMain{
+    color: var(--main-text-color);
+}
 
 
 @media all and (max-width: 60em){

@@ -3,15 +3,17 @@ import {connect} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import {Spinner, Card} from 'react-bootstrap';
 import mainImg from '../images/main.jpg';
-import {useParams } from 'react-router-dom';
+import {useParams, useNavigate } from 'react-router-dom';
 import decoded from 'jwt-decode';
 import { loginUser } from '../redux/explainForReducer';
+import CardReview from '../components/items/CardReview';
 
 
 const IntMainPage=(props)=>{
     const params=useParams();
     const [isLoad, setLoad]=useState(false);
-    const [lastReview, setLast]=useState([])
+    const [lastReview, setLast]=useState([]);
+    const navigate=useNavigate();
     
     useEffect(()=>{ 
         if(params.token){
@@ -30,6 +32,22 @@ const IntMainPage=(props)=>{
         // eslint-disable-next-line
     },[])
 
+    const showR=(id)=>{        
+        let item=lastReview.find(el=>el.id===id)
+       navigate('/showReview/'+item.id)
+     }
+
+    let lastR=isLoad?lastReview.map(el=>{
+        return <CardReview key={el.id}
+        id={el.id}
+        title={el.title}
+        username={el.nameuser}
+        date={el.date}
+        teg={el.teg}
+        rate={el.rate}
+        cbshowR={showR}/>
+    }).sort((a, b) => a > b ? 1 : -1):null;
+
     return(
         <div>
             {isLoad?<React.Fragment><div className='helloMain'>
@@ -40,7 +58,10 @@ const IntMainPage=(props)=>{
                 </Card>   
             </div>
             <div>
-                <div>Последние обзоры</div>
+                <h4 className='HInMain'>Последние обзоры</h4>
+                <div className='reviewLast'>
+                    {lastR}
+                </div>
             </div></React.Fragment>:
                 <Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}
         </div>
