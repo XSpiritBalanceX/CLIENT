@@ -33,6 +33,7 @@ body{
     transition: background-color 200ms linear;
     color:var(--main-text-color);    
     transition: color 500ms linear;
+    margin: 0 auto 0 auto;
 }
 
 .myBtn{
@@ -265,6 +266,9 @@ body{
 .userLink:hover:before {
     transform: scaleX(1);
     opacity: 1; 
+}
+.helloMain{
+    margin: 2% 0 2% 0;
 }
 
 
