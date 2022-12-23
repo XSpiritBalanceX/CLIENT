@@ -80,7 +80,8 @@ export const messages={
         yesBlo:'Blocked',
         noBlo:'Not blocked',
         users:'Users',
-        switchUser:'Your account'
+        switchUser:'Your account',
+        lastRev:'Last written reviews'
     },
     [LOCALES.RUSSIAN]:{
         main:'Главная',
@@ -161,6 +162,7 @@ export const messages={
         yesBlo:'Заблокирован',
         noBlo:'Не заблокирован ',
         users:'Пользователи',
-        switchUser:'Свой аккаунт'
+        switchUser:'Свой аккаунт',
+        lastRev:'Последние написанные обзоры'
     }
 }
