@@ -4,6 +4,7 @@ import {Button,Form,Table,Spinner, Modal, Dropdown } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {useNavigate } from 'react-router-dom';
 import Reviews from '../components/Reviews';
+import {addNameReview} from '../redux/explainForReducer'
 
 
 const IntMyPage=(props)=>{
@@ -44,7 +45,8 @@ const IntMyPage=(props)=>{
     },[isToken])  
 
     const goToNewReview=()=>{
-        navigate('/newreview')
+      props.dispatch(addNameReview(''))
+      navigate('/newreview')
     }
     
     const showR=(id)=>{

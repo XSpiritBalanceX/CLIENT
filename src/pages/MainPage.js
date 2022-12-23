@@ -13,6 +13,7 @@ const IntMainPage=(props)=>{
     const params=useParams();
     const [isLoad, setLoad]=useState(false);
     const [lastReview, setLast]=useState([]);
+    const [allRating, setRating]=useState([])
     const navigate=useNavigate();
     
     useEffect(()=>{ 
@@ -27,7 +28,7 @@ const IntMainPage=(props)=>{
     useEffect(()=>{
         fetch('http://localhost:5000/api/review/getmain')
         .then(response=>response.json())
-        .then(data=>{console.log(data); setLast(data);setLoad(true)})
+        .then(data=>{setLast(data.retuReview);setRating(data.rating);setLoad(true)})
         .catch(err=>console.log(err))
         // eslint-disable-next-line
     },[])
@@ -45,7 +46,8 @@ const IntMainPage=(props)=>{
         date={el.date}
         teg={el.teg}
         rate={el.rate}
-        cbshowR={showR}/>
+        cbshowR={showR}
+        rating={allRating}/>
     }).sort((a, b) => a > b ? 1 : -1):null;
 
     return(

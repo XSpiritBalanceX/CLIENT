@@ -4,6 +4,8 @@ import {Button,  Form, Container, Card,  Modal, Spinner} from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {Typeahead} from 'react-bootstrap-typeahead';
 import Editor from "./editor/Editor";
+import {Rating} from 'react-simple-star-rating';
+
 
 const IntNewReview=(props)=>{
 
@@ -18,26 +20,22 @@ const IntNewReview=(props)=>{
     const [titleWo, setTitleWo]=useState(nameRev);
     const [group, setGroupn]=useState([]);
     const [tags, setTags]=useState([]);
-    const [rat, setRat]=useState(0);
     const [show, setShow] = useState(false);
     const [modalInfo, setModal]=useState('');
     const handleClose = () => setShow(false);
     const [dragEnter, setDragEnter]=useState(false);
     const [pic, setPic] = useState('');
     const [allTags, setallTags]=useState([]);
-    const [initialTags, setInitial]=useState([])
+    const [initialTags, setInitial]=useState([]);
+    const [everyBook, setBook]=useState([]);
+    const [everyGame, setGame]=useState([]);
+    const [everyMovie, setMovie]=useState([]);
+    const [everySeries, setSeries]=useState([]);
+    const [dataForTitleWork, setDataTitle]=useState([]);
+    const [star, setStar]=useState(0);
 
     const intl=useIntl();
 
-    const changeRat=(event)=>{
-          if(Number(event.target.value)>10){
-           setRat(0);
-           setModal(<FormattedMessage id='errRat'/>)
-           setShow(true);
-          }else{            
-            setRat(event.target.value)
-          }               
-    }
     let options=props.locale==='en-US'?['Games', 'Movies', "Books", "Series"]:['Игры', 'Фильмы', "Книги", "Сериалы"]
 
     const dragEnterHangler=(event)=>{
@@ -71,7 +69,7 @@ const IntNewReview=(props)=>{
     const sendReview=async(event)=>{
       event.preventDefault();
       if(group.length===0 || title==='' ||titleWo==='' || 
-        editorHtmlValue==='' || rat==='' || tags.length===0){
+        editorHtmlValue==='' || tags.length===0){
         setModal(<FormattedMessage id='errField'/>)
         setShow(true);
       } else{
@@ -81,7 +79,7 @@ const IntNewReview=(props)=>{
         formData.append("name", titleWo);
         formData.append("groupn", group);
         formData.append("teg", tags);
-        formData.append("rate", rat);
+        formData.append("rate", star);
         formData.append("text", editorHtmlValue);
         formData.append("useremail", props.useremail);
         let response=await fetch('https://server-production-5ca0.up.railway.app/api/review/postpic',{
@@ -97,7 +95,7 @@ const IntNewReview=(props)=>{
       setTags([]);
       setGroupn([]);
       setEditorHtmlValue('');
-      setRat('');
+      setStar(0);
       }          
     }
     
@@ -107,6 +105,14 @@ const IntNewReview=(props)=>{
       .then(data=>{ setallTags(data);setInitial(data);setLoad(true)})
       .catch(err=>console.log(err))
     },[])
+
+    useEffect(()=>{
+      fetch('http://localhost:5000/api/review/getall/?lang='+props.locale)
+      .then(response=>response.json())
+      .then(data=>{setBook(data.everyBook); setGame(data.everyGame); setMovie(data.everyMovie); setSeries(data.everySeries)})
+      .catch(err=>console.log(err))
+      // eslint-disable-next-line
+    },[props.locale])
 
     const changeTags=(event)=>{
       let newAllTags=allTags.slice()
@@ -118,7 +124,24 @@ const IntNewReview=(props)=>{
       setallTags([...initialTags].concat([...tags]));
       // eslint-disable-next-line
     },[tags]) 
-   
+
+    
+    let choiseTitle=group.includes('Games')||group.includes('Игры')?everyGame:
+      group.includes('Books')||group.includes('Книги')?everyBook:
+      group.includes('Movies')||group.includes('Фильмы')?everyMovie:
+      group.includes('Series')||group.includes('Сериалы')?everySeries:[];
+      
+    useEffect(()=>{
+      let newDataTitle=[]
+      choiseTitle.forEach(el=>{newDataTitle.push(el.nameru || el.nameen)})
+      setDataTitle(newDataTitle);
+      // eslint-disable-next-line
+    },[group])
+
+    const handleRating=(rate)=>{
+      setStar(rate)
+    }
+
     return(
       <React.Fragment>
         {isLoad?<Container className="d-flex justify-content-center align-items-center" style={{height:'auto', margin:'2% auto 2% auto'}}>          
@@ -127,16 +150,26 @@ const IntNewReview=(props)=>{
             <Form className="d-flex flex-column" onSubmit={sendReview}>
               <Form.Control type="text" className="mt-3" name='title' onChange={(event)=>setTitle(event.target.value)} 
                 placeholder={intl.formatMessage({id:'revTitle'})} value={title} />
-              <Form.Control type="text" className="mt-3" name='titleWo' onChange={(event)=>setTitleWo(event.target.value)} 
-                placeholder={intl.formatMessage({id:'titleWo'})}  value={titleWo} disabled={props.nameItem===''?false:true}/>
               <Typeahead className="mt-3" 
                  id="basic-typeahead-single"
                     labelKey="nameGroup" 
                     onChange={(event)=>setGroupn(event)}
                     options={options}
-                    placeholder={intl.formatMessage({id:'group'})}
-                    selected={group}
+                    placeholder={intl.formatMessage({id:'group'})}                    
                 />
+                
+                 {props.nameItem!==''?<Form.Control type="text" className="mt-3" name='titleWo' onChange={(event)=>setTitleWo(event.target.value)} 
+                  placeholder={intl.formatMessage({id:'titleWo'})}  value={titleWo} disabled={true}/>:
+                  <div>
+                    <Typeahead className="mt-3"
+                      id="basic-typeahead-example" 
+                      labelKey="nameTitleWprk" 
+                      onChange={(event)=>setTitleWo(event)}
+                      options={dataForTitleWork}
+                      placeholder={intl.formatMessage({id:'titleWo'})}                    
+                    />
+                  </div>} 
+                  
                 <Typeahead className="mt-3 myMylti" 
                     id="basic-typeahead-multiple"
                     labelKey="nameTags"
@@ -147,8 +180,10 @@ const IntNewReview=(props)=>{
                     placeholder={intl.formatMessage({id:'tags'})}
                     selected={tags}
                 />
-              <Form.Control type="number" min={0} max={10} maxLength="2" name='rat'  
-                 className="mt-3" onChange={(event)=>changeRat(event)} placeholder={intl.formatMessage({id:'rate'})}  value={rat}/>
+                <div style={{textAlign:'center'}}>
+                  <p><FormattedMessage id='rate'/></p>
+                  <Rating initialValue={star} onClick={handleRating} iconsCount={10}/> 
+                </div>
               <Editor 
                 value={initialMarkdownContent}
                 onChange={onEditorContentChanged}
@@ -185,9 +220,8 @@ const IntNewReview=(props)=>{
 const mapStateToProps=(state)=>{
     return { 
         nameItem:state.info.nameReview ,
-        locale:state.info.locale ,  
-        tags:state.info.alltags ,
-        useremail:state.info.userEmail
+        locale:state.info.locale , 
+        useremail:state.info.userEmail,
     }
  }
  

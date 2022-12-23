@@ -268,7 +268,7 @@ body{
     opacity: 1; 
 }
 .helloMain{
-    margin: 2% 0 2% 0;
+    margin: 2% 0 3% 0;
 }
 .reviewLast{
     display: flex;
@@ -282,6 +282,7 @@ body{
 }
 .HInMain{
     color: var(--main-text-color);
+    margin-left: 2%;
 }
 
 

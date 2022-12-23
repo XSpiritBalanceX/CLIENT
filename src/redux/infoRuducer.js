@@ -13,7 +13,6 @@ const initialState={
     userEmail:tokeninStorage!==null?decoded(tokeninStorage).email:'',
     nameUser:tokeninStorage!==null?decoded(tokeninStorage).name:'',
     nameReview:'',
-    alltags:['funny', 'good', 'книги', 'badly', 'фильмы'],
  }
 
  
