@@ -6,11 +6,12 @@ const CardReview=(props)=>{
   
   const [averageRating, setAverage]=useState([]);
   const [isLoad, setLoad]=useState(false);
+  const [allLikes, setLikes]=useState([])
 
   useEffect(()=>{
-        fetch(`http://localhost:5000/api/review/getrating?name=${props.title}`)
+        fetch(`http://localhost:5000/api/review/getrating?name=${props.title}&username=${props.username}`)
         .then(response=>response.json())
-        .then(data=>{setAverage(data); setLoad(true)})
+        .then(data=>{setAverage(data.ratingItem); setLoad(true);setLikes(data.allLikes)})
         .catch(err=>console.log(err))
     // eslint-disable-next-line
   },[])
@@ -18,7 +19,15 @@ const CardReview=(props)=>{
   let rating=0;
   averageRating.length===0?rating=0:averageRating.map(el=>{
    return rating=rating+el.value/averageRating.length
-  })
+  });
+
+  let sumLikes=0;
+  allLikes.length===0?rating=0:allLikes.map(el=>{
+    if(el.like){
+      sumLikes=sumLikes+el.like;
+    }
+    return sumLikes
+   });
   
     return(
       <React.Fragment>
@@ -27,7 +36,7 @@ const CardReview=(props)=>{
               <Card.Title>{props.title} </Card.Title>
               <Card.Text> 
               <FormattedMessage id='ratReview' /> {rating.toFixed(1)} <i className="bi bi-star-fill"></i><br/>
-                {props.username}<br/>
+                {props.username} {sumLikes} <i className="bi bi bi-hand-thumbs-up"></i><br/>
                 {props.date}<br/>
                 # {props.teg} <br/>
                 <i className="bi bi-star-fill"></i> {props.rate}<br/> 

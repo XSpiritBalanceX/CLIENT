@@ -27,14 +27,16 @@ const IntShowReview=(props)=>{
     const [like, setLike]=useState(false);
 
     useEffect(()=>{
-        fetch(`https://server-production-5ca0.up.railway.app/api/review/onereview?id=${idReview}`)
+        fetch( `https://server-production-5ca0.up.railway.app/api/review/onereview?id=${idReview}` )
         .then(response=>response.json())
-        .then(data=>{setOneReview(data.oneReview) ; setLoad(true);setAverageRating(data.getRating) })
+        .then(data=>{setOneReview(data.oneReview) ; setLoad(true);setAverageRating(data.getRating); })
         .catch(err=>console.log(err))
         // eslint-disable-next-line
-    },[idReview]); 
+    },[idReview, like, star]); 
+    
 
     let average=averageRating!==0?averageRating.reduce((acc,el)=> acc+el.value,0):0;
+    let averageLike=averageRating!==0?averageRating.reduce((acc,el)=> acc+el.like,0):0;
     
     let nameReviewNow;
     let review=isLoad?oneReview.map(el=>{
@@ -45,6 +47,7 @@ const IntShowReview=(props)=>{
             </div>
             <div>
               <p><FormattedMessage id='ratReview'/>{averageRating.length===0?0:(average/averageRating.length).toFixed(1)} <i className="bi bi-star-fill"></i></p>
+                <p>{averageLike} <i className="bi bi bi-hand-thumbs-up"></i></p>
                 <h3>{el.title}</h3>
                 <h5>{el.name}</h5>
                 <p><FormattedMessage id='authRev'/>: {el.nameuser}</p>
