@@ -9,7 +9,7 @@ const CardReview=(props)=>{
   const [allLikes, setLikes]=useState([])
 
   useEffect(()=>{
-        fetch(`http://localhost:5000/api/review/getrating?name=${props.title}&username=${props.username}`)
+        fetch(`https://server-production-5ca0.up.railway.app/api/review/getrating?name=${props.title}&username=${props.username}`)
         .then(response=>response.json())
         .then(data=>{setAverage(data.ratingItem); setLoad(true);setLikes(data.allLikes)})
         .catch(err=>console.log(err))

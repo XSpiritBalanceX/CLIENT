@@ -32,11 +32,16 @@ const IntShowReview=(props)=>{
         .then(data=>{setOneReview(data.oneReview) ; setLoad(true);setAverageRating(data.getRating); })
         .catch(err=>console.log(err))
         // eslint-disable-next-line
-    },[idReview, like, star]); 
-    
+    },[idReview]); 
 
-    let average=averageRating!==0?averageRating.reduce((acc,el)=> acc+el.value,0):0;
-    let averageLike=averageRating!==0?averageRating.reduce((acc,el)=> acc+el.like,0):0;
+    let average=0;
+    averageRating===0?average=0:averageRating.map(el=>{
+        return average=average+el.value/averageRating.length
+    });
+    let sumLikes=0;
+    averageRating===0?sumLikes=0:averageRating.map(el=>{
+        return sumLikes=sumLikes+el.like
+    }); 
     
     let nameReviewNow;
     let nameuser;
@@ -46,8 +51,8 @@ const IntShowReview=(props)=>{
      return <div key={el.id} className='showRev' ref={template}>
             <div className='floatDiv'>
                <img src={el.namepict} alt={el.name} className='pict'/> 
-              <p><FormattedMessage id='ratReview'/>{averageRating.length===0?0:(average/averageRating.length).toFixed(1)} <i className="bi bi-star-fill"></i></p>
-                <p>{averageLike} <i className="bi bi bi-hand-thumbs-up"></i></p>
+              <p><FormattedMessage id='ratReview'/>{averageRating.length===0?0:average.toFixed(1)} <i className="bi bi-star-fill"></i></p>
+                <p>{sumLikes} <i className="bi bi bi-hand-thumbs-up"></i></p>
                 <h3>{el.title}</h3>
                 <h5>{el.name}</h5>
                 <p><FormattedMessage id='authRev'/>: {el.nameuser}</p>

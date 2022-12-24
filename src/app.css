@@ -285,7 +285,8 @@ body{
 }
 .HInMain{
     color: var(--main-text-color);
-    margin-left: 2%;
+    margin: 4% 2% 1% 2%;
+    border-bottom: solid 2px #9FA0A4;
 }
 
 

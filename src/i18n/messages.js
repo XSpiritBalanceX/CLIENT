@@ -81,7 +81,8 @@ export const messages={
         noBlo:'Not blocked',
         users:'Users',
         switchUser:'Your account',
-        lastRev:'Last written reviews'
+        lastRev:'Last written reviews',
+        highRev:'Top rated reviews'
     },
     [LOCALES.RUSSIAN]:{
         main:'Главная',
@@ -163,6 +164,7 @@ export const messages={
         noBlo:'Не заблокирован ',
         users:'Пользователи',
         switchUser:'Свой аккаунт',
-        lastRev:'Последние написанные обзоры'
+        lastRev:'Последние написанные обзоры',
+        highRev:'Обзоры с высшей оценкой'
     }
 }
