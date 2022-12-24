@@ -36,7 +36,7 @@ const CardReview=(props)=>{
               <Card.Title>{props.title} </Card.Title>
               <Card.Text> 
               <FormattedMessage id='ratReview' /> {rating.toFixed(1)} <i className="bi bi-star-fill"></i><br/>
-                {props.username} {sumLikes} <i className="bi bi bi-hand-thumbs-up"></i><br/>
+                {props.username}  <i className="bi bi bi-hand-thumbs-up"></i> {sumLikes}<br/>
                 {props.date}<br/>
                 # {props.teg} <br/>
                 <i className="bi bi-star-fill"></i> {props.rate}<br/> 

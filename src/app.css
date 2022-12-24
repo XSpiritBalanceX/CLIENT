@@ -143,9 +143,12 @@ body{
     color:var(--main-text-color);
 }
 .pict{
-    width: 20em;
+    width: 30em;
     height: 25em;
+    float: left;
+    margin-right: 2%;
 }
+
 
 .textReview{
     background-color:var(--textReview-background);

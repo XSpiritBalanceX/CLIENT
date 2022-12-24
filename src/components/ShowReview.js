@@ -39,13 +39,13 @@ const IntShowReview=(props)=>{
     let averageLike=averageRating!==0?averageRating.reduce((acc,el)=> acc+el.like,0):0;
     
     let nameReviewNow;
+    let nameuser;
     let review=isLoad?oneReview.map(el=>{
         nameReviewNow=el.title;
+        nameuser=el.nameuser;
      return <div key={el.id} className='showRev' ref={template}>
-        <div style={{marginRight:'5%'}}>
-                <img src={el.namepict} alt={el.name} className='pict'/>
-            </div>
-            <div>
+            <div className='floatDiv'>
+               <img src={el.namepict} alt={el.name} className='pict'/> 
               <p><FormattedMessage id='ratReview'/>{averageRating.length===0?0:(average/averageRating.length).toFixed(1)} <i className="bi bi-star-fill"></i></p>
                 <p>{averageLike} <i className="bi bi bi-hand-thumbs-up"></i></p>
                 <h3>{el.title}</h3>
@@ -156,7 +156,7 @@ const IntShowReview=(props)=>{
                 <i className="bi bi-download"></i> | <i className="bi bi-printer"></i>
               </Button>
           {review}
-          {props.isLogin&&<div className='starRating'>
+          {props.isLogin&& (props.nameUserNow!==nameuser)?<div className='starRating'>
             <p><FormattedMessage id='ratUser' /></p>
             <p>
              <Rating initialValue={star} onClick={handleRating}/>
@@ -168,7 +168,7 @@ const IntShowReview=(props)=>{
               </Button>
                 
             </p>
-          </div>}
+          </div>:null}
         {isLoadComment&&<div className='comment'>
             <div>{comments}</div>
             {props.isLogin&&<div className='newComment'>
@@ -198,7 +198,8 @@ const IntShowReview=(props)=>{
 const mapStateToProps=(state)=>{
     return {
         isLogin:state.info.isLogin,
-        useremail: state.info.userEmail,      
+        useremail: state.info.userEmail, 
+        nameUserNow:state.info.nameUser     
     }
 }
  
