@@ -17,6 +17,7 @@ const IntPageLinks=(props)=>{
   const [searchValue, setSearchValue]=useState('');
   const [showRes, setShow]=useState([]);
   const [shoSearchInput, setShowInput]=useState(false);
+  const [allComments, setComments]=useState([])
   let stopWords = new Set(['and', 'or', 'to', 'in', 'a', 'the', 'и', 'а', 'или'])
   let miniSearch= new MiniSearch({
     fields:['title','text'],
@@ -31,11 +32,11 @@ const IntPageLinks=(props)=>{
     },
     
   })
-  const [test, setTest]=useState([])
+  
   useEffect(()=>{
     fetch(/* 'https://server-production-5ca0.up.railway.app/api/review/getmain' */'http://localhost:5000/api/review/getmain')
         .then(response=>response.json())
-        .then(data=>{props.dispatch(loadMain(data.retuReview, data.revieHighRat, true));setSearch(data.review); setTest(data.comments);})
+        .then(data=>{props.dispatch(loadMain(data.retuReview, data.revieHighRat, true));setSearch(data.review); setComments(data.comments);})
         .catch(err=>console.log(err))
         // eslint-disable-next-line
   },[])
@@ -43,7 +44,7 @@ const IntPageLinks=(props)=>{
   
   if(props.isLoad===true){
     miniSearch.addAll(searchData);
-    miniSearch.addAll(test);
+    miniSearch.addAll(allComments);
   }
 
   useEffect(()=>{
