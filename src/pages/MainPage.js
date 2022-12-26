@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
-import {Spinner, Card} from 'react-bootstrap';
+import { Card, Spinner } from 'react-bootstrap';
 import mainImg from '../images/main.jpg';
 import {useParams, useNavigate } from 'react-router-dom';
 import decoded from 'jwt-decode';
@@ -11,9 +11,6 @@ import CardReview from '../components/items/CardReview';
 
 const IntMainPage=(props)=>{
     const params=useParams();
-    const [isLoad, setLoad]=useState(false);
-    const [lastReview, setLast]=useState([]);
-    const [reviewHigScore, setHigh]=useState([]);
     const navigate=useNavigate();
     
     useEffect(()=>{ 
@@ -25,20 +22,12 @@ const IntMainPage=(props)=>{
         // eslint-disable-next-line
     },[])
 
-    useEffect(()=>{
-        fetch('https://server-production-5ca0.up.railway.app/api/review/getmain')
-        .then(response=>response.json())
-        .then(data=>{setLast(data.retuReview);setLoad(true); setHigh(data.revieHighRat)})
-        .catch(err=>console.log(err))
-        // eslint-disable-next-line
-    },[])
-
     const showR=(id)=>{        
-        let item=lastReview.find(el=>el.id===id)
+        let item=props.lastReview.find(el=>el.id===id) || props.reviewHighScore.find(el=>el.id===id)
        navigate('/showReview/'+item.id)
     }
 
-    let lastR=isLoad?lastReview.map(el=>{
+    let lastR=props.lastReview.map(el=>{
         return <CardReview key={el.id}
         id={el.id}
         title={el.title}
@@ -47,9 +36,9 @@ const IntMainPage=(props)=>{
         teg={el.teg}
         rate={el.rate}
         cbshowR={showR}/>
-    }).sort((a, b) => a > b ? 1 : -1):null;
+    }).sort((a, b) => a > b ? 1 : -1);
 
-    let highRevie=isLoad?reviewHigScore.map(el=>{
+    let highRevie=props.reviewHighScore.map(el=>{
         return <CardReview key={el.id}
         id={el.id}
         title={el.title}
@@ -58,11 +47,11 @@ const IntMainPage=(props)=>{
         teg={el.teg}
         rate={el.rate}
         cbshowR={showR}/>
-    }).sort((a, b) => a > b ? 1 : -1):null;
+    }).sort((a, b) => a > b ? 1 : -1);
 
     return(
         <div>
-            {isLoad?<React.Fragment><div className='helloMain'>
+            {props.isLoad?<React.Fragment><div className='helloMain'>
                 <Card style={{width:'70%', border:'solid 4px #9FA0A4'}} className='p-4 contMain'>
                  <Card.Img variant="top" src={mainImg} style={{width:'30%', height:'5%', borderRadius:'5px', margin:'0 auto 2% auto'}}/> 
                     <Card.Title><FormattedMessage id='title'/></Card.Title>
@@ -78,14 +67,18 @@ const IntMainPage=(props)=>{
                 <div className='reviewLast'>
                     {highRevie}
                 </div>
-            </div></React.Fragment>:
-                <Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}
+            </div></React.Fragment>:<Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}
+            
         </div>
     )
 }
 
 const mapStateToProps=(state)=>{
-    return { }
+    return { 
+        lastReview:state.info.lastReview,
+        reviewHighScore:state.info.reviewHighScore,
+        isLoad:state.info.isLoadReview,
+    }
  }
  
  const MainPage=connect(mapStateToProps)(IntMainPage);

@@ -5,6 +5,7 @@ const load_games='load_games';
 const load_series='load_series';
 const isLogin_user='isLogin_user';
 const add_name_review='add_name_review';
+const load_main_data='load_main_data';
 
 const changeLanguage=function (lang){
    return{
@@ -59,6 +60,15 @@ const addNameReview=function(name){
    }
 }
 
+const loadMain=function(last, score, bool){
+   return{
+      type:load_main_data,
+      lastR:last,
+      highSc:score,
+      isLoad:bool
+   }
+}
+
 
 
 
@@ -70,4 +80,4 @@ export {change_language, changeLanguage,
    load_series, loadSeries,
    isLogin_user, loginUser,
    add_name_review, addNameReview, 
-   }
+   load_main_data, loadMain}

@@ -1,6 +1,6 @@
 import { LOCALES } from "../i18n/locales";
 import { change_language, load_movies, load_books, load_games, load_series,
-    isLogin_user, add_name_review} from "./explainForReducer";
+    isLogin_user, add_name_review, load_main_data} from "./explainForReducer";
 import decoded from 'jwt-decode';
 let tokeninStorage=sessionStorage.getItem('token');
 const initialState={
@@ -13,11 +13,21 @@ const initialState={
     userEmail:tokeninStorage!==null?decoded(tokeninStorage).email:'',
     nameUser:tokeninStorage!==null?decoded(tokeninStorage).name:'',
     nameReview:'',
+    lastReview:[],
+    reviewHighScore:[],
+    isLoadReview:false
  }
 
  
  function infoReducer (state=initialState, action){
      switch (action.type){
+        case load_main_data:{
+            let newState={...state};
+            newState.lastReview=action.lastR;
+            newState.reviewHighScore=action.highSc;
+            newState.isLoadReview=action.isLoad;
+            return newState;
+        }
         case change_language:{
             let newState={...state};
             newState.locale=action.language;

@@ -82,7 +82,8 @@ export const messages={
         users:'Users',
         switchUser:'Your account',
         lastRev:'Last written reviews',
-        highRev:'Top rated reviews'
+        highRev:'Top rated reviews',
+        search:'Search...'
     },
     [LOCALES.RUSSIAN]:{
         main:'Главная',
@@ -165,6 +166,7 @@ export const messages={
         users:'Пользователи',
         switchUser:'Свой аккаунт',
         lastRev:'Последние написанные обзоры',
-        highRev:'Обзоры с высшей оценкой'
+        highRev:'Обзоры с высшей оценкой',
+        search:'Поиск...'
     }
 }

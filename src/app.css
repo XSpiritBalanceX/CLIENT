@@ -288,6 +288,29 @@ body{
     margin: 4% 2% 1% 2%;
     border-bottom: solid 2px #9FA0A4;
 }
+.searchInput{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 70%;
+    position: relative;
+}
+.autocomplite{
+    border: solid 3px rgb(123, 123, 123);
+    border-radius: 5px;
+    padding: 25px;
+    position: absolute; top: 47px;left:41%;
+    z-index: 10;
+    background-color: var(--main-background);
+}
+.autocomplite li{
+    list-style-type: none;
+    margin-bottom: 2%;
+}
+.mainGroup{
+    display: flex;
+    flex-direction: row;
+}
 
 
 @media all and (max-width: 60em){
@@ -373,5 +396,8 @@ body{
     }
     .serch{
         margin: 2% 0 0 2%;
+    }
+    .mainGroup{
+        flex-direction: column;
     }
 }
