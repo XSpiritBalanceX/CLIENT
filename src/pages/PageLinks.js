@@ -18,23 +18,21 @@ const IntPageLinks=(props)=>{
   const [showRes, setShow]=useState([]);
   const [shoSearchInput, setShowInput]=useState(false);
   const [allComments, setComments]=useState([])
-  let stopWords = new Set(['and', 'or', 'to', 'in', 'a', 'the', 'и', 'а', 'или'])
+  let stopWords = new Set(['and', 'or', 'to', 'in', 'a', 'the', 'и', 'а', 'или', 'но', 'не',])
   let miniSearch= new MiniSearch({
     fields:['title','text'],
     storeFields:['title', 'namereview'],
      processTerm:(term, _fieldName) =>
     stopWords.has(term) ? null : term.toLowerCase(), 
      searchOptions:{
-      boost:{namereview:2,},
       prefix:true,
-      fuzzy:0.25,
       processTerm: (term) => term.toLowerCase() 
     },
     
   })
-  
+  console.log(showRes)
   useEffect(()=>{
-    fetch(/* 'https://server-production-5ca0.up.railway.app/api/review/getmain' */'http://localhost:5000/api/review/getmain')
+    fetch( 'https://server-production-5ca0.up.railway.app/api/review/getmain' )
         .then(response=>response.json())
         .then(data=>{props.dispatch(loadMain(data.retuReview, data.revieHighRat, true));setSearch(data.review); setComments(data.comments);})
         .catch(err=>console.log(err))

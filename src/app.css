@@ -9,6 +9,7 @@ html[data-theme='light']{
     --cardBook-color:black;
     --cardBook-border-color:#3c3c3c;
     --textReview-background:white;
+    --search-input-background:rgb(248, 239, 207);
 }
 html[data-theme='dark']{
     --background-color:#3c3c3c;
@@ -21,6 +22,7 @@ html[data-theme='dark']{
     --cardBook-color:white;
     --cardBook-border-color:white;
     --textReview-background:rgb(244, 216, 147);
+    --search-input-background:rgb(206, 206, 206);
 }
 
 body{
@@ -278,10 +280,11 @@ body{
     flex-direction: row;
     flex-wrap: wrap;
     margin: 0 2% 2% 2%;
+    justify-content: center;
 }
 .reviewLast > div{
     width: 20em;
-    margin-right: 2%;
+     margin-right: 2%; 
 }
 .HInMain{
     color: var(--main-text-color);
@@ -301,11 +304,16 @@ body{
     padding: 25px;
     position: absolute; top: 47px;left:41%;
     z-index: 10;
-    background-color: var(--main-background);
+    background-color: var(--search-input-background);
+    height: 15em;
+    overflow-y: auto;
 }
 .autocomplite li{
     list-style-type: none;
     margin-bottom: 2%;
+}
+.autocomplite a{
+    color: black;
 }
 .mainGroup{
     display: flex;
@@ -399,5 +407,8 @@ body{
     }
     .mainGroup{
         flex-direction: column;
+    }
+    .pict{
+        width: 100%;
     }
 }

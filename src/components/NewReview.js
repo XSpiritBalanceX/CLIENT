@@ -182,7 +182,7 @@ const IntNewReview=(props)=>{
                 />
                 <div style={{textAlign:'center'}}>
                   <p><FormattedMessage id='rate'/></p>
-                  <Rating initialValue={star} onClick={handleRating} iconsCount={10}/> 
+                  <Rating initialValue={star} onClick={handleRating} iconsCount={10} size={30}/> 
                 </div>
               <Editor 
                 value={initialMarkdownContent}
