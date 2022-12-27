@@ -30,7 +30,7 @@ const IntPageLinks=(props)=>{
     },
     
   })
-  console.log(showRes)
+  
   useEffect(()=>{
     fetch( 'https://server-production-5ca0.up.railway.app/api/review/getmain' )
         .then(response=>response.json())
@@ -121,7 +121,7 @@ const IntPageLinks=(props)=>{
       <Button variant="outline-dark" className='btn-sm myBtn' onClick={handleClickDark}>Dark</Button>
       </div>
       <div className='searchInput' style={{visibility:shoSearchInput?'visible':'hidden'}}>
-      <Form.Control style={{marginLeft:'40%', width:'50%', marginTop:'1%'}} type="text" list="reviews" placeholder={'Search'} 
+      <Form.Control style={{marginLeft:'40%', width:'50%', marginTop:'1%'}} type="text" list="reviews" placeholder={'...'} 
                value={searchValue} onChange={(event)=>setSearchValue(event.target.value)} />
                <Button className='myBtn' onClick={()=>setSearchValue('')}><i  className="bi bi-x-lg myProf"></i></Button>
                { showRes.length!==0?<ul className='autocomplite'>
