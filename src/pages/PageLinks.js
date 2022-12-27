@@ -34,7 +34,7 @@ const IntPageLinks=(props)=>{
   useEffect(()=>{
     fetch( 'https://server-production-5ca0.up.railway.app/api/review/getmain' )
         .then(response=>response.json())
-        .then(data=>{props.dispatch(loadMain(data.retuReview, data.revieHighRat, true));setSearch(data.review); setComments(data.comments);})
+        .then(data=>{props.dispatch(loadMain(data.retuReview, data.revieHighRat,data.review, true));setSearch(data.review); setComments(data.comments);})
         .catch(err=>console.log(err))
         // eslint-disable-next-line
   },[])

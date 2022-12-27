@@ -15,6 +15,7 @@ const initialState={
     nameReview:'',
     lastReview:[],
     reviewHighScore:[],
+    allReview:[],
     isLoadReview:false
  }
 
@@ -25,6 +26,7 @@ const initialState={
             let newState={...state};
             newState.lastReview=action.lastR;
             newState.reviewHighScore=action.highSc;
+            newState.allReview=action.allReview;
             newState.isLoadReview=action.isLoad;
             return newState;
         }

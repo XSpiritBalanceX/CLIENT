@@ -60,11 +60,12 @@ const addNameReview=function(name){
    }
 }
 
-const loadMain=function(last, score, bool){
+const loadMain=function(last, score,all, bool){
    return{
       type:load_main_data,
       lastR:last,
       highSc:score,
+      allReview:all,
       isLoad:bool
    }
 }

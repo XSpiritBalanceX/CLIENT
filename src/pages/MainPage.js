@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import { Card, Spinner } from 'react-bootstrap';
@@ -7,11 +7,14 @@ import {useParams, useNavigate } from 'react-router-dom';
 import decoded from 'jwt-decode';
 import { loginUser } from '../redux/explainForReducer';
 import CardReview from '../components/items/CardReview';
+import {TagCloud} from 'react-tagcloud'
 
 
 const IntMainPage=(props)=>{
     const params=useParams();
     const navigate=useNavigate();
+    const [tagCloudData, setCloud]=useState([]);
+    const [dataInTags, setDataInTags]=useState([])
     
     useEffect(()=>{ 
         if(params.token){
@@ -20,12 +23,39 @@ const IntMainPage=(props)=>{
             props.dispatch(loginUser(true, email, params.token, name));
         } 
         // eslint-disable-next-line
-    },[])
+    },[]);
+
+    useEffect(()=>{
+        let arrData=[];
+        props.allReviews.forEach(el=>{
+            arrData.push(el.teg)
+        });
+        let newData=arrData.join(',').split(',').reduce((acc,el)=>{
+            acc[el]=(acc[el]||0)+1;
+            return acc
+        },{})
+        let result=[];
+        for(let k in newData){
+            result.push({value:k, count:newData[k]})
+        }
+        setCloud(result)
+        // eslint-disable-next-line
+    },[props.isLoad===true])
+    
+    const findReviewTags=(value)=>{
+        let cardCloud=[];
+        props.allReviews.forEach(el=>{
+            if(el.teg.includes(value)){
+                cardCloud.push(el)
+        }});
+        setDataInTags(cardCloud)
+    }
 
     const showR=(id)=>{        
         let item=props.lastReview.find(el=>el.id===id) || props.reviewHighScore.find(el=>el.id===id)
        navigate('/showReview/'+item.id)
     }
+    
 
     let lastR=props.lastReview.map(el=>{
         return <CardReview key={el.id}
@@ -52,11 +82,24 @@ const IntMainPage=(props)=>{
     return(
         <div>
             {props.isLoad?<React.Fragment><div className='helloMain'>
-                <Card style={{width:'70%', border:'solid 4px #9FA0A4'}} className='p-4 contMain'>
-                 <Card.Img variant="top" src={mainImg} style={{width:'30%', height:'5%', borderRadius:'5px', margin:'0 auto 2% auto'}}/> 
+                <React.Fragment><Card className='p-4 contMain'>
+                 <Card.Img variant="top" src={mainImg} style={{width:'30%', height:'60%', borderRadius:'5px', margin:'0 auto 2% auto'}}/> 
                     <Card.Title><FormattedMessage id='title'/></Card.Title>
                     <FormattedMessage id='gretings'/>
-                </Card>   
+                </Card> </React.Fragment>
+                <React.Fragment><TagCloud className='tagCloud' tags={tagCloudData} minSize={12} maxSize={35} onClick={tag=>findReviewTags(tag.value)}/></React.Fragment>     
+            </div>
+            <div className='tagsContent'>
+                {dataInTags.map(el=>{
+                    return <CardReview key={el.id}
+                    id={el.id}
+                    title={el.title}
+                    username={el.nameuser}
+                    date={el.date}
+                    teg={el.teg}
+                    rate={el.rate}
+                    cbshowR={showR}/>
+                })}
             </div>
             <div>
                 <h4 className='HInMain'><FormattedMessage id='lastRev'/></h4>
@@ -77,6 +120,7 @@ const mapStateToProps=(state)=>{
     return { 
         lastReview:state.info.lastReview,
         reviewHighScore:state.info.reviewHighScore,
+        allReviews:state.info.allReview,
         isLoad:state.info.isLoadReview,
     }
  }

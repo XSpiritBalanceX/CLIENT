@@ -58,7 +58,7 @@ const IntAdminPage=(props)=>{
         setAllUsers(data)
     }
     const giveAdmin=async(id, role,email)=>{
-        let response=await fetch(`https://server-production-5ca0.up.railway.app/admin/giveadmin?id=${id}&newrole=${role}`)
+        let response=await fetch(`https://server-production-5ca0.up.railway.app/api/admin/giveadmin?id=${id}&newrole=${role}`)
         let data=await response.json(); 
         setAllUsers(data)
         if(email===props.email){

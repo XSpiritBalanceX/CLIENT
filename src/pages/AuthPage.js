@@ -47,7 +47,7 @@ const IntAuthPage=(props)=>{
           }
           setForm({email:'', password:''}); 
         }else{
-           let response=await fetch('https://server-production-5ca0.up.railway.app/api/user/registration',{method:'POST',
+           let response=await fetch('https://server-production-5ca0.up.railway.app/api/user/registration' ,{method:'POST',
             headers:{
              'Accept': 'application/json',
              'Content-Type': 'application/json'
