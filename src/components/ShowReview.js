@@ -13,7 +13,6 @@ const IntShowReview=(props)=>{
 
     const params=useParams();
     const idReview=params.id;
-    function createMarkup(text) { return {__html: text}; };
     const [newComment, setNewComment]=useState('');
     const [isLoad, setLoad]=useState(false);
     const [oneReview, setOneReview]=useState([]);

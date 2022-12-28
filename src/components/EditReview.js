@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react';
 import {Button,  Form, Container, Card,  Modal} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
-import Editor from "./editor/Editor";
 import {Typeahead} from 'react-bootstrap-typeahead';
 import {useParams} from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import {Rating} from 'react-simple-star-rating';
 
 
 const IntEditReview=(props)=>{
@@ -21,12 +21,13 @@ const IntEditReview=(props)=>{
     const handleClose = () => setShow(false);
     const [pic, setPic] = useState('');
     const [text, setText]=useState('...');
+    const [star, setStar]=useState(0);
 
     useEffect(()=>{
         fetch(`https://server-production-5ca0.up.railway.app/api/review/itemreview?id=${idReview}`)
         .then(response=>response.json())
-        .then(data=>{setLoad(true);setInfoReview({title:data.title, name:data.name, rate:data.rate, 
-            groupn:data.groupn, teg:[data.teg],url:data.namepict});setText(data.text)})
+        .then(data=>{setLoad(true);setInfoReview({title:data.title, name:data.name, 
+            groupn:data.groupn, teg:[data.teg],url:data.namepict});setText(data.text); setStar(data.rate)})
         .catch(err=>console.log(err))
         // eslint-disable-next-line
     },[idReview]); 
@@ -35,15 +36,6 @@ const IntEditReview=(props)=>{
         setInfoReview({...infoReview, [event.target.name]:event.target.value})
     }
 
-    const changeRat=(event)=>{
-        if(Number(event.target.value)>10){
-            setInfoReview({...infoReview, rate:0})
-            setModal(<FormattedMessage id='errRat'/>)
-            setShow(true);
-           }else{   
-            setInfoReview({...infoReview, rate:event.target.value}) 
-           }  
-    }
     const handleChange = (e) => {
         setPic(e.target.files[0]);
     };
@@ -55,7 +47,7 @@ const IntEditReview=(props)=>{
         formData.append("title", infoReview.title);
         formData.append("groupn", infoReview.groupn);
         formData.append("teg", infoReview.teg);
-        formData.append("rate", infoReview.rate);
+        formData.append("rate", star);
         formData.append("text", text);
         let response=await fetch('https://server-production-5ca0.up.railway.app/api/review/editreview',{
         method:'POST',
@@ -64,6 +56,9 @@ const IntEditReview=(props)=>{
       let data=await response.json();
       setModal(data.message);
       setShow(true);
+    }
+    const handleRating=(rate)=>{
+      setStar(rate)
     }
 
     let options=props.locale==='en-US'?['Games', 'Movies', "Books", "Series"]:['Игры', 'Фильмы', "Книги", "Сериалы"]
@@ -89,9 +84,10 @@ const IntEditReview=(props)=>{
                     placeholder={intl.formatMessage({id:'tags'})}
                     selected={infoReview.teg}
                 /> 
-                <Form.Control type="number" min={0} max={10} maxLength="2" name='rate'  
-                 className="mt-3" onChange={(event)=>changeRat(event)} placeholder={intl.formatMessage({id:'rate'})}  value={infoReview.rate}/>
-                   
+                <div style={{textAlign:'center', marginBottom:'2%'}}>
+                  <p><FormattedMessage id='rate'/></p>
+                  <Rating initialValue={star} onClick={handleRating} iconsCount={10} size={30}/> 
+                </div>
                  <CKEditor 
                     editor={ ClassicEditor } 
                     data={text} 
@@ -100,7 +96,7 @@ const IntEditReview=(props)=>{
                       setText(data)
                     }}
                   /> 
-                <img alt={infoReview.name} src={infoReview.url} style={{width:'7em', height:'7em'}}/> 
+                <img alt={infoReview.name} src={infoReview.url} style={{width:'7em', height:'7em', marginTop:'2%'}}/> 
                 <div className='mt-3'>
                 {pic!==''?<FormattedMessage id='addPict'/>:<FormattedMessage id='rule'/>}               
               </div>        

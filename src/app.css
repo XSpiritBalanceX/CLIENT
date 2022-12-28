@@ -382,6 +382,9 @@ body{
 .ck[data-cke-tooltip-text="Insert media"]{
     display: none;
 }
+.ck{
+    color: black;
+}
 
 @media all and (max-width: 60em){
     .myPageContainer{

@@ -3,18 +3,12 @@ import {connect} from 'react-redux';
 import {Button,  Form, Container, Card,  Modal, Spinner} from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {Typeahead} from 'react-bootstrap-typeahead';
-import EditorMy from "./editor/Editor";
 import {Rating} from 'react-simple-star-rating';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const IntNewReview=(props)=>{
 
-  const initialMarkdownContent ='';
-  const [editorHtmlValue, setEditorHtmlValue] = useState("");
-  const onEditorContentChanged = (content) => {
-    setEditorHtmlValue(content.html);
-  };
     let nameRev=props.nameItem===''?'':props.nameItem;
     const [isLoad, setLoad]=useState(false);
     const [title, setTitle]=useState('');
@@ -82,7 +76,7 @@ const IntNewReview=(props)=>{
     const sendReview=async(event)=>{
       event.preventDefault();
       if(group.length===0 || title==='' ||titleWo==='' || 
-        editorHtmlValue==='' || tags.length===0){
+        text==='' || text==='...' || tags.length===0){
         setModal(<FormattedMessage id='errField'/>)
         setShow(true);
       } else{
@@ -93,7 +87,7 @@ const IntNewReview=(props)=>{
         formData.append("groupn", group);
         formData.append("teg", tags);
         formData.append("rate", star);
-        formData.append("text", editorHtmlValue);
+        formData.append("text", text);
         formData.append("useremail", props.useremail);
         let response=await fetch('https://server-production-5ca0.up.railway.app/api/review/postpic',{
         method:'POST',
@@ -107,7 +101,7 @@ const IntNewReview=(props)=>{
       setPic('')
       setTags([]);
       setGroupn([]);
-      setEditorHtmlValue('');
+      setText('...');
       setStar(0);
       }          
     }
@@ -193,11 +187,11 @@ const IntNewReview=(props)=>{
                     placeholder={intl.formatMessage({id:'tags'})}
                     selected={tags}
                 />
-                <div style={{textAlign:'center'}}>
+                <div style={{textAlign:'center', marginBottom:'2%'}}>
                   <p><FormattedMessage id='rate'/></p>
                   <Rating initialValue={star} onClick={handleRating} iconsCount={10} size={30}/> 
                 </div>
-                <CKEditor 
+                <CKEditor className='myEditorField'
                   editor={ ClassicEditor } 
                   data={text} 
                   onChange={( event, editor ) => {
