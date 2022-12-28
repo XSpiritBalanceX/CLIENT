@@ -3,9 +3,10 @@ import {connect} from 'react-redux';
 import {Button,  Form, Container, Card,  Modal, Spinner} from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {Typeahead} from 'react-bootstrap-typeahead';
-import Editor from "./editor/Editor";
+import EditorMy from "./editor/Editor";
 import {Rating} from 'react-simple-star-rating';
-
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const IntNewReview=(props)=>{
 
@@ -33,6 +34,8 @@ const IntNewReview=(props)=>{
     const [everySeries, setSeries]=useState([]);
     const [dataForTitleWork, setDataTitle]=useState([]);
     const [star, setStar]=useState(0);
+    const [showPicture, setShowPicture]=useState('');
+    const [text, setText]=useState('...');
 
     const intl=useIntl();
 
@@ -53,7 +56,7 @@ const IntNewReview=(props)=>{
       event.stopPropagation();
       setDragEnter(true)
     }
-const [showPicture, setShowPicture]=useState('')
+
     const dropHandler=(event)=>{
       event.preventDefault();
       event.stopPropagation();
@@ -151,7 +154,7 @@ const [showPicture, setShowPicture]=useState('')
     const handleRating=(rate)=>{
       setStar(rate)
     }
-
+    
     return(
       <React.Fragment>
         {isLoad?<Container className="d-flex justify-content-center align-items-center" style={{height:'auto', margin:'2% auto 2% auto'}}>          
@@ -194,10 +197,18 @@ const [showPicture, setShowPicture]=useState('')
                   <p><FormattedMessage id='rate'/></p>
                   <Rating initialValue={star} onClick={handleRating} iconsCount={10} size={30}/> 
                 </div>
-              <Editor 
+                <CKEditor 
+          editor={ ClassicEditor } 
+          data={text} 
+          onChange={( event, editor ) => {
+            const data = editor.getData();
+            setText(data)
+          }}
+        />
+              {/* <EditorMy 
                 value={initialMarkdownContent}
                 onChange={onEditorContentChanged}
-              />     
+              />  */}    
                <div className='mt-3'>
                 {pic!==''?<FormattedMessage id='addPict'/>:<FormattedMessage id='rule'/>}               
               </div>

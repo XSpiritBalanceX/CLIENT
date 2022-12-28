@@ -372,7 +372,15 @@ body{
 .btnForImage i{
     position: absolute;top:0;left: 20%;
 }
-
+.ck[data-cke-tooltip-text="Insert image"]{
+    display: none;
+}
+.ck[data-cke-tooltip-text="Insert table"]{
+    display: none;
+}
+.ck[data-cke-tooltip-text="Insert media"]{
+    display: none;
+}
 
 @media all and (max-width: 60em){
     .myPageContainer{
