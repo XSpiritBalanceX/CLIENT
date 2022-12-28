@@ -158,6 +158,7 @@ body{
     background-color:var(--textReview-background);
     border-radius: 10px;
     padding: 5px;
+    color:black;
 }
 
 .myCardReview{

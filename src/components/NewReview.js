@@ -198,17 +198,13 @@ const IntNewReview=(props)=>{
                   <Rating initialValue={star} onClick={handleRating} iconsCount={10} size={30}/> 
                 </div>
                 <CKEditor 
-          editor={ ClassicEditor } 
-          data={text} 
-          onChange={( event, editor ) => {
-            const data = editor.getData();
-            setText(data)
-          }}
-        />
-              {/* <EditorMy 
-                value={initialMarkdownContent}
-                onChange={onEditorContentChanged}
-              />  */}    
+                  editor={ ClassicEditor } 
+                  data={text} 
+                  onChange={( event, editor ) => {
+                    const data = editor.getData();
+                    setText(data)
+                  }}
+                />   
                <div className='mt-3'>
                 {pic!==''?<FormattedMessage id='addPict'/>:<FormattedMessage id='rule'/>}               
               </div>

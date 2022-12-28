@@ -6,6 +6,7 @@ import {Form, Button, Spinner, Modal} from 'react-bootstrap';
 import 'animate.css';
 import {useReactToPrint} from 'react-to-print';
 import {Rating} from 'react-simple-star-rating';
+import parse from 'html-react-parser';
 
 
 const IntShowReview=(props)=>{
@@ -60,7 +61,7 @@ const IntShowReview=(props)=>{
                 <p><FormattedMessage id='group'/>: {el.groupn}</p>
                 <p><FormattedMessage id='revTags'/>{el.teg}</p>
                 <p><FormattedMessage id='ratAuth'/>{el.rate} <i className="bi bi-star-fill"></i></p>
-                <p dangerouslySetInnerHTML={createMarkup(el.text)} className='textReview'/>
+                <div className='textReview'>{parse(el.text)}</div>
             </div>
       </div>
     }):null;

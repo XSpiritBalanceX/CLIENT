@@ -5,6 +5,8 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import Editor from "./editor/Editor";
 import {Typeahead} from 'react-bootstrap-typeahead';
 import {useParams} from 'react-router-dom';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 const IntEditReview=(props)=>{
@@ -17,18 +19,14 @@ const IntEditReview=(props)=>{
     const [show, setShow] = useState(false);
     const [modalInfo, setModal]=useState('');
     const handleClose = () => setShow(false);
-    const initialMarkdownContent ='';
-    const [editorHtmlValue, setEditorHtmlValue] = useState("");
-    const onEditorContentChanged = (content) => {
-      setEditorHtmlValue(content.html);
-    };
     const [pic, setPic] = useState('');
+    const [text, setText]=useState('...');
 
     useEffect(()=>{
         fetch(`https://server-production-5ca0.up.railway.app/api/review/itemreview?id=${idReview}`)
         .then(response=>response.json())
         .then(data=>{setLoad(true);setInfoReview({title:data.title, name:data.name, rate:data.rate, 
-            groupn:data.groupn, teg:[data.teg], text:data.text, url:data.namepict})})
+            groupn:data.groupn, teg:[data.teg],url:data.namepict});setText(data.text)})
         .catch(err=>console.log(err))
         // eslint-disable-next-line
     },[idReview]); 
@@ -58,7 +56,7 @@ const IntEditReview=(props)=>{
         formData.append("groupn", infoReview.groupn);
         formData.append("teg", infoReview.teg);
         formData.append("rate", infoReview.rate);
-        formData.append("text", editorHtmlValue);
+        formData.append("text", text);
         let response=await fetch('https://server-production-5ca0.up.railway.app/api/review/editreview',{
         method:'POST',
         body:formData
@@ -69,7 +67,6 @@ const IntEditReview=(props)=>{
     }
 
     let options=props.locale==='en-US'?['Games', 'Movies', "Books", "Series"]:['Игры', 'Фильмы', "Книги", "Сериалы"]
-    function createMarkup(text) { return {__html: text}; };
     return(
         <Container className="d-flex justify-content-center align-items-center" style={{height:'auto', margin:'2% auto 2% auto'}}>          
           {isLoad?<Card style={{width:600, border:'2px solid'}} className='p-5 contMain'>
@@ -94,11 +91,15 @@ const IntEditReview=(props)=>{
                 /> 
                 <Form.Control type="number" min={0} max={10} maxLength="2" name='rate'  
                  className="mt-3" onChange={(event)=>changeRat(event)} placeholder={intl.formatMessage({id:'rate'})}  value={infoReview.rate}/>
-                 <p dangerouslySetInnerHTML={createMarkup(infoReview.text)} className='textReview'></p>  
-                <Editor style={{border:'red 1px solid'}}
-                    value={initialMarkdownContent}
-                    onChange={onEditorContentChanged}
-                /> 
+                   
+                 <CKEditor 
+                    editor={ ClassicEditor } 
+                    data={text} 
+                    onChange={( event, editor ) => {
+                      const data = editor.getData();
+                      setText(data)
+                    }}
+                  /> 
                 <img alt={infoReview.name} src={infoReview.url} style={{width:'7em', height:'7em'}}/> 
                 <div className='mt-3'>
                 {pic!==''?<FormattedMessage id='addPict'/>:<FormattedMessage id='rule'/>}               
