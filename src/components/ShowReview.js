@@ -48,8 +48,8 @@ const IntShowReview=(props)=>{
     let review=isLoad?oneReview.map(el=>{
         nameReviewNow=el.title;
         nameuser=el.nameuser;
-     return <div key={el.id} className='showRev' ref={template}>
-            <div className='floatDiv'>
+     return <div key={el.id} className='showRev' ref={template} >
+            <div className='floatDiv'  >
                <img src={el.namepict} alt={el.name} className='pict'/> 
               <p><FormattedMessage id='ratReview'/>{averageRating.length===0?0:average.toFixed(1)} <i className="bi bi-star-fill"></i></p>
                 <p>{sumLikes} <i className="bi bi bi-hand-thumbs-up"></i></p>
@@ -65,7 +65,15 @@ const IntShowReview=(props)=>{
       </div>
     }):null;
     
-
+    console.error = (function() {
+        const error = console.error;    
+        return function(exception) {
+            if ((exception + '').indexOf('Warning: A component is `contentEditable`') !== 0) {
+                error.apply(console, arguments)
+            }
+        }
+    })() 
+    
     const sendComment=async()=>{
         let sendInfo={
             namereview:nameReviewNow,
