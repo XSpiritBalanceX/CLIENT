@@ -15,6 +15,7 @@ const IntEditReview=(props)=>{
     const idReview=params.id;
     const intl=useIntl();
     const [isLoad, setLoad]=useState(false);
+    const [isLoadTags, setLoadTags]=useState(false);
     const [infoReview, setInfoReview]=useState([]);
     const [show, setShow] = useState(false);
     const [modalInfo, setModal]=useState('');
@@ -22,15 +23,25 @@ const IntEditReview=(props)=>{
     const [pic, setPic] = useState('');
     const [text, setText]=useState('...');
     const [star, setStar]=useState(0);
+    const [allTags, setallTags]=useState([]);
+    const [initialTags, setInitial]=useState([]);
+    const [tags, setTags]=useState('');
 
     useEffect(()=>{
         fetch(`https://server-production-5ca0.up.railway.app/api/review/itemreview?id=${idReview}`)
         .then(response=>response.json())
         .then(data=>{setLoad(true);setInfoReview({title:data.title, name:data.name, 
-            groupn:data.groupn, teg:[data.teg],url:data.namepict});setText(data.text); setStar(data.rate)})
+            groupn:data.groupn,url:data.namepict});setTags(data.teg.split(','));setText(data.text); setStar(data.rate);})
         .catch(err=>console.log(err))
         // eslint-disable-next-line
     },[idReview]); 
+
+    useEffect(()=>{
+      fetch('https://server-production-5ca0.up.railway.app/api/review/gettags')
+      .then(response=>response.json())
+      .then(data=>{ setallTags(data);setInitial(data);setLoadTags(true)})
+      .catch(err=>console.log(err))
+    },[])
 
     const changeInfo=(event)=>{
         setInfoReview({...infoReview, [event.target.name]:event.target.value})
@@ -46,7 +57,7 @@ const IntEditReview=(props)=>{
         formData.append("pic", pic);
         formData.append("title", infoReview.title);
         formData.append("groupn", infoReview.groupn);
-        formData.append("teg", infoReview.teg);
+        formData.append("teg", tags);
         formData.append("rate", star);
         formData.append("text", text);
         let response=await fetch('https://server-production-5ca0.up.railway.app/api/review/editreview',{
@@ -61,10 +72,21 @@ const IntEditReview=(props)=>{
       setStar(rate)
     }
 
+    const changeTags=(event)=>{
+      let newAllTags=allTags.slice()
+      newAllTags.push(event)
+      setallTags(newAllTags) 
+    }
+
+    useEffect(()=>{
+      setallTags([...initialTags].concat([...tags]));
+      // eslint-disable-next-line
+    },[tags])
+
     let options=props.locale==='en-US'?['Games', 'Movies', "Books", "Series"]:['Игры', 'Фильмы', "Книги", "Сериалы"]
     return(
         <Container className="d-flex justify-content-center align-items-center" style={{height:'auto', margin:'2% auto 2% auto'}}>          
-          {isLoad?<Card style={{width:600, border:'2px solid'}} className='p-5 contMain'>
+          {isLoad&&isLoadTags?<Card style={{width:600, border:'2px solid'}} className='p-5 contMain'>
             <h2 className="m-auto"><FormattedMessage id='editRev'/></h2>
             <Form className="d-flex flex-column"  onSubmit={sendEditInfo}>
             <Form.Control type="text" className="mt-3" name='title' onChange={(event)=>changeInfo(event)} 
@@ -74,16 +96,17 @@ const IntEditReview=(props)=>{
                     {options.map((el, index)=>{
                         return (<option key={index}>{el}</option>)
                     })}
-                    </Form.Control>  
-                <Typeahead className="mt-3 myMylti" 
-                    id="basic-typeahead-multiple"
-                    labelKey="name"
-                    multiple 
-                    onChange={(event)=>setInfoReview({...infoReview,teg:event})}
-                    options={props.tags}
-                    placeholder={intl.formatMessage({id:'tags'})}
-                    selected={infoReview.teg}
-                /> 
+                    </Form.Control> 
+                    <Typeahead className="mt-3 myMylti" 
+                      id="basic-typeahead-multiple"
+                      labelKey="nameTags"
+                      multiple 
+                      onInputChange={(event)=>changeTags(event)}
+                      onChange={(event)=>{setTags(event);}}
+                      options={allTags}
+                      selected={tags}
+                    />     
+                
                 <div style={{textAlign:'center', marginBottom:'2%'}}>
                   <p><FormattedMessage id='rate'/></p>
                   <Rating initialValue={star} onClick={handleRating} iconsCount={10} size={30}/> 
