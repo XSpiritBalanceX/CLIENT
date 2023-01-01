@@ -20,7 +20,7 @@ const IntPageLinks=(props)=>{
   const [allComments, setComments]=useState([])
   let stopWords = new Set(['and', 'or', 'to', 'in', 'a', 'the', 'и', 'а', 'или', 'но', 'не',])
   let miniSearch= new MiniSearch({
-    fields:['title','text'],
+    fields:['title','comments', 'text'],
     storeFields:['title', 'namereview'],
      processTerm:(term, _fieldName) =>
     stopWords.has(term) ? null : term.toLowerCase(), 
@@ -41,8 +41,21 @@ const IntPageLinks=(props)=>{
 
   
   if(props.isLoad===true){
-    miniSearch.addAll(searchData);
-    miniSearch.addAll(allComments);
+    let searArr=[]    
+     for(let k in searchData){
+      let el={}
+      el.comments=[]
+      for(let y in allComments){
+        if(allComments[y].namereview===searchData[k].title){
+          el.comments.push(allComments[y].text)
+        }
+      }
+      el.id=searchData[k].id;
+      el.text=searchData[k].text;
+      el.title=searchData[k].title;
+      searArr.push(el)
+    } 
+    miniSearch.addAll(searArr);
   }
 
   useEffect(()=>{

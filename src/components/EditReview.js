@@ -26,12 +26,14 @@ const IntEditReview=(props)=>{
     const [allTags, setallTags]=useState([]);
     const [initialTags, setInitial]=useState([]);
     const [tags, setTags]=useState('');
+    const [showPicture, setShowPicture]=useState('');
 
     useEffect(()=>{
         fetch(`https://server-production-5ca0.up.railway.app/api/review/itemreview?id=${idReview}`)
         .then(response=>response.json())
         .then(data=>{setLoad(true);setInfoReview({title:data.title, name:data.name, 
-            groupn:data.groupn,url:data.namepict});setTags(data.teg.split(','));setText(data.text); setStar(data.rate);})
+            groupn:data.groupn});
+            setPic(data.namepict);setTags(data.teg.split(','));setText(data.text); setStar(data.rate);})
         .catch(err=>console.log(err))
         // eslint-disable-next-line
     },[idReview]); 
@@ -49,6 +51,11 @@ const IntEditReview=(props)=>{
 
     const handleChange = (e) => {
         setPic(e.target.files[0]);
+        let reader=new FileReader();
+      reader.onloadend=()=>{
+        setShowPicture(reader.result)
+      }
+      reader.readAsDataURL(e.target.files[0]);
     };
 
     const sendEditInfo=async()=>{
@@ -82,6 +89,36 @@ const IntEditReview=(props)=>{
       setallTags([...initialTags].concat([...tags]));
       // eslint-disable-next-line
     },[tags])
+
+    const [dragEnter, setDragEnter]=useState(false);
+    const dragEnterHangler=(event)=>{
+      event.preventDefault();
+      event.stopPropagation();
+      setDragEnter(true)
+    }
+    const dragLeaveHangler=(event)=>{
+      event.preventDefault();
+      event.stopPropagation();
+      setDragEnter(false)
+    }
+    const dragOverHangler=(event)=>{
+      event.preventDefault();
+      event.stopPropagation();
+      setDragEnter(true)
+    }
+
+    const dropHandler=(event)=>{
+      event.preventDefault();
+      event.stopPropagation();
+      setPic(event.dataTransfer.files[0]);
+      let reader=new FileReader();
+      reader.onloadend=()=>{
+        setShowPicture(reader.result)
+      }
+      reader.readAsDataURL(event.dataTransfer.files[0])      
+      setDragEnter(false)
+    }
+   
 
     let options=props.locale==='en-US'?['Games', 'Movies', "Books", "Series"]:['Игры', 'Фильмы', "Книги", "Сериалы"]
     return(
@@ -119,14 +156,20 @@ const IntEditReview=(props)=>{
                       setText(data)
                     }}
                   /> 
-                <img alt={infoReview.name} src={infoReview.url} style={{width:'7em', height:'7em', marginTop:'2%'}}/> 
-                <div className='mt-3'>
-                {pic!==''?<FormattedMessage id='addPict'/>:<FormattedMessage id='rule'/>}               
-              </div>        
-              <div className='mt-3'>
+                 {pic?<div style={{marginTop:'2%'}}>
+                <img src={showPicture || pic} alt={infoReview.title} style={{width:'13em', height:'10em'}}/>
+                <Button className='btnForImage' onClick={()=>{setPic('')}}><i className="bi bi-x"></i></Button>
+              </div>:null }        
+              {pic===''?<React.Fragment><div className='mt-3'>
                 <label htmlFor='loadPic' className='labelMyInput'><FormattedMessage id='upload'/></label>
                  <input type={'file'} onChange={handleChange} id='loadPic' className='MyInput'/>
-              </div>
+              </div>              
+                <div className='MyPicture mt-3'  onDragEnter={dragEnterHangler} 
+                onDragLeave={dragLeaveHangler} onDragOver={dragOverHangler} onDrop={dropHandler}>                  
+                { dragEnter?<div style={{textAlign:'center'}}><i className="bi bi-card-image pictDrag"></i><div><FormattedMessage id='drop'/></div></div>:<div style={{textAlign:'center'}}><i className="bi bi-card-image pictDrag"></i><div><FormattedMessage id='drag'/></div></div> }
+              </div></React.Fragment>:null}
+
+                
               <div className=" d-flex  justify-content-end mt-3 pl-3 pr-3">
                 <Button  variant="outline-dark" className='myBtn'  type='submit' ><FormattedMessage id='edit'/></Button>
               </div>    
