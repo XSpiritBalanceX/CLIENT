@@ -33,6 +33,18 @@ const IntShowReview=(props)=>{
         // eslint-disable-next-line
     },[idReview]); 
 
+    useEffect(()=>{
+         if(averageRating!==0){
+            averageRating.forEach(el=>{
+                if(el.useremail===props.useremail){
+                    setLike(el.like);
+                    setStar(el.value)
+                }
+            })
+        }         
+        // eslint-disable-next-line
+    },[isLoad]) 
+
     let average=0;
     averageRating===0?average=0:averageRating.map(el=>{
         return average=average+el.value/averageRating.length
