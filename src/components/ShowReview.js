@@ -2,11 +2,13 @@ import React, {useState, useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import {useParams} from 'react-router-dom';
-import {Form, Button, Spinner, Modal} from 'react-bootstrap';
+import {Form, Button, Spinner} from 'react-bootstrap';
 import 'animate.css';
 import {useReactToPrint} from 'react-to-print';
 import {Rating} from 'react-simple-star-rating';
 import parse from 'html-react-parser';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const IntShowReview=(props)=>{
@@ -16,9 +18,6 @@ const IntShowReview=(props)=>{
     const [newComment, setNewComment]=useState('');
     const [isLoad, setLoad]=useState(false);
     const [oneReview, setOneReview]=useState([]);
-    const [show, setShow] = useState(false);
-    const [modalInfo, setModal]=useState('');
-    const handleClose = () => setShow(false);
     const [allComments, setAllComments]=useState([]);
     const [isLoadComment, setLoadComment]=useState(false);
     const template=useRef();
@@ -89,8 +88,11 @@ const IntShowReview=(props)=>{
             body:JSON.stringify(sendInfo)
           })
         const data=await response.json();
-        setModal(data.message);
-        setShow(true);
+        if(response.status!==200){
+            toast.error(<FormattedMessage id='errShow' />);
+        }else{
+          toast.success(data.message);  
+        } 
         setNewComment('');
     }
 
@@ -133,12 +135,11 @@ const IntShowReview=(props)=>{
                 body:JSON.stringify({useremail:props.useremail, value:rate, namereview:nameReviewNow})
             });
             if(response.status!==200){
-                setModal('Упс...Попробуй еще раз');
-                setShow(true);
+                toast.error(<FormattedMessage id='errShow' />);
+            }else{
+              let data=await response.json();
+              toast.success(data.message);  
             }
-            let data=await response.json();
-            setModal(data.message);
-            setShow(true);
         }
 
         const clickLike=async()=>{
@@ -152,12 +153,12 @@ const IntShowReview=(props)=>{
                 body:JSON.stringify({useremail:props.useremail, like:!like, namereview:nameReviewNow})
             });
             if(response.status!==200){
-                setModal('Упс...Попробуй еще раз');
-                setShow(true);
+                toast.error(<FormattedMessage id='errShow' />);
+            }else{
+              let data=await response.json();
+              toast.success(data.message);  
             }
-            let data=await response.json();
-            setModal(data.message);
-            setShow(true);
+            
         }
  
     return(
@@ -195,12 +196,8 @@ const IntShowReview=(props)=>{
         </React.Fragment>
     } 
 
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Body>{modalInfo}</Modal.Body>
-                <Modal.Footer>
-                  <Button variant="secondary"  onClick={handleClose}>Close</Button>
-                </Modal.Footer>
-            </Modal>
+            <ToastContainer position="top-center"
+              autoClose={5000}/>
         </div>
         
         

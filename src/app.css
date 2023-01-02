@@ -344,7 +344,6 @@ body{
     overflow-y: auto;
 }
 .autocomplite li{
-    list-style-type: none;
     margin-bottom: 2%;
 }
 .autocomplite a{
@@ -485,5 +484,9 @@ body{
     }
     .contMain{
         width: 90%;
+    }
+    .autocomplite{
+        width: 100%;
+        position: absolute; top: 47px;left:20%;
     }
 }

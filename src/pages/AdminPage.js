@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {Button,Table,Spinner,Modal  } from 'react-bootstrap';
+import {Button,Table,Spinner  } from 'react-bootstrap';
 import {useNavigate } from 'react-router-dom';
 import {connect} from 'react-redux';
 import { FormattedMessage} from 'react-intl';
 import AdminTable from '../components/AdminTable';
 import {loginUser} from '../redux/explainForReducer';
 import decoded from 'jwt-decode';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const IntAdminPage=(props)=>{
 
@@ -13,9 +15,6 @@ const IntAdminPage=(props)=>{
     const navigate=useNavigate();
     const [allUsers, setAllUsers]=useState([]);
     const [myEmail, setMyEmail]=useState('');
-    const [show, setShow] = useState(false);
-    const [modalInfo, setModal]=useState('');
-    const handleClose = () => setShow(false);
 
     const checkRole=async()=>{        
         const response=await fetch('https://server-production-5ca0.up.railway.app/api/admin/', {
@@ -78,9 +77,12 @@ const IntAdminPage=(props)=>{
             },
             body:JSON.stringify({id, email})
            })
-        let data=await response.json();
-        setModal(data.message)
-        setShow(true); 
+        if(response.status!==200){
+            toast.error(<FormattedMessage id='errShow' />);
+        }else{
+          let data=await response.json();
+          toast.success(data.message);  
+        }
         if(email===props.email){
             sessionStorage.removeItem('token')
             sessionStorage.removeItem('admin')
@@ -136,12 +138,8 @@ const IntAdminPage=(props)=>{
                      {bodyUsers}       
                     </tbody>
                 </Table>
-                <Modal show={show} onHide={handleClose}>
-                    <Modal.Body>{modalInfo}</Modal.Body>
-                    <Modal.Footer>
-                      <Button variant="secondary"  onClick={handleClose}>Close</Button>
-                    </Modal.Footer>
-                </Modal>
+                <ToastContainer position="top-center"
+                    autoClose={5000}/>
             </div>
             </div>:
             <Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}

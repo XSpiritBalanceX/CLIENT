@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Button,Form,Table,Spinner, Modal, Dropdown } from 'react-bootstrap';
+import {Button,Form,Table,Spinner, Dropdown } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {useNavigate } from 'react-router-dom';
 import Reviews from '../components/Reviews';
-import {addNameReview} from '../redux/explainForReducer'
+import {addNameReview} from '../redux/explainForReducer';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const IntMyPage=(props)=>{
@@ -17,9 +19,6 @@ const IntMyPage=(props)=>{
     const navigate=useNavigate();
     const [isToken, setToken]=useState(false);
     const [allLikes, setAllLikes]=useState([]);
-    const [show, setShow] = useState(false);
-    const [modalInfo, setModal]=useState('');
-    const handleClose = () => setShow(false);
     
     
     useEffect(()=>{
@@ -70,9 +69,12 @@ const IntMyPage=(props)=>{
         },
         body:JSON.stringify({id, title})
       })
-      let data=await response.json();
-      setModal(data.message)
-      setShow(true);       
+      if(response.status!==200){
+        toast.error(<FormattedMessage id='errShow' />);
+      }else{
+        let data=await response.json();
+        toast.success(data.message);  
+      }       
     }
 
     useEffect(()=>{
@@ -169,12 +171,8 @@ const IntMyPage=(props)=>{
       </tbody>
     </Table>
 
-            <Modal show={show} onHide={handleClose}>
-              <Modal.Body>{modalInfo}</Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary"  onClick={handleClose}>Close</Button>
-              </Modal.Footer>
-            </Modal>
+            <ToastContainer position="top-center"
+              autoClose={5000}/>
             </div>:<Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}
         </div>
     )

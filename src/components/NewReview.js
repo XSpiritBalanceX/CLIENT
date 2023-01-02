@@ -1,11 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Button,  Form, Container, Card,  Modal, Spinner} from 'react-bootstrap';
+import {Button,  Form, Container, Card, Spinner} from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {Typeahead} from 'react-bootstrap-typeahead';
 import {Rating} from 'react-simple-star-rating';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const IntNewReview=(props)=>{
 
@@ -15,9 +17,6 @@ const IntNewReview=(props)=>{
     const [titleWo, setTitleWo]=useState(nameRev);
     const [group, setGroupn]=useState([]);
     const [tags, setTags]=useState([]);
-    const [show, setShow] = useState(false);
-    const [modalInfo, setModal]=useState('');
-    const handleClose = () => setShow(false);
     const [dragEnter, setDragEnter]=useState(false);
     const [pic, setPic] = useState('');
     const [allTags, setallTags]=useState([]);
@@ -77,8 +76,7 @@ const IntNewReview=(props)=>{
       event.preventDefault();
       if(group.length===0 || title==='' ||titleWo==='' || 
         text==='' || text==='...' || tags.length===0){
-        setModal(<FormattedMessage id='errField'/>)
-        setShow(true);
+        toast.error(<FormattedMessage id='errField'/>);
       } else{
         const formData = new FormData();
         formData.append("pic", pic);
@@ -94,8 +92,7 @@ const IntNewReview=(props)=>{
         body:formData
       })
       let data=await response.json()
-      setModal(data.message);
-      setShow(true);
+      toast.info(data.message);
       setTitle('');
       setTitleWo('');
       setPic('')
@@ -219,12 +216,8 @@ const IntNewReview=(props)=>{
               </div>              
             </Form>
           </Card>
-          <Modal show={show} onHide={handleClose}>
-            <Modal.Body>{modalInfo}</Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary"  onClick={handleClose}>Close</Button>
-            </Modal.Footer>
-            </Modal>
+          <ToastContainer position="top-center"
+              autoClose={5000}/>
           </Container>:<Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}
           </React.Fragment>
     )

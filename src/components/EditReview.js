@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Button,  Form, Container, Card,  Modal} from 'react-bootstrap';
+import {Button,  Form, Container, Card} from 'react-bootstrap';
 import {connect} from 'react-redux';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {Typeahead} from 'react-bootstrap-typeahead';
@@ -7,6 +7,8 @@ import {useParams} from 'react-router-dom';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import {Rating} from 'react-simple-star-rating';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const IntEditReview=(props)=>{
@@ -17,9 +19,6 @@ const IntEditReview=(props)=>{
     const [isLoad, setLoad]=useState(false);
     const [isLoadTags, setLoadTags]=useState(false);
     const [infoReview, setInfoReview]=useState([]);
-    const [show, setShow] = useState(false);
-    const [modalInfo, setModal]=useState('');
-    const handleClose = () => setShow(false);
     const [pic, setPic] = useState('');
     const [text, setText]=useState('...');
     const [star, setStar]=useState(0);
@@ -72,8 +71,7 @@ const IntEditReview=(props)=>{
         body:formData
       })
       let data=await response.json();
-      setModal(data.message);
-      setShow(true);
+      toast.success(data.message);
     }
     const handleRating=(rate)=>{
       setStar(rate)
@@ -176,12 +174,8 @@ const IntEditReview=(props)=>{
             </Form>
           </Card>:null}
 
-          <Modal show={show} onHide={handleClose}>
-            <Modal.Body>{modalInfo}</Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary"  onClick={handleClose}>Close</Button>
-            </Modal.Footer>
-            </Modal>
+          <ToastContainer position="top-center"
+              autoClose={5000}/>
           </Container>
     )
 }

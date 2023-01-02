@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import {Button, Modal, Form, Container, Card} from 'react-bootstrap';
+import {Button, Form, Container, Card} from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {loginUser} from '../redux/explainForReducer'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const IntAuthPage=(props)=>{
     const location=useLocation();
@@ -14,9 +15,6 @@ const IntAuthPage=(props)=>{
 
     const [form, setForm]=useState({email:'', password:''});
     const [formReg, setFormReg]=useState({name:'', email:'', password:''});
-    const [show, setShow] = useState(false);
-    const [modalInfo, setModal]=useState('');
-    const handleClose = () => setShow(false);
 
     const changeLogin=(event)=>{
      setForm({...form, [event.target.name]:event.target.value})
@@ -37,10 +35,9 @@ const IntAuthPage=(props)=>{
             body:JSON.stringify(form)})
             data=await response.json();
           if(data.isBlocked){
+            toast.error(<FormattedMessage id='blocked'/>, {theme: "light"});
             props.dispatch(loginUser(false));
             navigate('/login');
-            setModal(<FormattedMessage id='blocked'/>);
-            setShow(true);
           }else{
             props.dispatch(loginUser(true, data.email, data.token, data.name));
             navigate('/mypage')
@@ -54,8 +51,11 @@ const IntAuthPage=(props)=>{
             },
             body:JSON.stringify(formReg)})
             data=await response.json(); 
-            setModal(data.message);
-            setShow(true)
+            if(response.status!==200){
+              toast.error(data.message);
+            }else{
+              toast.success(data.message);
+            }
             data.token?navigate('/login'):navigate('/registration');
             setFormReg({name:'', email:'', password:''}) 
         }
@@ -63,8 +63,7 @@ const IntAuthPage=(props)=>{
       }catch(e){
         setForm({email:'', password:''})
         setFormReg({name:'', email:'', password:''})  
-        setModal(e.response.data.message)
-        setShow(true); 
+        toast.error(e.response.data.message);
       }
     }
 
@@ -76,8 +75,12 @@ const IntAuthPage=(props)=>{
       window.open( 'https://server-production-5ca0.up.railway.app/auth/discord' , '_self')
     }
 
+    
+
     return(
         <div>
+            <ToastContainer position="top-center"
+              autoClose={5000}/>
             <Container className="d-flex justify-content-center align-items-center" style={{height:window.innerHeight-54}}>          
           <Card style={{width:600, border:'2px solid'}} className='p-5 contMain'>
             <h2 className="m-auto">{isLogin?<FormattedMessage id='auth'/>:<FormattedMessage id='registr'/>}</h2>
@@ -105,14 +108,6 @@ const IntAuthPage=(props)=>{
           </Card>
           </Container>
 
-          <Modal show={show} onHide={handleClose}>
-        <Modal.Body>{modalInfo}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" className='myBtn' onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
         </div>
     )
 }
