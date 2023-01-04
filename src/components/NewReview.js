@@ -91,8 +91,12 @@ const IntNewReview=(props)=>{
         method:'POST',
         body:formData
       })
-      let data=await response.json()
-      toast.info(data.message);
+      let data=await response.json();
+      if(response.status!==200){
+        toast.error(data.message);
+      }else{
+        toast.success(data.message);
+      }      
       setTitle('');
       setTitleWo('');
       setPic('')
