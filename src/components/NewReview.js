@@ -111,7 +111,7 @@ const IntNewReview=(props)=>{
     },[])
 
     useEffect(()=>{
-      fetch('http://localhost:5000/api/review/getall/?lang='+props.locale)
+      fetch('https://server-production-5ca0.up.railway.app/api/review/getall/?lang='+props.locale)
       .then(response=>response.json())
       .then(data=>{setBook(data.everyBook); setGame(data.everyGame); setMovie(data.everyMovie); setSeries(data.everySeries)})
       .catch(err=>console.log(err))
