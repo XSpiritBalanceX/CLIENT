@@ -58,7 +58,7 @@ const IntMoviesPage=(props)=>{
                         goToM={goToMovie}/>
                     })}
                     </div>
-                    <div style={{margin:'0 auto 2% auto', position:'absolute', left:'40%',}}>
+                    <div className='paginatContent'>
                     <ButtonToolbar >
                     <ButtonGroup className="me-2" style={{textDecoration:'none'}}>
                         <Button className='myBtn' name='1'><NavLink to={'/movies/first'} className={obj=>obj.isActive?'active':'page-link'}>1</NavLink ></Button> 

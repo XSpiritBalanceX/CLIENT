@@ -384,6 +384,10 @@ body{
 .ck{
     color: black;
 }
+.paginatContent{
+    margin: 0 auto 2% auto;
+    position: absolute; left: 40%;
+}
 
 @media all and (max-width: 60em){
     .myPageContainer{
@@ -488,5 +492,8 @@ body{
     .autocomplite{
         width: 100%;
         position: absolute; top: 47px;left:20%;
+    }
+    .paginatContent{
+        left: 25%;
     }
 }
