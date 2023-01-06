@@ -6,7 +6,8 @@ const CardReview=(props)=>{
   
   const [averageRating, setAverage]=useState([]);
   const [isLoad, setLoad]=useState(false);
-  const [allLikes, setLikes]=useState([])
+  const [allLikes, setLikes]=useState([]);
+
 
   useEffect(()=>{
         fetch(`https://server-production-5ca0.up.railway.app/api/review/getrating?name=${props.title}&username=${props.username}`)
@@ -35,6 +36,7 @@ const CardReview=(props)=>{
            <Card.Body>
               <Card.Title>{props.title} </Card.Title>
               <Card.Text> 
+                {props.name?<span style={{fontWeight:'bold'}}>{props.name}<br/></span>:null}
               <FormattedMessage id='ratReview' /> {rating.toFixed(1)} <i className="bi bi-star-fill"></i><br/>
                 {props.username}  <i className="bi bi bi-hand-thumbs-up"></i> {sumLikes}<br/>
                 {props.date}<br/>
