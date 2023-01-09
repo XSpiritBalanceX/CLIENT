@@ -96,6 +96,7 @@ const IntMainPage=(props)=>{
                     return <CardReview key={el.id}
                     id={el.id}
                     title={el.title}
+                    name={el.name}
                     username={el.nameuser}
                     date={el.date}
                     teg={el.teg}
