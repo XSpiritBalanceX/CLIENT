@@ -119,10 +119,10 @@ const IntPageLinks=(props)=>{
             <Nav className=' justify-content-end' >
             <Button onClick={()=>setShowInput(!shoSearchInput)} className='btn-sm myBtn'><i className="bi bi-search myProf"></i></Button>
             <NavLink to={'/'} className="nav-link"><FormattedMessage id='main'/></NavLink>
-            <NavLink to={'/books/first'} className="nav-link"><FormattedMessage id='books'/></NavLink>
-            <NavLink to={'/movies/first'} className="nav-link"><FormattedMessage id='movies'/></NavLink>
-            <NavLink to={'/series/first'} className="nav-link"><FormattedMessage id='series'/></NavLink>
-            <NavLink to={'/games/first'} className="nav-link"><FormattedMessage id='games'/></NavLink>
+            <NavLink to={'/books/1'} className="nav-link"><FormattedMessage id='books'/></NavLink>
+            <NavLink to={'/movies/1'} className="nav-link"><FormattedMessage id='movies'/></NavLink>
+            <NavLink to={'/series/1'} className="nav-link"><FormattedMessage id='series'/></NavLink>
+            <NavLink to={'/games/1'} className="nav-link"><FormattedMessage id='games'/></NavLink>
             {props.isLogin&&<Button className='myBtn navigBtn'  onClick={()=>goToProf()}><i className="bi bi-person-circle myProf"></i>  </Button>}
             {props.isLogin&&<Button className='myBtn navigBtn'  onClick={()=>goToAdmin()}><i className="bi bi-person-fill-gear myProf"></i> </Button>}
             <Button className='myBtn' onClick={()=>redirectTo()}>{!props.isLogin?<i className="bi bi-box-arrow-in-right myProf"></i>:<i className="bi bi-box-arrow-left myProf"></i>}</Button>           
@@ -156,9 +156,9 @@ const IntPageLinks=(props)=>{
 }
 
 const mapStateToProps=(state)=>({
-    locale:state.info.locale,
-    isLogin:state.info.isLogin,
-    isLoad:state.info.isLoadReview,
+    locale:state.review.locale,
+    isLogin:state.service.isLogin,
+    isLoad:state.review.isLoadReview,
 })
 
 const PageLinks=connect(mapStateToProps)(IntPageLinks);

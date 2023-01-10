@@ -180,9 +180,9 @@ const IntMyPage=(props)=>{
 }
 
 const mapStateToProps=(state)=>({
-        locale:state.info.locale,
-        email:state.info.userEmail, 
-        name:state.info.nameUser       
+        locale:state.review.locale,
+        email:state.service.userEmail, 
+        name:state.service.nameUser       
     })
  
 const MyPage=connect(mapStateToProps)(IntMyPage);

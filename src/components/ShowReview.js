@@ -217,9 +217,9 @@ const IntShowReview=(props)=>{
 }
 
 const mapStateToProps=(state)=>({
-        isLogin:state.info.isLogin,
-        useremail: state.info.userEmail, 
-        nameUserNow:state.info.nameUser     
+        isLogin:state.service.isLogin,
+        useremail: state.service.userEmail, 
+        nameUserNow:state.service.nameUser     
 })
  
 const ShowReview=connect(mapStateToProps)(IntShowReview);

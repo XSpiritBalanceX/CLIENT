@@ -182,8 +182,7 @@ const IntEditReview=(props)=>{
 
  
 const mapStateToProps=(state)=>({
-        isLogin:state.info.isLogin,
-        tags:state.info.alltags ,      
+        isLogin:state.service.isLogin      
     }
 )
  

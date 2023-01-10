@@ -55,8 +55,8 @@ const intPageRouter=(props)=>{
 }
 
 const mapStateToProps=(state)=>({
-      locale:state.info.locale,
-      isLogin:state.info.isLogin
+      locale:state.review.locale,
+      isLogin:state.service.isLogin
     })
  
  const PageRouter=connect(mapStateToProps)(intPageRouter);

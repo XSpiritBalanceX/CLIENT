@@ -231,9 +231,9 @@ const IntNewReview=(props)=>{
 }
 
 const mapStateToProps=(state)=>({
-        nameItem:state.info.nameReview ,
-        locale:state.info.locale , 
-        useremail:state.info.userEmail,
+        nameItem:state.review.nameReview ,
+        locale:state.review.locale , 
+        useremail:state.service.userEmail,
     }
 )
  

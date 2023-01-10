@@ -150,7 +150,7 @@ const IntAdminPage=(props)=>{
 }
 
 const mapStateToProps=(state)=>({
-        email:state.info.userEmail      
+        email:state.service.userEmail      
     }
 )
  

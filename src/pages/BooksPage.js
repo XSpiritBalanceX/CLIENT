@@ -1,39 +1,26 @@
-import React, {useState, useEffect} from 'react';
-import {useParams,  NavLink, useNavigate} from 'react-router-dom'
+import React, {useState} from 'react';
+import {useParams, useNavigate} from 'react-router-dom'
 import {connect} from 'react-redux';
-import {Spinner, ButtonGroup, Button, ButtonToolbar } from 'react-bootstrap';
-import {loadBooks} from '../store/actionForReducer';
+import {Spinner } from 'react-bootstrap';
 import Books from '../components/Books';
+import Pagination from '../components/Pagination';
 import './styles/ContantPage.css';
+import useFetch from '../components/hooks/useFetch';
 
 
 const IntBooksPage=(props)=>{
-    const [isLoad, setLoad]=useState(true);
+
+    const {data, loading, error}=useFetch('https://server-production-5ca0.up.railway.app/api/books/?lang='+props.locale );
     const params=useParams();
     let pageCount=params.page;
     const navigate=useNavigate();
-
-    useEffect(()=>{
-        fetch('https://server-production-5ca0.up.railway.app/api/books/?lang='+props.locale)
-        .then(response=>response.json())
-        .then(data=>{setLoad(false); props.dispatch(loadBooks(data))})
-        .catch(err=>console.log(err))
-        // eslint-disable-next-line
-    },[props.locale]);
-
-    let booksData;
-    if(pageCount==='first'){
-        booksData=props.bookData.slice(0,4);
-    }else if(pageCount==='second'){
-        booksData=props.bookData.slice(5,9);
-    }else if(pageCount==='third'){
-        booksData=props.bookData.slice(10,14);
-    }else if(pageCount==='fourth'){
-        booksData=props.bookData.slice(15,19);
-    }else if(pageCount==='fifth'){
-        booksData=props.bookData.slice(20,24);
-    }else if(pageCount==='sixth'){
-        booksData=props.bookData.slice(25,30);
+    const [itemPerPage]=useState(6);
+    const lastItemIndex=pageCount*itemPerPage;
+    const firstItemIndex=lastItemIndex-itemPerPage;
+    const currentItem=data.slice(firstItemIndex, lastItemIndex);
+   
+    if(error){
+        console.log(error)
     }
     
     const goToBook=(id)=>{
@@ -42,11 +29,11 @@ const IntBooksPage=(props)=>{
 
     return(
         <div>
-            {isLoad?
+            {!loading?
             <Spinner animation="border" className='loadContant' />:
             <div>
                 <div className='contentAllPage'>
-                {booksData.map(el=>{
+                {currentItem.map(el=>{
                      return <Books key={el.id}
                         id={el.id}
                         name={props.locale==='ru-RU'?el.nameru:el.nameen}
@@ -58,16 +45,7 @@ const IntBooksPage=(props)=>{
                     })}
                     </div>
                     <div className='paginatContent'>
-                    <ButtonToolbar >
-                    <ButtonGroup className="me-2 " >
-                        <Button  className='myBtn' name='1'><NavLink to={'/books/first'} className={obj=>obj.isActive?'active':'page-link'}>1</NavLink ></Button> 
-                        <Button  className='myBtn' name='2'><NavLink to={'/books/second'} className={obj=>obj.isActive?'active':'page-link'}>2</NavLink ></Button> 
-                        <Button  className='myBtn' name='3'><NavLink to={'/books/third'} className={obj=>obj.isActive?'active':'page-link'}>3</NavLink ></Button>
-                        <Button  className='myBtn'  name='4'><NavLink to={'/books/fourth'} className={obj=>obj.isActive?'active':'page-link'}>4</NavLink ></Button>
-                        <Button  className='myBtn' name='5'><NavLink to={'/books/fifth'} className={obj=>obj.isActive?'active':'page-link'}>5</NavLink ></Button>
-                        <Button  className='myBtn'name='6'><NavLink to={'/books/sixth'} className={obj=>obj.isActive?'active':'page-link'}>6</NavLink ></Button>
-                    </ButtonGroup>
-                </ButtonToolbar>
+                        <Pagination itemPerPage={itemPerPage} totalItems={data.length} whereGo={'books'}/>
                     </div>
             </div>
             }
@@ -76,8 +54,7 @@ const IntBooksPage=(props)=>{
 }
 
 const mapStateToProps=(state)=>({
-        locale:state.info.locale,
-        bookData:state.info.books
+        locale:state.review.locale
     })
  
  const BooksPage=connect(mapStateToProps)(IntBooksPage);

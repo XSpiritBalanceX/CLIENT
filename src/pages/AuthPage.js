@@ -114,7 +114,7 @@ const IntAuthPage=(props)=>{
 }
 
 const mapStateToProps=(state)=>({
-      isLogin:state.info.isLogin
+      isLogin:state.service.isLogin
     })
  
  const AuthPage=connect(mapStateToProps)(IntAuthPage);

@@ -115,8 +115,8 @@ const IntItemBook=(props)=>{
 }
 
 const mapStateToProps=(state)=>({
-        locale:state.info.locale,
-        isLogin:state.info.isLogin
+        locale:state.review.locale,
+        isLogin:state.service.isLogin
  })
  
 const ItemBook=connect(mapStateToProps)(IntItemBook);

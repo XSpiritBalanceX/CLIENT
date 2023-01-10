@@ -123,10 +123,10 @@ const IntMainPage=(props)=>{
 }
 
 const mapStateToProps=(state)=>({ 
-        lastReview:state.info.lastReview,
-        reviewHighScore:state.info.reviewHighScore,
-        allReviews:state.info.allReview,
-        isLoad:state.info.isLoadReview,
+        lastReview:state.review.lastReview,
+        reviewHighScore:state.review.reviewHighScore,
+        allReviews:state.review.allReview,
+        isLoad:state.review.isLoadReview,
  })
  
  const MainPage=connect(mapStateToProps)(IntMainPage);
