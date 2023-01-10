@@ -1,19 +1,20 @@
 import React from 'react';
 import {Card, Button} from 'react-bootstrap';
+import './styles/StylesForItemsCont.css';
 
 
-const Movies=(props)=>{
+const Movies=({id, name, url, locale, runtime, genre, goToM})=>{
 
     return(
-        <Card className='cardBook'>
-        <Card.Img variant="top" title={props.name} src={props.url} style={{width:'10em', margin:'3% auto 0 auto'}}/>
+        <Card className='cardMovie'>
+        <Card.Img variant="top" title={name} src={url} className='imageCardCont'/>
         <Card.Body>
-          <Card.Title>{props.name}</Card.Title>
+          <Card.Title>{name}</Card.Title>
           <Card.Text>
-            {`${props.locale==='ru-RU'?'Жанр':'Genre'} - ${props.genre}`}<br/>
-            {`${props.locale==='ru-RU'?'Продолжительность':'Runtime'} - ${props.runtime}`}<br/>
+            {`${locale==='ru-RU'?'Жанр':'Genre'} - ${genre}`}<br/>
+            {`${locale==='ru-RU'?'Продолжительность':'Runtime'} - ${runtime}`}<br/>
           </Card.Text>
-          <Button variant="dark" className='myBtn' onClick={()=>props.goToM(props.id)}>{props.locale==='ru-RU'?'Показать':'Show'}</Button>
+          <Button variant="dark" className='myBtn' onClick={()=>goToM(id)}>{locale==='ru-RU'?'Показать':'Show'}</Button>
         </Card.Body>
       </Card>
     )

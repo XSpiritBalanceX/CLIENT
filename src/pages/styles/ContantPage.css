@@ -1,0 +1,23 @@
+.paginatContent{
+    margin: 0 auto 2% auto;
+    position: absolute; left: 40%;
+}
+
+.loadContant{
+    position:absolute;
+    top:50%;
+    left:50%;
+}
+.contentAllPage{
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:center;
+    margin:2% 5% 2% 5%;
+}
+
+@media all and (max-width: 40em){
+    .paginatContent{
+        left: 25%;
+    }
+}

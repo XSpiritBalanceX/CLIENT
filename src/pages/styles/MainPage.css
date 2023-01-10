@@ -1,0 +1,182 @@
+html[data-theme='light']{
+    --background-color:white;
+    --main-text-color:black;
+    --search-input-background:rgb(248, 239, 207);
+}
+html[data-theme='dark']{
+    --background-color:#3c3c3c;
+    --main-text-color:white;
+    --search-input-background:rgb(206, 206, 206);
+}
+.helloMain{
+    margin: 2% 2% 3% 2%;
+    display: flex;
+    flex-direction: row;
+}
+.tagCloud{
+    border: solid 1px rgb(181, 181, 181);
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    border-radius: 10%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    margin-left: 2%;
+    padding: 10px;
+}
+.tagCloud span{
+    z-index: 5;
+}
+.tagCloud:hover{
+    cursor: pointer;
+}
+.reviewLast{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 2% 2% 2%;
+    justify-content: center;
+}
+.reviewLast > div{
+    width: 23em;
+    margin-right: 2%; 
+}
+.tagsContent{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 2% 2% 2%;
+    justify-content: center;
+}
+.tagsContent > div{
+    width: 23em;
+    margin-right: 2%; 
+}
+.HInMain{
+    color: var(--main-text-color);
+    margin: 4% 2% 1% 2%;
+    border-bottom: solid 2px #9FA0A4;
+}
+.searchInput{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 70%;
+    position: relative;
+}
+.autocomplite{
+    border: solid 3px rgb(123, 123, 123);
+    border-radius: 5px;
+    padding: 25px;
+    position: absolute; top: 47px;left:41%;
+    z-index: 10;
+    background-color: var(--search-input-background);
+    height: 15em;
+    overflow-y: auto;
+}
+.autocomplite li{
+    margin-bottom: 2%;
+}
+.autocomplite a{
+    color: black;
+}
+.mainImg{
+    width:30%;
+    height:60%;
+    border-radius:5px;
+    margin:0 auto 2% auto;
+}
+.loadMain{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.mainGroup{
+    display: flex;
+    flex-direction: row;
+}
+.userLink{
+    font-family: 'Roboto';
+    text-decoration: none;
+    font-size: 18px;
+    color: var(--main-text-color);
+    font-weight: 300;
+    margin: 0 2px;
+    position: relative;
+}
+.userLink:hover{
+    color: var(--main-text-color);
+}
+.userLink:before {
+    position: absolute;
+    margin: 0 auto;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--main-text-color);
+    content: '';
+    opacity: .3;
+    transform: scaleX(.6);
+    transition-property: opacity, transform;
+    transition-duration: .3s;
+}
+    
+.userLink:hover:before {
+    transform: scaleX(1);
+    opacity: 1; 
+}
+.logo{
+    width:4.5em;
+    height:2em;
+}
+.navigBtn{
+    margin-right:3px;
+    font-size:13px;
+}
+.groupLang{
+    position:absolute;
+    right:0.2%;
+}
+.controlSearch{
+    margin-left:40%;
+    width:50%;
+    margin-top:1%;
+}
+
+@media all and (max-width: 60em){
+    .navbar-nav{
+        display: flex;
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        font-size: 15px;
+    }
+    .container{
+        margin-right: 2%;
+    }
+    .container span{
+        margin-left: -25%;
+    }
+}
+
+@media all and (max-width: 40em){
+    .helloMain{
+        flex-direction: column;
+    }
+    .tagCloud{
+        width: 90%;
+        margin-top: 5%;
+    }
+    .mainGroup{
+        flex-direction: column;
+    }
+    .container{
+        margin-right: 0%;
+    }
+    .container span{
+        margin-left: 0%;
+    }
+}

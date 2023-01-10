@@ -1,0 +1,38 @@
+html[data-theme='light']{
+    --main-text-color:black;
+    --myBtn-background-color:rgb(33,37,41);
+    --myBtn-text-color:white;
+    --myBtn-border-color:rgb(33,37,41);
+    --cardBook-background-color:white;
+}
+html[data-theme='dark']{
+    --main-text-color:white;
+    --myBtn-background-color:rgb(232, 172, 19);
+    --myBtn-border-color:rgb(232, 172, 19);
+    --myBtn-text-color:black;
+    --cardBook-background-color:#3c3c3c;
+}
+.myCardReview{
+    font-size: 13px;
+    border-color: var(--main-text-color);
+    background-color: var(--cardBook-background-color);
+    color:var(--main-text-color);  
+    margin-top: 2%;
+}
+.myCardReview img{
+    width: 20em;
+    height: 13em;
+}
+.myBtn{
+    background-color: var(--myBtn-background-color);
+    color:var(--myBtn-text-color); 
+    transition: background-color 100ms linear;
+    border-color: var(--myBtn-border-color);
+}
+.myBtn:hover{
+    background-color: black;
+    border-color: black;
+}
+.spanName{
+    font-weight: bold;
+}

@@ -1,0 +1,11 @@
+html[data-theme='light']{
+    --background-color:white;
+}
+html[data-theme='dark']{
+    --background-color:#3c3c3c;
+}
+body{
+    font-family: 'Roboto', 'Montserrat', sans-serif;
+    background-color: var(--background-color);
+    transition: background-color 200ms linear;
+}

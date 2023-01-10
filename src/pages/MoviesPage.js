@@ -3,7 +3,8 @@ import {useParams,  NavLink, useNavigate} from 'react-router-dom'
 import {connect} from 'react-redux';
 import {Spinner, ButtonGroup, Button, ButtonToolbar } from 'react-bootstrap';
 import Movies from '../components/Movies';
-import {loadMovies} from '../redux/explainForReducer';
+import {loadMovies} from '../store/actionForReducer';
+import './styles/ContantPage.css';
 
 
 const IntMoviesPage=(props)=>{
@@ -44,9 +45,9 @@ const IntMoviesPage=(props)=>{
     return(
         <div>
             {isLoad?
-            <Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>:
+            <Spinner animation="border" className='loadContant'/>:
             <div>
-                <div style={{display:'flex', flexDirection:'row', flexWrap:'wrap',justifyContent:'center', margin:'2% 5% 2% 5%'}}>
+                <div className='contentAllPage'>
                 {moviesData.map(el=>{
                      return <Movies key={el.id}
                         id={el.id}
@@ -76,12 +77,10 @@ const IntMoviesPage=(props)=>{
     )
 }
 
-const mapStateToProps=(state)=>{
-    return {
+const mapStateToProps=(state)=>({
         locale:state.info.locale,
         moviData:state.info.movies
-    }
- }
+    })
  
  const MoviesPage=connect(mapStateToProps)(IntMoviesPage);
  

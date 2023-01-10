@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {useParams,  NavLink, useNavigate} from 'react-router-dom'
 import {connect} from 'react-redux';
 import {Spinner, ButtonGroup, Button, ButtonToolbar } from 'react-bootstrap';
-import {loadGames} from '../redux/explainForReducer';
+import {loadGames} from '../store/actionForReducer';
 import Games from '../components/Games';
+import './styles/ContantPage.css';
 
 
 const IntGamePage=(props)=>{
@@ -42,9 +43,9 @@ const IntGamePage=(props)=>{
     return(
         <div>
             {isLoad?
-            <Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>:
+            <Spinner animation="border" className='loadContant'/>:
             <div>
-                <div style={{display:'flex', flexDirection:'row', flexWrap:'wrap',justifyContent:'center', margin:'2% 5% 2% 5%'}}>
+                <div className='contentAllPage'>
                 {gameData.map(el=>{
                      return <Games key={el.id}
                         id={el.id}
@@ -74,12 +75,10 @@ const IntGamePage=(props)=>{
     )
 }
 
-const mapStateToProps=(state)=>{
-    return {
+const mapStateToProps=(state)=>({
         locale:state.info.locale,
         gamesData:state.info.games
-    }
- }
+    })
  
  const GamePage=connect(mapStateToProps)(IntGamePage);
  

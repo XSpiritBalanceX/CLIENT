@@ -1,0 +1,103 @@
+html[data-theme='light']{
+    --main-text-color:black;
+    --cardBook-background-color:white;
+    --myBtn-background-color:rgb(33,37,41);
+    --myBtn-text-color:white;
+    --myBtn-border-color:rgb(33,37,41);
+}
+html[data-theme='dark']{
+    --main-text-color:white;
+    --cardBook-background-color:#3c3c3c;
+    --myBtn-background-color:rgb(248, 215, 132);
+    --myBtn-border-color:rgb(248, 215, 132);
+    --myBtn-text-color:black;
+}
+.pictInDescription{
+    margin-right: 2%;
+}
+.pictInDescription img{
+    width: 20em;
+    height: 27em;
+}
+.emptyReview{
+    color:var(--main-text-color);
+    font-size: 1.5em;
+    margin-top: 2%;
+}
+.oneReviewInDescrip{
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.oneReviewInDescrip .myCardReview {
+    width: auto;
+    margin-right: 3%;
+}
+.contanerForAllContent{
+    position: relative;
+}
+.contanerForAllContent .myBtn:first-child{
+    position: absolute;right: 2%; top: -1%;
+}
+.contanForItem{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 2% 3% 2% 3%; 
+}
+.MyDescript{
+    height:auto;
+    padding:2%;
+    border: none;
+    background-color: var(--cardBook-background-color);
+    color:var(--main-text-color);  
+    display: flex;
+    flex-direction: row;
+}
+.myBtn{
+    background-color: var(--myBtn-background-color);
+    color:var(--myBtn-text-color); 
+    transition: background-color 100ms linear;
+    border-color: var(--myBtn-border-color);
+}
+.myBtn:hover{
+    background-color: black;
+    border-color: black;
+}
+.loadItem{
+    position:absolute;
+    top:50%;
+    left:50%;
+}
+.bi-star-fill{
+    color:yellow
+}
+
+@media all and (max-width: 60em){
+    .contanForItem{
+        flex-direction: column;
+        align-items: center;
+    }
+    .MyDescript{
+        width: 100%;
+        margin-bottom: 2%;
+    }
+    .MyDescript .card-img-top{
+        height: 40em;
+        width: 70%;
+        margin: 0 auto 0 auto;
+        padding: 5%;
+    }
+}
+
+@media all and (max-width: 40em){
+    .MyDescript{
+        flex-direction: column;
+        width: 100%;
+        margin-bottom: 3%;
+    }
+    .contanerForAllContent .myBtn:first-child{
+        position: absolute;left: 2%; top: -3%;
+        width: 30%;
+    }
+}

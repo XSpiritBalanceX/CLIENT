@@ -1,8 +1,10 @@
 import { LOCALES } from "../i18n/locales";
-import { change_language, load_movies, load_books, load_games, load_series,
-    isLogin_user, add_name_review, load_main_data} from "./explainForReducer";
+import { CHANGE_LANGUAGE, LOAD_MOVIES, LOAD_BOOKS, LOAD_GAMES, LOAD_SERIES,
+    ISLOGIN_USER, ADD_NAME_REVIEW, LOAD_MAIN_DATA} from "./actionForReducer";
 import decoded from 'jwt-decode';
+
 let tokeninStorage=sessionStorage.getItem('token');
+
 const initialState={
     locale:LOCALES.RUSSIAN,
     movies:[],
@@ -22,7 +24,7 @@ const initialState={
  
  function infoReducer (state=initialState, action){
      switch (action.type){
-        case load_main_data:{
+        case LOAD_MAIN_DATA:{
             let newState={...state};
             newState.lastReview=action.lastR;
             newState.reviewHighScore=action.highSc;
@@ -30,32 +32,32 @@ const initialState={
             newState.isLoadReview=action.isLoad;
             return newState;
         }
-        case change_language:{
+        case CHANGE_LANGUAGE:{
             let newState={...state};
             newState.locale=action.language;
             return newState;
         }
-        case load_movies:{
+        case LOAD_MOVIES:{
             let newState={...state};
             newState.movies=action.data;
             return newState;
         }
-        case load_books:{
+        case LOAD_BOOKS:{
             let newState={...state};
             newState.books=action.data;
             return newState;
         }
-        case load_games:{
+        case LOAD_GAMES:{
             let newState={...state};
             newState.games=action.data;
             return newState;
         }
-        case load_series:{
+        case LOAD_SERIES:{
             let newState={...state};
             newState.series=action.data;
             return newState;
         }
-        case isLogin_user:{
+        case ISLOGIN_USER:{
             let newState={...state};
             newState.isLogin=action.login;
             sessionStorage.setItem('token',action.tokenUser)
@@ -63,14 +65,11 @@ const initialState={
             newState.nameUser=action.nameUser;
             return newState;
         }
-        case add_name_review:{
+        case ADD_NAME_REVIEW:{
             let newState={...state};
             newState.nameReview=action.nameReview;
             return newState;
         }
-        
-        
- 
  
         default: return state;
      }

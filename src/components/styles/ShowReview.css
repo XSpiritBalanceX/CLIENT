@@ -1,0 +1,106 @@
+html[data-theme='light']{
+    --background-color:white;
+    --main-text-color:black;
+    --textReview-background:white;
+}
+html[data-theme='dark']{
+    --background-color:#3c3c3c;
+    --main-text-color:white;
+    --textReview-background:rgb(244, 216, 147);
+}
+.showRev{
+    display: flex;
+    flex-direction: column;
+    max-width: 900px;
+    margin: 2% auto 2% auto;
+    color:var(--main-text-color);
+    text-align: center;
+}
+.pict{
+    width: auto;
+    height: 30em;
+    margin: 0 auto 0 auto;
+}
+.textReview{
+    background-color:var(--textReview-background);
+    border-radius: 10px;
+    padding: 5px;
+    color:black;
+    text-align: justify;
+}
+.oneComment{
+    border: solid 1px ;
+    border-color: var(--main-text-color);
+    border-radius: 10px;
+    color:var(--main-text-color);
+    margin-bottom: 2%;
+    width: 60%;
+}
+.newComBut{
+    width: 15%;
+    height: 3em;
+}
+.starRating{
+    text-align: center;
+    margin-bottom: 2%;
+    color:var(--main-text-color);
+}
+.likeBtn{
+    background-color: #f5a754;
+    border-color: #f5a754;
+}
+.likeHand{
+    color: rgb(66, 65, 65);
+}
+.comment{
+    margin: 0 5% 2% 5%;
+}
+.newComment{
+    display: flex;
+    flex-direction: row;
+    margin: 5%;
+    align-items: center;
+}
+.textar{
+    width: 60%;
+    margin-right: 2%;
+}
+.labelForComment{
+    color:var(--main-text-color);
+}
+.loadShoeRev{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+.forPrint{
+    margin-top:3%;
+    width:auto;
+    height:auto;
+}
+
+@media all and (max-width: 60em){
+    .showRev{
+        flex-direction: column;
+        align-items: center;
+   }
+}
+
+@media all and (max-width: 40em){
+    .showRev{
+        flex-direction: column;
+    }
+    .pict{
+        width: 100%;
+    }
+    .newComBut{
+        width: 50%;
+        height: 3em;
+    }
+    .newComment{
+        flex-direction: column;
+    }
+    .textar{
+        width: 90%;        
+    }
+}

@@ -3,8 +3,9 @@ import {connect} from 'react-redux';
 import {useParams, useNavigate} from 'react-router-dom';
 import {Spinner, Card, Button } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import {addNameReview} from '../../redux/explainForReducer';
+import {addNameReview} from '../../store/actionForReducer';
 import CardReview from './CardReview';
+import './styles/stylesForItems.css';
 
 const IntItemMovie=(props)=>{
     const [item, setItem]=useState([]);
@@ -35,20 +36,18 @@ const IntItemMovie=(props)=>{
     let oneMovie=!isLoad? item.map(el=>{
         nameItem=props.locale==='ru-RU'?el.nameru:el.nameen;
        return <React.Fragment key={el.id}>
-           <Card.Img variant="top" title={el.nameen||el.nameru} src={el.url} />
-           <Card.Body>
-              <Card.Title>{props.locale==='ru-RU'?el.nameru:el.nameen}</Card.Title>
-              <Card.Text>
-              <FormattedMessage id='date'/> {el.data}<br/>
-              <FormattedMessage id='genre'/> {props.locale==='ru-RU'?el.genreru:el.genreen}<br/>
-              <FormattedMessage id='director'/>  {props.locale==='ru-RU'?el.directorru:el.directoren}<br/>
-              <FormattedMessage id='runtime'/>{el.runtime}<FormattedMessage id='time'/><br/>               
-              <FormattedMessage id='starring'/> {props.locale==='ru-RU'?el.starringru:el.starringen}<br/><br/>
-               <FormattedMessage id='summary'/> {props.locale==='ru-RU'?el.summaryru:el.summaryen}<br/><br/>
-              <FormattedMessage id='metascore'/> {el.metascore}<br/>
-              <FormattedMessage id='userscore'/>  {rating}                
-              </Card.Text>
-            </Card.Body>
+           <div className='pictInDescription'>
+                <img alt={el.nameen||el.nameru} src={el.url}/>
+            </div>
+           <div>
+                <h3>{props.locale==='ru-RU'?el.nameru:el.nameen}</h3>
+                <p><FormattedMessage id='director'/>  {props.locale==='ru-RU'?el.directorru:el.directoren}</p>
+                <p><FormattedMessage id='starring'/>  {props.locale==='ru-RU'?el.starringru:el.starringen}</p>
+                <p><FormattedMessage id='date'/> {el.data}</p>
+                <p><FormattedMessage id='genre'/> {props.locale==='ru-RU'?el.genreru:el.genreen}</p>
+                <p><FormattedMessage id='summary'/> {props.locale==='ru-RU'?el.summaryru:el.summaryen}</p>
+                <p><FormattedMessage id='userscore'/>  {rating} </p>
+           </div>
         </React.Fragment> 
         }):null;
 
@@ -81,18 +80,21 @@ const IntItemMovie=(props)=>{
         },[allReview])
         
         let cardReview=allReview.length===0?<p className='emptyReview'><FormattedMessage id='messForEmpty'/></p>:
-      allReview.map(el=>{
-        return <CardReview key={el.id}
-         id={el.id}
-         title={el.title}
-         username={el.nameuser}
-         date={el.date}
-         teg={el.teg}
-         rate={el.rate}
-         cbshowR={showR}/>
-      })
+        <div className='oneReviewInDescrip'>
+        {allReview.map(el=>{
+          return <CardReview key={el.id}
+           id={el.id}
+           title={el.title}
+           username={el.nameuser}
+           date={el.date}
+           teg={el.teg}
+           rate={el.rate}
+           url={el.namepict}
+           cbshowR={showR}/>
+        })}  
+      </div>
     return(
-        <div>
+        <div className='contanerForAllContent'>
            {isLoad&&isLoadReview?<Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>:
             <div className='contanForItem'>
                 <Card className='MyDescript' >
@@ -110,12 +112,10 @@ const IntItemMovie=(props)=>{
     )
 }
 
-const mapStateToProps=(state)=>{
-    return {
+const mapStateToProps=(state)=>({
         locale:state.info.locale,
         isLogin:state.info.isLogin
-    }
- }
+ })
  
 const ItemMovie=connect(mapStateToProps)(IntItemMovie);
 

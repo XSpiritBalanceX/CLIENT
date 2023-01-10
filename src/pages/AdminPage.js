@@ -4,10 +4,11 @@ import {useNavigate } from 'react-router-dom';
 import {connect} from 'react-redux';
 import { FormattedMessage} from 'react-intl';
 import AdminTable from '../components/AdminTable';
-import {loginUser} from '../redux/explainForReducer';
+import {loginUser} from '../store/actionForReducer';
 import decoded from 'jwt-decode';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './styles/AdminPage.css';
 
 const IntAdminPage=(props)=>{
 
@@ -119,11 +120,11 @@ const IntAdminPage=(props)=>{
                   <p><i className="bi bi-person-check-fill"></i> {props.email}</p>  
                  {props.email!==myEmail?<Button className='myBtn' onClick={switchToMyAccount}><FormattedMessage id='switchUser'/></Button>:null}   
                 </div>
-                <div style={{textAlign:'center'}}>
+                <div className='contForTableAdmin'>
                 <h4 className='emptyReview'><FormattedMessage id='users'/></h4>
-                <Table  className='myTable'>
+                <Table  className='myTableAdmin'>
                     <thead>
-                      <tr style={{textAlign:'center'}}>
+                      <tr >
                         <th><FormattedMessage id='nameUser'/></th>
                         <th><FormattedMessage id='emailUser'/></th>
                         <th><FormattedMessage id='roleUser'/></th>
@@ -142,17 +143,16 @@ const IntAdminPage=(props)=>{
                     autoClose={5000}/>
             </div>
             </div>:
-            <Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}
+            <Spinner animation="border" className='loadAdmin'/>}
         </div>
         
     )
 }
 
-const mapStateToProps=(state)=>{
-    return {
+const mapStateToProps=(state)=>({
         email:state.info.userEmail      
     }
- }
+)
  
 const AdminPage=connect(mapStateToProps)(IntAdminPage);
 

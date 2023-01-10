@@ -3,9 +3,10 @@ import {connect} from 'react-redux';
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {Button, Form, Container, Card} from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
-import {loginUser} from '../redux/explainForReducer'
+import {loginUser} from '../store/actionForReducer'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './styles/AuthPage.css';
 
 const IntAuthPage=(props)=>{
     const location=useLocation();
@@ -81,13 +82,13 @@ const IntAuthPage=(props)=>{
         <div>
             <ToastContainer position="top-center"
               autoClose={5000}/>
-            <Container className="d-flex justify-content-center align-items-center" style={{height:window.innerHeight-54}}>          
-          <Card style={{width:600, border:'2px solid'}} className='p-5 contMain'>
+            <Container className="d-flex justify-content-center align-items-center" >          
+          <Card  className='p-5 contMain'>
             <h2 className="m-auto">{isLogin?<FormattedMessage id='auth'/>:<FormattedMessage id='registr'/>}</h2>
             {isLogin?<Form className="d-flex flex-column">  
             <div className='buttForAut'>
               <Button variant="danger" style={{marginRight:'10px'}} onClick={googleAuth}><i className="bi bi-google"></i> Google</Button>
-              <Button  style={{backgroundColor:'rgb(88,101,242)'}} onClick={discordAuth}><i className="bi bi-discord"></i> Discord</Button>
+              <Button className='buttDisc'  onClick={discordAuth}><i className="bi bi-discord"></i> Discord</Button>
             </div>  
               <Form.Control type="email" className="mt-3" placeholder={intl.formatMessage({id:'enterEmail'})} value={form.email} name='email' onChange={changeLogin}/>
               <Form.Control type='password' className="mt-3" placeholder={intl.formatMessage({id:'enterPass'})} name='password' value={form.password} onChange={changeLogin}/>
@@ -112,11 +113,9 @@ const IntAuthPage=(props)=>{
     )
 }
 
-const mapStateToProps=(state)=>{
-    return {
+const mapStateToProps=(state)=>({
       isLogin:state.info.isLogin
-    }
- }
+    })
  
  const AuthPage=connect(mapStateToProps)(IntAuthPage);
  

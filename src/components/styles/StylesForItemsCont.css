@@ -1,0 +1,23 @@
+html[data-theme='light']{
+    --cardBook-background-color:white;
+    --cardBook-color:black;
+    --cardBook-border-color:#3c3c3c;
+}
+html[data-theme='dark']{
+    --cardBook-background-color:#3c3c3c;
+    --cardBook-color:white;
+    --cardBook-border-color:white;
+}
+.cardBook, .cardMovie, .cardSeries, .cardGame{
+    background-color: var(--cardBook-background-color);
+    color:var(--cardBook-color);
+    border-color: var(--cardBook-border-color);
+    width: 20rem;
+    height:auto;
+    margin:0 5% 2% 5%;
+}
+.imageCardCont{
+    width:10em;
+    height: 50%;
+    margin:3% auto 0 auto;
+}

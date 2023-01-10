@@ -2,8 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {useParams,  NavLink, useNavigate} from 'react-router-dom'
 import {connect} from 'react-redux';
 import {Spinner, ButtonGroup, Button, ButtonToolbar } from 'react-bootstrap';
-import {loadBooks} from '../redux/explainForReducer';
+import {loadBooks} from '../store/actionForReducer';
 import Books from '../components/Books';
+import './styles/ContantPage.css';
 
 
 const IntBooksPage=(props)=>{
@@ -42,9 +43,9 @@ const IntBooksPage=(props)=>{
     return(
         <div>
             {isLoad?
-            <Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>:
+            <Spinner animation="border" className='loadContant' />:
             <div>
-                <div style={{display:'flex', flexDirection:'row', flexWrap:'wrap',justifyContent:'center', margin:'2% 5% 2% 5%'}}>
+                <div className='contentAllPage'>
                 {booksData.map(el=>{
                      return <Books key={el.id}
                         id={el.id}
@@ -74,12 +75,10 @@ const IntBooksPage=(props)=>{
     )
 }
 
-const mapStateToProps=(state)=>{
-    return {
+const mapStateToProps=(state)=>({
         locale:state.info.locale,
         bookData:state.info.books
-    }
- }
+    })
  
  const BooksPage=connect(mapStateToProps)(IntBooksPage);
  

@@ -3,7 +3,8 @@ import {useParams,  NavLink, useNavigate} from 'react-router-dom'
 import {connect} from 'react-redux';
 import {Spinner, ButtonGroup, Button, ButtonToolbar } from 'react-bootstrap';
 import Series from '../components/Series';
-import {loadSeries} from '../redux/explainForReducer';
+import {loadSeries} from '../store/actionForReducer';
+import './styles/ContantPage.css';
 
 
 const IntSeriesPage=(props)=>{
@@ -42,9 +43,9 @@ const IntSeriesPage=(props)=>{
     return(
         <div>
             {isLoad?
-            <Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>:
+            <Spinner animation="border" className='loadContant'/>:
             <div>
-                <div style={{display:'flex', flexDirection:'row', flexWrap:'wrap',justifyContent:'center', margin:'2% 5% 2% 5%'}}>
+                <div className='contentAllPage'>
                 {seriesData.map(el=>{
                      return <Series key={el.id}
                         id={el.id}
@@ -74,12 +75,10 @@ const IntSeriesPage=(props)=>{
     )
 }
 
-const mapStateToProps=(state)=>{
-    return {
+const mapStateToProps=(state)=>({
         locale:state.info.locale,
         series:state.info.series
-    }
- }
+    })
  
  const SeriesPage=connect(mapStateToProps)(IntSeriesPage);
  

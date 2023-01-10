@@ -120,8 +120,8 @@ const IntEditReview=(props)=>{
 
     let options=props.locale==='en-US'?['Games', 'Movies', "Books", "Series"]:['Игры', 'Фильмы', "Книги", "Сериалы"]
     return(
-        <Container className="d-flex justify-content-center align-items-center" style={{height:'auto', margin:'2% auto 2% auto'}}>          
-          {isLoad&&isLoadTags?<Card style={{width:600, border:'2px solid'}} className='p-5 contMain'>
+        <Container className="d-flex justify-content-center align-items-center contanerForEdi" >          
+          {isLoad&&isLoadTags?<Card  className='p-5 contMain cardNewR'>
             <h2 className="m-auto"><FormattedMessage id='editRev'/></h2>
             <Form className="d-flex flex-column"  onSubmit={sendEditInfo}>
             <Form.Control type="text" className="mt-3" name='title' onChange={(event)=>changeInfo(event)} 
@@ -142,7 +142,7 @@ const IntEditReview=(props)=>{
                       selected={tags}
                     />     
                 
-                <div style={{textAlign:'center', marginBottom:'2%'}}>
+                <div className='ratingDiv'>
                   <p><FormattedMessage id='rate'/></p>
                   <Rating initialValue={star} onClick={handleRating} iconsCount={10} size={30}/> 
                 </div>
@@ -154,8 +154,8 @@ const IntEditReview=(props)=>{
                       setText(data)
                     }}
                   /> 
-                 {pic?<div style={{marginTop:'2%'}}>
-                <img src={showPicture || pic} alt={infoReview.title} style={{width:'13em', height:'10em'}}/>
+                 {pic?<div className='mt-3'>
+                <img src={showPicture || pic} alt={infoReview.title} className='imageInReviewForm'/>
                 <Button className='btnForImage' onClick={()=>{setPic('')}}><i className="bi bi-x"></i></Button>
               </div>:null }        
               {pic===''?<React.Fragment><div className='mt-3'>
@@ -181,12 +181,11 @@ const IntEditReview=(props)=>{
 }
 
  
-const mapStateToProps=(state)=>{
-    return {
+const mapStateToProps=(state)=>({
         isLogin:state.info.isLogin,
         tags:state.info.alltags ,      
     }
-}
+)
  
 const EditReview=connect(mapStateToProps)(IntEditReview);
 export default EditReview;

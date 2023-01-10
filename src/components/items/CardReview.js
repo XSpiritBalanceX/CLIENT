@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
+import './styles/CardReview.css';
 
 const CardReview=(props)=>{
   
@@ -34,9 +35,10 @@ const CardReview=(props)=>{
       <React.Fragment>
         {isLoad?<Card className='myCardReview'>
            <Card.Body>
+           <Card.Img variant="top" src={props.url} />
               <Card.Title>{props.title} </Card.Title>
               <Card.Text> 
-                {props.name?<span style={{fontWeight:'bold'}}>{props.name}<br/></span>:null}
+                {props.name?<span className='spanName' >{props.name}<br/></span>:null}
               <FormattedMessage id='ratReview' /> {rating.toFixed(1)} <i className="bi bi-star-fill"></i><br/>
                 {props.username}  <i className="bi bi bi-hand-thumbs-up"></i> {sumLikes}<br/>
                 {props.date}<br/>

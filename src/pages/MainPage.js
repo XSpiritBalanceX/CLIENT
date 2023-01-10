@@ -5,9 +5,10 @@ import { Card, Spinner } from 'react-bootstrap';
 import mainImg from '../images/main.jpg';
 import {useParams, useNavigate } from 'react-router-dom';
 import decoded from 'jwt-decode';
-import { loginUser } from '../redux/explainForReducer';
+import { loginUser } from '../store/actionForReducer';
 import CardReview from '../components/items/CardReview';
-import {TagCloud} from 'react-tagcloud'
+import {TagCloud} from 'react-tagcloud';
+import './styles/MainPage.css';
 
 
 const IntMainPage=(props)=>{
@@ -66,6 +67,7 @@ const IntMainPage=(props)=>{
         date={el.date}
         teg={el.teg}
         rate={el.rate}
+        url={el.namepict}
         cbshowR={showR}/>
     }).sort((a, b) => a > b ? 1 : -1);
 
@@ -78,14 +80,14 @@ const IntMainPage=(props)=>{
         date={el.date}
         teg={el.teg}
         rate={el.rate}
+        url={el.namepict}
         cbshowR={showR}/>
     }).sort((a, b) => a > b ? 1 : -1);
-
     return(
         <div>
             {props.isLoad?<React.Fragment><div className='helloMain'>
                 <React.Fragment><Card className='p-4 contMain'>
-                 <Card.Img variant="top" src={mainImg} style={{width:'30%', height:'60%', borderRadius:'5px', margin:'0 auto 2% auto'}}/> 
+                 <Card.Img variant="top" src={mainImg} className='mainImg' /> 
                     <Card.Title><FormattedMessage id='title'/></Card.Title>
                     <FormattedMessage id='gretings'/>
                 </Card> </React.Fragment>
@@ -101,6 +103,7 @@ const IntMainPage=(props)=>{
                     date={el.date}
                     teg={el.teg}
                     rate={el.rate}
+                    url={el.namepict}
                     cbshowR={showR}/>
                 })}
             </div>
@@ -113,20 +116,18 @@ const IntMainPage=(props)=>{
                 <div className='reviewLast'>
                     {highRevie}
                 </div>
-            </div></React.Fragment>:<Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}
+            </div></React.Fragment>:<Spinner animation="border" className='loadMain' />}
             
         </div>
     )
 }
 
-const mapStateToProps=(state)=>{
-    return { 
+const mapStateToProps=(state)=>({ 
         lastReview:state.info.lastReview,
         reviewHighScore:state.info.reviewHighScore,
         allReviews:state.info.allReview,
         isLoad:state.info.isLoadReview,
-    }
- }
+ })
  
  const MainPage=connect(mapStateToProps)(IntMainPage);
  

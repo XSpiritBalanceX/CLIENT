@@ -1,0 +1,31 @@
+html[data-theme='light']{
+    --main-background:white;
+    --main-text-color:black;
+}
+html[data-theme='dark']{
+    --main-background:#3c3c3c;
+    --main-text-color:white;
+}
+.contMain{
+    width:600;
+    background-color: var(--main-background);
+    transition: background-color 200ms linear;
+    color:var(--main-text-color);    
+    transition: color 500ms linear;
+    margin: 0 auto 0 auto;
+    width: 60%;
+    border: solid 4px #9FA0A4;
+}
+.buttForAut{
+    margin:2% auto 0 auto;
+}
+.buttDisc{
+    background-color:rgb(88,101,242);
+}
+
+@media all and (max-width: 40em){
+    .contMain{
+        width: 90%;
+    }
+
+}

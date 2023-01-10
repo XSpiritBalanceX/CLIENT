@@ -1,50 +1,50 @@
-const change_language='change_language';
-const load_movies='load_movies';
-const load_books='load_books';
-const load_games='load_games';
-const load_series='load_series';
-const isLogin_user='isLogin_user';
-const add_name_review='add_name_review';
-const load_main_data='load_main_data';
+const CHANGE_LANGUAGE='CHANGE_LANGUAGE';
+const LOAD_MOVIES='LOAD_MOVIES';
+const LOAD_BOOKS='LOAD_BOOKS';
+const LOAD_GAMES='LOAD_GAMES';
+const LOAD_SERIES='LOAD_SERIES';
+const ISLOGIN_USER='ISLOGIN_USER';
+const ADD_NAME_REVIEW='ADD_NAME_REVIEW';
+const LOAD_MAIN_DATA='LOAD_MAIN_DATA';
 
 const changeLanguage=function (lang){
    return{
-    type:change_language,
+    type:CHANGE_LANGUAGE,
     language:lang
    }
 }
 
 const loadMovies=function(dataMov){
    return{
-      type:load_movies,
+      type:LOAD_MOVIES,
       data:dataMov
    }
 }
 
 const loadBooks=function(dataBook){
    return{
-      type:load_books,
+      type:LOAD_BOOKS,
       data:dataBook
    }
 }
 
 const loadGames=function(dataGame){
    return{
-      type:load_games,
+      type:LOAD_GAMES,
       data:dataGame
    }
 }
 
 const loadSeries=function(dataSeries){
    return{
-      type:load_series,
+      type:LOAD_SERIES,
       data:dataSeries
    }
 }
 
 const loginUser=function(bool, userEmail, token, name){
    return{
-      type:isLogin_user,
+      type:ISLOGIN_USER,
       login:bool,
       user:userEmail,
       tokenUser:token,
@@ -55,14 +55,14 @@ const loginUser=function(bool, userEmail, token, name){
 
 const addNameReview=function(name){
    return{
-      type:add_name_review,
+      type:ADD_NAME_REVIEW,
       nameReview:name
    }
 }
 
 const loadMain=function(last, score,all, bool){
    return{
-      type:load_main_data,
+      type:LOAD_MAIN_DATA,
       lastR:last,
       highSc:score,
       allReview:all,
@@ -74,11 +74,11 @@ const loadMain=function(last, score,all, bool){
 
 
 
-export {change_language, changeLanguage,
-   load_movies, loadMovies,
-   load_books, loadBooks,
-   load_games, loadGames,
-   load_series, loadSeries,
-   isLogin_user, loginUser,
-   add_name_review, addNameReview, 
-   load_main_data, loadMain}
+export {CHANGE_LANGUAGE, changeLanguage,
+   LOAD_MOVIES, loadMovies,
+   LOAD_BOOKS, loadBooks,
+   LOAD_GAMES, loadGames,
+   LOAD_SERIES, loadSeries,
+   ISLOGIN_USER, loginUser,
+   ADD_NAME_REVIEW, addNameReview, 
+   LOAD_MAIN_DATA, loadMain}

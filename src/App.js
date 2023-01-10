@@ -2,10 +2,11 @@ import React from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {createStore, combineReducers} from 'redux';
-import infoReducer from './redux/infoRuducer';
+import infoReducer from './store/infoRuducer';
 import PageRouter from './pages/PageRouter';
 import PageLinks from './pages/PageLinks';
-import './app.css';
+//import './app.css';
+import './General.css';
 
 function App() {
    

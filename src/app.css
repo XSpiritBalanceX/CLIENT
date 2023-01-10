@@ -83,9 +83,15 @@ body{
 
 .contanForItem{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-around;
-    margin: 2% 3% 2% 3%;
+    margin: 2% 3% 2% 3%;    
+}
+.contanerForAllContent{
+    position: relative;
+}
+.contanerForAllContent .myBtn:first-child{
+    position: absolute;right: 2%; top: 1%;
 }
 
 .rbt-input-wrapper{
@@ -142,15 +148,16 @@ body{
 
 .showRev{
     display: flex;
-    flex-direction: row;
-    margin: 2% 5% 2% 5%;
+    flex-direction: column;
+    max-width: 900px;
+    margin: 2% auto 2% auto;
     color:var(--main-text-color);
+    text-align: center;
 }
 .pict{
-    width: 30em;
-    height: 25em;
-    float: left;
-    margin-right: 2%;
+    width: auto;
+    height: 30em;
+    margin: 0 auto 0 auto;
 }
 
 
@@ -159,6 +166,7 @@ body{
     border-radius: 10px;
     padding: 5px;
     color:black;
+    text-align: justify;
 }
 
 .myCardReview{
@@ -169,23 +177,44 @@ body{
     color:var(--main-text-color);  
     margin-top: 2%;
 }
+.myCardReview img{
+  width: 20em;
+}
 
 .bi-star-fill{
     color:yellow
 }
 
 .MyDescript{
-    width: 20rem;
     height:auto;
     padding:2%;
-    border: solid 2px ;
-    border-color: var(--main-text-color);
+    border: none;
     background-color: var(--cardBook-background-color);
     color:var(--main-text-color);  
+    display: flex;
+    flex-direction: row;
+}
+
+.pictInDescription{
+    margin-right: 2%;
+}
+.pictInDescription img{
+    width: 20em;
+    height: 27em;
+}
+.oneReviewInDescrip{
+    display: flex; 
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.oneReviewInDescrip .myCardReview {
+    width: auto;
+    margin-right: 3%;
 }
 .emptyReview{
     color:var(--main-text-color);
     font-size: 1.5em;
+    margin-top: 2%;
 }
 
 .comment{
@@ -307,7 +336,7 @@ body{
     justify-content: center;
 }
 .reviewLast > div{
-    width: 20em;
+    width: 23em;
     margin-right: 2%; 
 }
 .tagsContent{
@@ -318,7 +347,7 @@ body{
     justify-content: center;
 }
 .tagsContent > div{
-    width: 20em;
+    width: 23em;
     margin-right: 2%; 
 }
 .HInMain{
@@ -423,6 +452,9 @@ body{
 
     .labelMyInput{
         display: block;
+    }
+    .MyDescript{
+        flex-direction: column;
     }
     .MyPicture{
         display: none;

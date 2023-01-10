@@ -1,0 +1,129 @@
+html[data-theme='light']{
+    --main-text-color:black;
+    --myBtn-background-color:rgb(33,37,41);
+    --myBtn-text-color:white;
+    --myBtn-border-color:rgb(33,37,41);
+}
+html[data-theme='dark']{
+    --main-text-color:white;
+    --myBtn-background-color:rgb(248, 215, 132);
+    --myBtn-border-color:rgb(248, 215, 132);
+    --myBtn-text-color:black;
+}
+
+.btnForImage{
+    position: absolute;
+    width: 0.5em;
+    height: 1.5em;
+    border-radius: 100%;
+    background-color: var(--myBtn-background-color);
+    border-color: var(--myBtn-background-color);
+}
+.btnForImage:hover{
+    background-color: rgb(16, 208, 16);
+    border-color: rgb(16, 208, 16);
+}
+.btnForImage i{
+    position: absolute;top:0;left: 20%;
+}
+.labelMyInput{
+    border: solid 2px;
+    border-color: var(--main-text-color);
+    padding: 5px 10px;
+    cursor: pointer;
+    /* display: none; */
+}
+.MyInput{
+    display: none; 
+}
+.MyPicture{
+    border: dashed 2px;
+    border-color: var(--main-text-color);
+    height: 8em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pictDrag{
+    color: rgb(180, 178, 178);
+    font-size: 3em;
+}
+.contanerForEdi{
+    height:auto;
+    margin:2% auto 2% auto;
+}
+.cardNewR{
+    width:600px;
+    border:2px solid;
+}
+.ratingDiv{
+    text-align: center;
+    margin-bottom: 2%;
+}
+.imageInReviewForm{
+    width:13em;
+    height:10em;
+}
+.textInDrag{
+    text-align: center;
+}
+.loadEdRev{
+    position: absolute;
+    top:50%;
+    left: 50%;
+}
+.rbt-input-wrapper{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.rbt-token-removeable{
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    margin-right: 3%;
+    align-items: center;
+    background-color: #e7f4ff;
+    padding: 2px;
+    border-radius: 5px;
+    color:#007bff;
+}
+.rbt-close-content{
+    display: none;
+}
+.close {
+    font-size: 60%;
+}
+
+.quill{
+    margin-top: 2%;    
+}
+.ql-container{
+    overflow-y: auto;
+    height: 7em;
+}
+.ck[data-cke-tooltip-text="Insert image"]{
+    display: none;
+}
+.ck[data-cke-tooltip-text="Insert table"]{
+    display: none;
+}
+.ck[data-cke-tooltip-text="Insert media"]{
+    display: none;
+}
+.ck{
+    color: black;
+}
+
+@media all and (max-width: 40em){
+    .labelMyInput{
+        display: block;
+    }
+    .labelMyInput{
+        display: block;
+    }
+    .MyPicture{
+        display: none;
+    }
+}

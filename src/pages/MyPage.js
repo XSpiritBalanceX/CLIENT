@@ -4,9 +4,10 @@ import {Button,Form,Table,Spinner, Dropdown } from 'react-bootstrap';
 import { FormattedMessage, useIntl } from 'react-intl';
 import {useNavigate } from 'react-router-dom';
 import Reviews from '../components/Reviews';
-import {addNameReview} from '../redux/explainForReducer';
+import {addNameReview} from '../store/actionForReducer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './styles/MyPage.css';
 
 
 const IntMyPage=(props)=>{
@@ -92,7 +93,7 @@ const IntMyPage=(props)=>{
 
     let review=isLoad&&allReview.length===0?
        <tr>
-        <td colSpan={6} style={{textAlign:'center'}}><FormattedMessage id='emptyTable' /></td>
+        <td colSpan={6} className='emptyR' ><FormattedMessage id='emptyTable' /></td>
       </tr>:
       allReview.map(el=>{
         return <Reviews key={el.id}
@@ -149,7 +150,7 @@ const IntMyPage=(props)=>{
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>             
-                <Form.Control type="text" className="mt-1 "  style={{margin:'0 2% 0 2%'}}
+                <Form.Control type="text" className="mt-1 constrolFind" 
                   placeholder={intl.formatMessage({id:'findRev'})}  
                   value={filter}  onChange={(event)=>{setFilter(event.target.value )}}  />  
                   <Button className='myBtn serch' size='sm' 
@@ -173,18 +174,16 @@ const IntMyPage=(props)=>{
 
             <ToastContainer position="top-center"
               autoClose={5000}/>
-            </div>:<Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}
+            </div>:<Spinner animation="border" className='loadTable' />}
         </div>
     )
 }
 
-const mapStateToProps=(state)=>{
-    return {
+const mapStateToProps=(state)=>({
         locale:state.info.locale,
         email:state.info.userEmail, 
         name:state.info.nameUser       
-    }
- }
+    })
  
 const MyPage=connect(mapStateToProps)(IntMyPage);
  

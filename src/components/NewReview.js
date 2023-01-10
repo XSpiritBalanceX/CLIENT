@@ -8,6 +8,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './styles/StyleForReviewManip.css';
 
 const IntNewReview=(props)=>{
 
@@ -152,8 +153,8 @@ const IntNewReview=(props)=>{
     
     return(
       <React.Fragment>
-        {isLoad?<Container className="d-flex justify-content-center align-items-center" style={{height:'auto', margin:'2% auto 2% auto'}}>          
-          <Card style={{width:600, border:'2px solid'}} className='p-5 contMain'>
+        {isLoad?<Container className="d-flex justify-content-center align-items-center contanerForEdi" >          
+          <Card  className='p-5 contMain cardNewR'>
             <h2 className="m-auto"><FormattedMessage id='newRev'/></h2>
             <Form className="d-flex flex-column" onSubmit={sendReview}>
               <Form.Control type="text" className="mt-3" name='title' onChange={(event)=>setTitle(event.target.value)} 
@@ -178,7 +179,7 @@ const IntNewReview=(props)=>{
                     />
                   </div>} 
                   
-                <Typeahead className="mt-3 myMylti" 
+                <Typeahead className="mt-3 " 
                     id="basic-typeahead-multiple"
                     labelKey="nameTags"
                     multiple 
@@ -188,11 +189,11 @@ const IntNewReview=(props)=>{
                     placeholder={intl.formatMessage({id:'tags'})}
                     selected={tags}
                 />
-                <div style={{textAlign:'center', marginBottom:'2%'}}>
+                <div className='ratingDiv' >
                   <p><FormattedMessage id='rate'/></p>
                   <Rating initialValue={star} onClick={handleRating} iconsCount={10} size={30}/> 
                 </div>
-                <CKEditor className='myEditorField'
+                <CKEditor 
                   editor={ ClassicEditor } 
                   data={text} 
                   onChange={( event, editor ) => {
@@ -204,7 +205,7 @@ const IntNewReview=(props)=>{
                 {pic!==''?<FormattedMessage id='addPict'/>:<FormattedMessage id='rule'/>}               
               </div>
               {pic?<div>
-                <img src={showPicture} alt={pic.name} style={{width:'13em', height:'10em'}}/>
+                <img src={showPicture} alt={pic.name} className='imageInReviewForm' />
                 <Button className='btnForImage' onClick={()=>{setPic('')}}><i className="bi bi-x"></i></Button>
               </div>:null }        
               {pic===''?<React.Fragment><div className='mt-3'>
@@ -213,7 +214,7 @@ const IntNewReview=(props)=>{
               </div>              
                 <div className='MyPicture mt-3'  onDragEnter={dragEnterHangler} 
                 onDragLeave={dragLeaveHangler} onDragOver={dragOverHangler} onDrop={dropHandler}>                  
-                { dragEnter?<div style={{textAlign:'center'}}><i className="bi bi-card-image pictDrag"></i><div><FormattedMessage id='drop'/></div></div>:<div style={{textAlign:'center'}}><i className="bi bi-card-image pictDrag"></i><div><FormattedMessage id='drag'/></div></div> }
+                { dragEnter?<div className='textInDrag' ><i className="bi bi-card-image pictDrag"></i><div><FormattedMessage id='drop'/></div></div>:<div className='textInDrag'><i className="bi bi-card-image pictDrag"></i><div><FormattedMessage id='drag'/></div></div> }
               </div></React.Fragment>:null}
               <div className=" d-flex  justify-content-end mt-3 pl-3 pr-3">
                 <Button  variant="outline-dark" className='myBtn' type='submit'><FormattedMessage id='send'/></Button>
@@ -222,20 +223,19 @@ const IntNewReview=(props)=>{
           </Card>
           <ToastContainer position="top-center"
               autoClose={5000}/>
-          </Container>:<Spinner animation="border" style={{position:'absolute', top:'50%', left:'50%'}}/>}
+          </Container>:<Spinner animation="border" className='loadEdRev'/>}
           </React.Fragment>
     )
         
     
 }
 
-const mapStateToProps=(state)=>{
-    return { 
+const mapStateToProps=(state)=>({
         nameItem:state.info.nameReview ,
         locale:state.info.locale , 
         useremail:state.info.userEmail,
     }
- }
+)
  
 const NewReview=connect(mapStateToProps)(IntNewReview);
  

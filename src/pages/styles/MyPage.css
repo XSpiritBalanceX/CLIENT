@@ -1,0 +1,63 @@
+html[data-theme='light']{
+    --main-text-color:black;
+}
+html[data-theme='dark']{
+    --main-text-color:white;
+}
+
+.myPerson{
+    color:var(--main-text-color);
+}
+.contanForControl{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 2%;
+}
+
+.myTable{
+    width: 100%;
+    color:var(--main-text-color);
+    text-align: center;
+}
+.emptyR{
+    text-align: center;
+}
+.constrolFind{
+    margin:0 2% 0 2%;
+    height: 3em;
+}
+.loadTable{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+.dropdown{
+    margin:1% 0 0% 0%;
+}
+
+
+@media all and (max-width: 40em){
+    .contanForControl{
+        flex-direction: column;
+        margin: 5%;
+        align-items: flex-start;
+    }
+    .myTable thead {
+        display: none;
+    }
+    .myTable tr {
+        display: block;
+    }
+    .myTable td {
+      display: block;
+      text-align: center;
+    }
+    .myTable td:before {
+      content: attr(aria—label);
+      float: left;
+    }
+    .dropdown{
+        margin:0 0 2% 2%;
+    }
+}
