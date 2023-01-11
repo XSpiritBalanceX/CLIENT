@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import {FormattedMessage} from 'react-intl';
 import { Card, Spinner } from 'react-bootstrap';
-import mainImg from '../images/main.jpg';
 import {useParams, useNavigate } from 'react-router-dom';
 import decoded from 'jwt-decode';
 import { loginUser } from '../store/actionForReducer';
@@ -52,11 +51,11 @@ const IntMainPage=(props)=>{
         setDataInTags(cardCloud)
     }
 
-    const showR=(id)=>{        
-        let item=props.lastReview.find(el=>el.id===id) || props.reviewHighScore.find(el=>el.id===id)
+    const showR=(id)=>{       
+      let item=props.lastReview.find(el=>el.id===id) || props.reviewHighScore.find(el=>el.id===id)
+       || dataInTags.find(el=>el.id===id);
        navigate('/showReview/'+item.id)
     }
-    
 
     let lastR=props.lastReview.map(el=>{
         return <CardReview key={el.id}
@@ -64,7 +63,8 @@ const IntMainPage=(props)=>{
         title={el.title}
         name={el.name}
         username={el.nameuser}
-        date={el.date}
+        moment={el.createdAt}
+        local={props.locale.slice(0,2)}
         teg={el.teg}
         rate={el.rate}
         url={el.namepict}
@@ -77,7 +77,8 @@ const IntMainPage=(props)=>{
         title={el.title}
         name={el.name}
         username={el.nameuser}
-        date={el.date}
+        moment={el.createdAt}
+        local={props.locale.slice(0,2)}
         teg={el.teg}
         rate={el.rate}
         url={el.namepict}
@@ -85,13 +86,15 @@ const IntMainPage=(props)=>{
     }).sort((a, b) => a > b ? 1 : -1);
     return(
         <div>
-            {props.isLoad?<React.Fragment><div className='helloMain'>
-                <React.Fragment><Card className='p-4 contMain'>
-                 <Card.Img variant="top" src={mainImg} className='mainImg' /> 
-                    <Card.Title><FormattedMessage id='title'/></Card.Title>
-                    <FormattedMessage id='gretings'/>
+            {props.isLoad?<React.Fragment>
+                <div className='helloMain'>
+                <React.Fragment>
+                    <Card className='p-4 contMain helloCard'> 
+                    <p><span className='cardMainInto'><FormattedMessage id='title'/><br/></span>
+                    <FormattedMessage id='gretings'/></p>
                 </Card> </React.Fragment>
-                <React.Fragment><TagCloud className='tagCloud' tags={tagCloudData} minSize={12} maxSize={35} onClick={tag=>findReviewTags(tag.value)}/></React.Fragment>     
+                <React.Fragment>
+                <TagCloud className='tagCloud' tags={tagCloudData} minSize={12} maxSize={35} onClick={tag=>findReviewTags(tag.value)}/></React.Fragment>     
             </div>
             <div className='tagsContent'>
                 {dataInTags.map(el=>{
@@ -100,7 +103,8 @@ const IntMainPage=(props)=>{
                     title={el.title}
                     name={el.name}
                     username={el.nameuser}
-                    date={el.date}
+                    moment={el.createdAt}
+                    local={props.locale.slice(0,2)}
                     teg={el.teg}
                     rate={el.rate}
                     url={el.namepict}
@@ -127,6 +131,7 @@ const mapStateToProps=(state)=>({
         reviewHighScore:state.review.reviewHighScore,
         allReviews:state.review.allReview,
         isLoad:state.review.isLoadReview,
+        locale:state.review.locale
  })
  
  const MainPage=connect(mapStateToProps)(IntMainPage);

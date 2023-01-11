@@ -13,9 +13,15 @@ html[data-theme='dark']{
     display: flex;
     flex-direction: row;
 }
+.helloCard >  p{
+    margin-top: 10%;
+}
+.cardMainInto{
+    font-size: 1.5em;
+}
 .tagCloud{
     border: solid 1px rgb(181, 181, 181);
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
     border-radius: 10%;
     display: flex;
     flex-direction: row;

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {useParams, useNavigate} from 'react-router-dom'
-import {connect} from 'react-redux';
+import {useParams, useNavigate} from 'react-router-dom';
 import {Spinner } from 'react-bootstrap';
 import Books from '../components/Books';
 import Pagination from '../components/Pagination';
@@ -8,9 +7,9 @@ import './styles/ContantPage.css';
 import useFetch from '../components/hooks/useFetch';
 
 
-const IntBooksPage=(props)=>{
+const BooksPage=(props)=>{
 
-    const {data, loading, error}=useFetch('https://server-production-5ca0.up.railway.app/api/books/?lang='+props.locale );
+    const {data, loading, error}=useFetch('https://server-production-5ca0.up.railway.app/api/books/');
     const params=useParams();
     let pageCount=params.page;
     const navigate=useNavigate();
@@ -36,11 +35,10 @@ const IntBooksPage=(props)=>{
                 {currentItem.map(el=>{
                      return <Books key={el.id}
                         id={el.id}
-                        name={props.locale==='ru-RU'?el.nameru:el.nameen}
-                        autor={props.locale==='ru-RU'?el.autorru:el.autoren}
-                        genre={props.locale==='ru-RU'?el.genreru:el.genreen}
+                        name={el.name}
+                        autor={el.autor}
+                        genre={el.genre}
                         url={el.url}
-                        locale={props.locale}
                         goToBoo={goToBook}/>
                     })}
                     </div>
@@ -53,10 +51,4 @@ const IntBooksPage=(props)=>{
     )
 }
 
-const mapStateToProps=(state)=>({
-        locale:state.review.locale
-    })
- 
- const BooksPage=connect(mapStateToProps)(IntBooksPage);
- 
- export default BooksPage;
+export default BooksPage;

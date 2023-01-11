@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {useParams, useNavigate} from 'react-router-dom'
-import {connect} from 'react-redux';
+import {useParams, useNavigate} from 'react-router-dom';
 import {Spinner} from 'react-bootstrap';
 import Series from '../components/Series';
 import './styles/ContantPage.css';
@@ -8,9 +7,9 @@ import Pagination from '../components/Pagination';
 import useFetch from '../components/hooks/useFetch';
 
 
-const IntSeriesPage=(props)=>{
+const SeriesPage=(props)=>{
 
-    const {data, loading, error}=useFetch('https://server-production-5ca0.up.railway.app/api/series/?lang='+props.locale );
+    const {data, loading, error}=useFetch('https://server-production-5ca0.up.railway.app/api/series/');
     const params=useParams();
     let pageCount=params.page;
     const navigate=useNavigate();
@@ -36,11 +35,10 @@ const IntSeriesPage=(props)=>{
                 {currentItem.map(el=>{
                      return <Series key={el.id}
                         id={el.id}
-                        name={props.locale==='ru-RU'?el.nameru:el.nameen}
-                        genre={props.locale==='ru-RU'?el.genreru:el.genreen}
+                        name={el.name}
+                        genre={el.genre}
                         numberofseas={el.numberofseas}
                         url={el.url}
-                        locale={props.locale}
                         goToSer={goToSeries}/>
                     })}
                     </div>
@@ -53,11 +51,5 @@ const IntSeriesPage=(props)=>{
     )
 }
 
-const mapStateToProps=(state)=>({
-        locale:state.content.locale,
-        series:state.content.series
-    })
- 
- const SeriesPage=connect(mapStateToProps)(IntSeriesPage);
  
  export default SeriesPage;

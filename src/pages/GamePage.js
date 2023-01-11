@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {useParams, useNavigate} from 'react-router-dom'
-import {connect} from 'react-redux';
+import {useParams, useNavigate} from 'react-router-dom';
 import {Spinner } from 'react-bootstrap';
 import Games from '../components/Games';
 import './styles/ContantPage.css';
@@ -8,8 +7,8 @@ import Pagination from '../components/Pagination';
 import useFetch from '../components/hooks/useFetch';
 
 
-const IntGamePage=(props)=>{
-    const {data, loading, error}=useFetch('https://server-production-5ca0.up.railway.app/api/games/?lang='+props.locale );
+const GamePage=(props)=>{
+    const {data, loading, error}=useFetch('https://server-production-5ca0.up.railway.app/api/games/');
     const params=useParams();
     let pageCount=params.page;
     const navigate=useNavigate();
@@ -35,11 +34,10 @@ const IntGamePage=(props)=>{
                 {currentItem.map(el=>{
                      return <Games key={el.id}
                         id={el.id}
-                        name={props.locale==='ru-RU'?el.nameru:el.nameen}
+                        name={el.name}
                         developer={el.developer}
-                        genre={props.locale==='ru-RU'?el.genreru:el.genreen}
+                        genre={el.genre}
                         url={el.url}
-                        locale={props.locale}
                         goToGam={goToGame}/>
                     })}
                     </div>
@@ -52,11 +50,4 @@ const IntGamePage=(props)=>{
     )
 }
 
-const mapStateToProps=(state)=>({
-        locale:state.review.locale,
-        gamesData:state.content.games
-    })
- 
- const GamePage=connect(mapStateToProps)(IntGamePage);
- 
- export default GamePage;
+export default GamePage;

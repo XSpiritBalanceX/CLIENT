@@ -17,9 +17,12 @@ html[data-theme='dark']{
     border-color: var(--main-text-color);
     background-color: var(--cardBook-background-color);
     color:var(--main-text-color);  
-    margin-top: 2%;
+    margin-top: 2%; 
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);  
 }
-.myCardReview img{
+.card-img-top{
+    display: block;
+    margin: 0 auto 0 auto;
     width: 20em;
     height: 13em;
 }

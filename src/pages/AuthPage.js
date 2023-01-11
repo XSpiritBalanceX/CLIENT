@@ -82,8 +82,8 @@ const IntAuthPage=(props)=>{
         <div>
             <ToastContainer position="top-center"
               autoClose={5000}/>
-            <Container className="d-flex justify-content-center align-items-center" >          
-          <Card  className='p-5 contMain'>
+            <Container className="d-flex justify-content-center align-items-center " >          
+          <Card  className='p-5 contMain m-5'>
             <h2 className="m-auto">{isLogin?<FormattedMessage id='auth'/>:<FormattedMessage id='registr'/>}</h2>
             {isLogin?<Form className="d-flex flex-column">  
             <div className='buttForAut'>

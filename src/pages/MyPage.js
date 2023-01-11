@@ -23,15 +23,20 @@ const IntMyPage=(props)=>{
     
     
     useEffect(()=>{
-       fetch('https://server-production-5ca0.up.railway.app/api/user/auth', {
-        headers:{
-          'Content-type': 'application/json',
-          'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
-        }
-      })
-      .then(response=>response.json())
-      .then(data=>{data.token?setToken(true):setToken(false)})
-      .catch(err=>console.log(err)) 
+      try{
+        (async function(){
+            let response=await fetch('https://server-production-5ca0.up.railway.app/api/user/auth', {
+              headers:{
+                'Content-type': 'application/json',
+                'Authorization': `Bearer ${sessionStorage.getItem('token')}`,
+              }
+            });
+            let data=await response.json();
+            data.token?setToken(true):setToken(false);
+        })()
+      }catch(err){
+          console.log(err)
+      }
       // eslint-disable-next-line
   },[]) 
 
@@ -39,7 +44,11 @@ const IntMyPage=(props)=>{
         if(isToken){
           fetch('https://server-production-5ca0.up.railway.app/api/review/userreview?useremail='+props.email)
           .then(response=>response.json())
-          .then(data=>{setLoad(true); setAllReview(data.userReview);setAddiData(data.userReview);setAllLikes(data.allLikes)})
+          .then(data=>{
+            setLoad(true); 
+            setAllReview(data.userReview);
+            setAddiData(data.userReview);
+            setAllLikes(data.allLikes)})
           .catch(err=>console.log(err))}
         // eslint-disable-next-line
     },[isToken])  
@@ -100,7 +109,8 @@ const IntMyPage=(props)=>{
          id={el.id}
          nameRev={el.title}
          nameWork={el.name}
-         date={el.date}
+         date={el.createdAt}
+         local={props.locale.slice(0,2)}
          cbShowRev={showR}
          cbEditReview={editReview}
          cbDeleteReview={deleteReview}
@@ -118,7 +128,7 @@ const IntMyPage=(props)=>{
       }else if(name==='returnRev'){
         sortReview=addiDataReview.slice()
       }else if(name==='byDate'){
-        sortReview=allReview.slice().sort((a, b) => a > b ? 1 : -1)
+        sortReview=allReview.slice().sort((a, b) => a.id > b.id ? -1 : 1)
       }
       setAllReview(sortReview)
     }
@@ -180,9 +190,9 @@ const IntMyPage=(props)=>{
 }
 
 const mapStateToProps=(state)=>({
-        locale:state.review.locale,
         email:state.service.userEmail, 
-        name:state.service.nameUser       
+        name:state.service.nameUser,
+        locale:state.review.locale      
     })
  
 const MyPage=connect(mapStateToProps)(IntMyPage);

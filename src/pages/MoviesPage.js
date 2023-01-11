@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {useParams, useNavigate} from 'react-router-dom'
-import {connect} from 'react-redux';
+import {useParams, useNavigate} from 'react-router-dom';
 import {Spinner } from 'react-bootstrap';
 import Movies from '../components/Movies';
 import './styles/ContantPage.css';
@@ -8,9 +7,9 @@ import Pagination from '../components/Pagination';
 import useFetch from '../components/hooks/useFetch';
 
 
-const IntMoviesPage=(props)=>{
+const MoviesPage=(props)=>{
 
-    const {data, loading, error}=useFetch('https://server-production-5ca0.up.railway.app/api/movies/?lang='+props.locale );
+    const {data, loading, error}=useFetch('https://server-production-5ca0.up.railway.app/api/movies');
     const params=useParams();
     let pageCount=params.page;
     const navigate=useNavigate();
@@ -36,11 +35,10 @@ const IntMoviesPage=(props)=>{
                 {currentItem.map(el=>{
                      return <Movies key={el.id}
                         id={el.id}
-                        name={props.locale==='ru-RU'?el.nameru:el.nameen}
-                        genre={props.locale==='ru-RU'?el.genreru:el.genreen}
-                        runtime={props.locale==='ru-RU'?`${el.runtime} мин`:`${el.runtime} min`}
+                        name={el.name}
+                        genre={el.genre}
+                        runtime={el.runtime}
                         url={el.url}
-                        locale={props.locale}
                         goToM={goToMovie}/>
                     })}
                     </div>
@@ -53,11 +51,4 @@ const IntMoviesPage=(props)=>{
     )
 }
 
-const mapStateToProps=(state)=>({
-        locale:state.review.locale,
-        moviData:state.content.movies
-    })
- 
- const MoviesPage=connect(mapStateToProps)(IntMoviesPage);
- 
- export default MoviesPage;
+export default MoviesPage;

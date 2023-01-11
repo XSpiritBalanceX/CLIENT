@@ -10,6 +10,8 @@ import parse from 'html-react-parser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/ShowReview.css';
+import Moment from 'react-moment';
+import 'moment/locale/ru';
 
 
 const IntShowReview=(props)=>{
@@ -27,13 +29,17 @@ const IntShowReview=(props)=>{
     const [like, setLike]=useState(false);
 
     useEffect(()=>{
-        fetch( `https://server-production-5ca0.up.railway.app/api/review/onereview?id=${idReview}` )
-        .then(response=>response.json())
-        .then(data=>{
-            setOneReview(data.oneReview) ; 
-            setLoad(true);
-            setAverageRating(data.getRating); })
-        .catch(err=>console.log(err))
+        try{
+            (async function(){
+                let response=await fetch(`https://server-production-5ca0.up.railway.app/api/review/onereview?id=${idReview}`);
+                let data=await response.json();
+                setOneReview(data.oneReview) ; 
+                setLoad(true);
+                setAverageRating(data.getRating);
+            })()
+          }catch(err){
+              console.log(err)
+          } 
         // eslint-disable-next-line
     },[idReview]); 
 
@@ -66,7 +72,7 @@ const IntShowReview=(props)=>{
      return <div key={el.id} className='showRev' ref={template} >
             <div >
                 <h3>{el.title}</h3> 
-                <p>{el.nameuser} <i className="bi bi-clock"></i> {el.date}</p>           
+                <p><i className="bi bi-person"></i> {el.nameuser} <i className="bi bi-calendar4-event"></i> <Moment format="D MMM YYYY" withTitle locale={props.locale.slice(0,2)}>{el.createdAt}</Moment></p>           
                 <img src={el.namepict} alt={el.name} className='pict'/>
                 <h5>{el.name}, {el.groupn}</h5>
                 <p><FormattedMessage id='ratAuth'/>{el.rate} <i className="bi bi-star-fill"></i></p>
@@ -113,10 +119,16 @@ const IntShowReview=(props)=>{
 
       useEffect(() => {
         const id = setInterval(() => {
-          fetch('https://server-production-5ca0.up.railway.app/api/review/getcomments')
-          .then(response=>response.json())
-          .then(data=>setAllComments(data), setLoadComment(true))
-          .catch(err=>console.log(err))       
+            try{
+                (async function(){
+                    let response=await fetch('https://server-production-5ca0.up.railway.app/api/review/getcomments');
+                    let data=await response.json();
+                    setAllComments(data);
+                    setLoadComment(true);
+                })()
+              }catch(err){
+                  console.log(err)
+              }       
         }, 4000);
         return () => {
           clearInterval(id);
@@ -219,7 +231,8 @@ const IntShowReview=(props)=>{
 const mapStateToProps=(state)=>({
         isLogin:state.service.isLogin,
         useremail: state.service.userEmail, 
-        nameUserNow:state.service.nameUser     
+        nameUserNow:state.service.nameUser,
+        locale:state.review.locale    
 })
  
 const ShowReview=connect(mapStateToProps)(IntShowReview);

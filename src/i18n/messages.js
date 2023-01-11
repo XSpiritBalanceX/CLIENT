@@ -84,7 +84,8 @@ export const messages={
         lastRev:'Last written reviews',
         highRev:'Top rated reviews',
         search:'Search...',
-        errShow:'Oops...Try again'
+        errShow:'Oops...Try again',
+        authorText:'Author:'
     },
     [LOCALES.RUSSIAN]:{
         main:'Главная',
@@ -169,6 +170,7 @@ export const messages={
         lastRev:'Последние написанные обзоры',
         highRev:'Обзоры с высшей оценкой',
         search:'Поиск...',
-        errShow:'Упс...Попробуй еще раз'
+        errShow:'Упс...Попробуй еще раз',
+        authorText:'Автор:'
     }
 }

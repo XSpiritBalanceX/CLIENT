@@ -21,7 +21,7 @@ const IntPageLinks=(props)=>{
   const [allComments, setComments]=useState([])
   let stopWords = new Set(['and', 'or', 'to', 'in', 'a', 'the', 'и', 'а', 'или', 'но', 'не',])
   let miniSearch= new MiniSearch({
-    fields:['title','comments', 'text'],
+    fields:['title','comments', 'text', 'name'],
     storeFields:['title', 'namereview'],
      processTerm:(term, _fieldName) =>
     stopWords.has(term) ? null : term.toLowerCase(), 
@@ -33,14 +33,17 @@ const IntPageLinks=(props)=>{
   })
   
   useEffect(()=>{
-    fetch( 'https://server-production-5ca0.up.railway.app/api/review/getmain')
-        .then(response=>response.json())
-        .then(data=>{
+    try{
+      (async function(){
+          let response=await fetch('https://server-production-5ca0.up.railway.app/api/review/getmain');
+          let data=await response.json();
           props.dispatch(loadMain(data.retuReview, data.revieHighRat,data.review, true));
           setSearch(data.review); 
           setComments(data.comments);
-        })
-        .catch(err=>console.log(err))
+      })()
+    }catch(err){
+        console.log(err)
+    }
         // eslint-disable-next-line
   },[])
 
@@ -58,6 +61,7 @@ const IntPageLinks=(props)=>{
       el.id=searchData[k].id;
       el.text=searchData[k].text;
       el.title=searchData[k].title;
+      el.name=searchData[k].name;
       searArr.push(el)
     } 
     miniSearch.addAll(searArr);

@@ -17,7 +17,7 @@ html[data-theme='dark']{
     text-align: center;
 }
 .pict{
-    width: auto;
+    width: 99%;
     height: 30em;
     margin: 0 auto 0 auto;
 }
@@ -27,6 +27,12 @@ html[data-theme='dark']{
     padding: 5px;
     color:black;
     text-align: justify;
+}
+.ratingRevCard{
+    font-size:15px;
+}
+.card-body{
+    padding: 10px;
 }
 .oneComment{
     border: solid 1px ;

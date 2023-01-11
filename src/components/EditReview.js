@@ -28,20 +28,35 @@ const IntEditReview=(props)=>{
     const [showPicture, setShowPicture]=useState('');
 
     useEffect(()=>{
-        fetch(`https://server-production-5ca0.up.railway.app/api/review/itemreview?id=${idReview}`)
-        .then(response=>response.json())
-        .then(data=>{setLoad(true);setInfoReview({title:data.title, name:data.name, 
-            groupn:data.groupn});
-            setPic(data.namepict);setTags(data.teg.split(','));setText(data.text); setStar(data.rate);})
-        .catch(err=>console.log(err))
+      try{
+        (async function(){
+            let response=await fetch(`https://server-production-5ca0.up.railway.app/api/review/itemreview?id=${idReview}`);
+            let data=await response.json();
+            setLoad(true);
+            setInfoReview({title:data.title, name:data.name, groupn:data.groupn});
+            setPic(data.namepict);
+            setTags(data.teg.split(','));
+            setText(data.text); 
+            setStar(data.rate);
+        })()
+      }catch(err){
+        console.log(err)
+      }
         // eslint-disable-next-line
     },[idReview]); 
 
     useEffect(()=>{
-      fetch('https://server-production-5ca0.up.railway.app/api/review/gettags')
-      .then(response=>response.json())
-      .then(data=>{ setallTags(data);setInitial(data);setLoadTags(true)})
-      .catch(err=>console.log(err))
+      try{
+        (async function(){
+            let response=await fetch('https://server-production-5ca0.up.railway.app/api/review/gettags');
+            let data=await response.json();
+            setallTags(data);
+            setInitial(data);
+            setLoadTags(true);
+        })()
+      }catch(err){
+        console.log(err)
+      }
     },[])
 
     const changeInfo=(event)=>{

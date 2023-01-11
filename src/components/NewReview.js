@@ -9,6 +9,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/StyleForReviewManip.css';
+import useFetch from './hooks/useFetch';
 
 const IntNewReview=(props)=>{
 
@@ -32,6 +33,18 @@ const IntNewReview=(props)=>{
     const [text, setText]=useState('...');
 
     const intl=useIntl();
+
+    const {data, loading, error}=useFetch('https://server-production-5ca0.up.railway.app/api/review/getall');
+    if(error){
+      console.log(error)
+    }
+    useEffect(()=>{
+        setBook(data.everyBook); 
+        setGame(data.everyGame); 
+        setMovie(data.everyMovie); 
+        setSeries(data.everySeries);
+      // eslint-disable-next-line
+    },[loading])
 
     let options=props.locale==='en-US'?['Games', 'Movies', "Books", "Series"]:['Игры', 'Фильмы', "Книги", "Сериалы"]
 
@@ -109,19 +122,18 @@ const IntNewReview=(props)=>{
     }
     
     useEffect(()=>{
-      fetch('https://server-production-5ca0.up.railway.app/api/review/gettags')
-      .then(response=>response.json())
-      .then(data=>{ setallTags(data);setInitial(data);setLoad(true)})
-      .catch(err=>console.log(err))
+      try{
+        (async function(){
+          let response=await fetch('https://server-production-5ca0.up.railway.app/api/review/gettags');
+          let data=await response.json();
+          setallTags(data);
+          setInitial(data);
+          setLoad(true)
+        })()
+      }catch(err){
+        console.log(err)
+      }
     },[])
-
-    useEffect(()=>{
-      fetch('https://server-production-5ca0.up.railway.app/api/review/getall/?lang='+props.locale)
-      .then(response=>response.json())
-      .then(data=>{setBook(data.everyBook); setGame(data.everyGame); setMovie(data.everyMovie); setSeries(data.everySeries)})
-      .catch(err=>console.log(err))
-      // eslint-disable-next-line
-    },[props.locale])
 
     const changeTags=(event)=>{
       let newAllTags=allTags.slice()
@@ -142,7 +154,7 @@ const IntNewReview=(props)=>{
       
     useEffect(()=>{
       let newDataTitle=[]
-      choiseTitle.forEach(el=>{newDataTitle.push(el.nameru || el.nameen)})
+      choiseTitle.forEach(el=>{newDataTitle.push(el.name)})
       setDataTitle(newDataTitle);
       // eslint-disable-next-line
     },[group])
@@ -172,7 +184,7 @@ const IntNewReview=(props)=>{
                   <div>
                     <Typeahead className="mt-3"
                       id="basic-typeahead-example" 
-                      labelKey="nameTitleWprk" 
+                      labelKey="nameTitleWork" 
                       onChange={(event)=>setTitleWo(event)}
                       options={dataForTitleWork}
                       placeholder={intl.formatMessage({id:'titleWo'})}                    

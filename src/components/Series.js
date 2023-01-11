@@ -1,9 +1,10 @@
 import React from 'react';
 import {Card, Button} from 'react-bootstrap';
 import './styles/StylesForItemsCont.css';
+import { FormattedMessage } from 'react-intl';
 
 
-const Series=({id, name, url, locale, numberofseas, genre, goToSer})=>{
+const Series=({id, name, url, numberofseas, genre, goToSer})=>{
 
     return(
         <Card className='cardSeries'>
@@ -11,10 +12,10 @@ const Series=({id, name, url, locale, numberofseas, genre, goToSer})=>{
         <Card.Body>
           <Card.Title>{name}</Card.Title>
           <Card.Text>
-            {`${locale==='ru-RU'?'Жанр':'Genre'} - ${genre}`}<br/>
-            {`${locale==='ru-RU'?'Количество сезонов':'Number of seasons'} - ${numberofseas}`}<br/>
+            <FormattedMessage id='genre' />{` ${genre}`}<br/>
+            <FormattedMessage id='seasons' />{` ${numberofseas}`}<br/>
           </Card.Text>
-          <Button variant="dark" className='myBtn' onClick={()=>goToSer(id)}>{locale==='ru-RU'?'Показать':'Show'}</Button>
+          <Button variant="dark" className='myBtn' onClick={()=>goToSer(id)}><FormattedMessage id='show' /></Button>
         </Card.Body>
       </Card>
     )

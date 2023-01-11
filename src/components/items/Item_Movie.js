@@ -18,12 +18,18 @@ const IntItemMovie=(props)=>{
     const navigate=useNavigate();
 
     useEffect(()=>{
-        fetch(`https://server-production-5ca0.up.railway.app/api/movies/getonemovie?lang=${props.locale}&id=${idMovie}`)
-        .then(response=>response.json())
-        .then(data=>{setItem(data); setIsLoadReview(false)})
-        .catch(err=>console.log(err))
+        try{
+            (async function(){
+                let response=await fetch(`https://server-production-5ca0.up.railway.app/api/movies/getonemovie?id=${idMovie}`);
+                let data=await response.json();
+                setItem(data); 
+                setIsLoadReview(false)
+            })()
+        }catch(err){
+            console.log(err)
+        }
         // eslint-disable-next-line
-    },[props.locale]);
+    },[]);
 
    
 
@@ -34,18 +40,18 @@ const IntItemMovie=(props)=>{
     }
 
     let oneMovie=!isLoad? item.map(el=>{
-        nameItem=props.locale==='ru-RU'?el.nameru:el.nameen;
+        nameItem=el.name;
        return <React.Fragment key={el.id}>
            <div className='pictInDescription'>
                 <img alt={el.nameen||el.nameru} src={el.url}/>
             </div>
            <div>
-                <h3>{props.locale==='ru-RU'?el.nameru:el.nameen}</h3>
-                <p><FormattedMessage id='director'/>  {props.locale==='ru-RU'?el.directorru:el.directoren}</p>
-                <p><FormattedMessage id='starring'/>  {props.locale==='ru-RU'?el.starringru:el.starringen}</p>
+                <h3>{el.name}</h3>
+                <p><FormattedMessage id='director'/>  {el.director}</p>
+                <p><FormattedMessage id='starring'/>  {el.starring}</p>
                 <p><FormattedMessage id='date'/> {el.data}</p>
-                <p><FormattedMessage id='genre'/> {props.locale==='ru-RU'?el.genreru:el.genreen}</p>
-                <p><FormattedMessage id='summary'/> {props.locale==='ru-RU'?el.summaryru:el.summaryen}</p>
+                <p><FormattedMessage id='genre'/> {el.genre}</p>
+                <p><FormattedMessage id='summary'/> {el.summary}</p>
                 <p><FormattedMessage id='userscore'/>  {rating} </p>
            </div>
         </React.Fragment> 
@@ -57,10 +63,16 @@ const IntItemMovie=(props)=>{
         }
 
         useEffect(()=>{
-            fetch(`https://server-production-5ca0.up.railway.app/api/review/itemreview?name=${nameItem}`)
-            .then(response=>response.json())
-            .then(data=>{setAllReview(data); setLoad(false)})
-            .catch(err=>console.log(err))
+            try{
+                (async function(){
+                    let response=await fetch(`https://server-production-5ca0.up.railway.app/api/review/itemreview?name=${nameItem}`);
+                    let data=await response.json();
+                    setAllReview(data); 
+                    setLoad(false);
+                })()
+            }catch(err){
+                console.log(err)
+            }
             // eslint-disable-next-line
         },[nameItem]); 
 
@@ -86,7 +98,8 @@ const IntItemMovie=(props)=>{
            id={el.id}
            title={el.title}
            username={el.nameuser}
-           date={el.date}
+           moment={el.createdAt}
+           local={props.locale.slice(0,2)}
            teg={el.teg}
            rate={el.rate}
            url={el.namepict}
@@ -113,8 +126,8 @@ const IntItemMovie=(props)=>{
 }
 
 const mapStateToProps=(state)=>({
-        locale:state.review.locale,
-        isLogin:state.service.isLogin
+        isLogin:state.service.isLogin,
+        locale:state.review.locale  
  })
  
 const ItemMovie=connect(mapStateToProps)(IntItemMovie);
